@@ -4,6 +4,7 @@ import unittest
 from backlog.util import load_conf
 from backlog.base import BacklogAPI
 
+
 class TestApi(unittest.TestCase):
     def setUp(self):
         self.conf = load_conf("./conf.yml")["backlog"]
@@ -14,6 +15,7 @@ class TestApi(unittest.TestCase):
         resp = resp.json()
         self.assertTrue(type(resp), list)
         self.assertTrue("id" in resp[0].keys())
+
 
 if __name__ == "__main__":
     unittest.main()

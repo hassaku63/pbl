@@ -4,6 +4,7 @@ import unittest
 from backlog.util import load_conf
 from backlog.base import BacklogAPI
 
+
 class TestWiki(unittest.TestCase):
     def setUp(self):
         self.conf = load_conf("./conf.yml")["backlog"]
