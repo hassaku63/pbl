@@ -2,6 +2,7 @@
 
 import os.path
 
+
 class Wiki(object):
     def __init__(self, api):
         """
