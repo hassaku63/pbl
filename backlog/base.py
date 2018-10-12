@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 import requests
 from backlog.wiki import Wiki
 from backlog.attachment import Attachment
+from backlog.project import Project
 
 BACKLOG_BASE_URL = "https://{space}.backlog.jp"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -49,6 +50,9 @@ class BaseAPI(object):
         elif method == "delete":
             resp = self.delete(method, uri, query_param, request_param, headers, **kwargs)
 
+        elif method == "patch":
+            resp = self.delete(method, uri, query_param, request_param, headers, **kwargs)
+
         else:
             raise BacklogError("Not supported http method: {}".format(method))
 
@@ -63,6 +67,9 @@ class BaseAPI(object):
     def delete(self, method, uri, query_param, request_param, headers, **kwargs):
         raise NotImplementedError
 
+    def patch(self, method, uri, query_param, request_param, headers, **kwargs):
+        raise NotImplementedError
+
 
 class BacklogAPI(BaseAPI):
     """
@@ -73,6 +80,7 @@ class BacklogAPI(BaseAPI):
 
         self.wiki = Wiki(self)
         self.attachment = Attachment(self)
+        self.project = Project(self)
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri + "?" + urlencode(query_param)
@@ -109,6 +117,20 @@ class BacklogAPI(BaseAPI):
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
+
+    def patch(self, method, uri, query_param, request_param, headers, **kwargs):
+        """
+        TODO: Implementation.
+
+        :param method:
+        :param uri:
+        :param query_param:
+        :param request_param:
+        :param headers:
+        :param kwargs:
+        :return:
+        """
+        raise NotImplementedError
 
 
 class BacklogObject(object):
