@@ -7,7 +7,7 @@ setup(
     name='backlog_util',
     version='0.1',
     install_requires=[
-        'requests>=2.19.1'
+        'requests>=2.19.1',
         'PyYAML>=3.13'
     ],
     description='Backlog API v2 wrapper',
