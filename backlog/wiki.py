@@ -24,17 +24,28 @@ class Wiki(object):
 
         return resp.json()
 
-    def create(self, projectId, name, content, mailNotify=False):
+    def create(self, projectId, name, content, mailNotify):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-wiki-page/
 
-        :param projectId:
-        :param name:
-        :param content:
-        :param mailNotify:
+        :param projectId: int: project id
+        :param name: str: wiki page name
+        :param content: str: page content
+        :param mailNotify: bool: notification
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis"
+        _method = "POST"
+        _request_param = {
+            "projectId": projectId,
+            "name": name,
+            "content": content,
+            "mailNotify": "true" if mailNotify else "false"
+        }
+
+        resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
+
+        return resp.json()
 
     def get(self, wikiId):
         """
@@ -43,7 +54,11 @@ class Wiki(object):
         :param wikiId:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
+        _method = "GET"
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
 
     def update(self, wikiId, name, content, mailNotify=False):
         """
@@ -75,7 +90,12 @@ class Wiki(object):
         :param wikiId:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
+        _method = "GET"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
 
     def add_attachment(self, wikiId, attachmentId):
         """
@@ -89,6 +109,7 @@ class Wiki(object):
 
     def get_attachment(self, wikiId, attachmentId):
         """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page-attachment
 
         :param wikiId:
         :param attachmentId:
