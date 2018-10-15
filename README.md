@@ -7,10 +7,12 @@
 
 Install dependencies
 
-> cd path-to-this-project-root
-> pip install .
+```bash
+cd path-to-this-project-root
+pip install .
+```
 
-Code snipet.
+Code snipet
 
 ```python
 import json
