@@ -5,12 +5,16 @@
 
 # Usage
 
-Install dependencies
+Install
 
 ```bash
 cd path-to-this-project-root
 pip install .
+
+# or
+pip install git+git://github.com/hassaku63/backlog_util@<BRANCH_NAME>
 ```
+
 
 Code snipet
 

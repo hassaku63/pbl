@@ -16,8 +16,8 @@ def main():
     # list project users
     # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
     print("# list project users")
-    users = api.project.users("SANDBOX1")
-    print(json.dumps(users.json()))
+    users = api.project.users("SampleProject")
+    print(json.dumps(users.json(), indent=2))
 
 
     """
@@ -26,19 +26,17 @@ def main():
     # list wikis
     # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page-list/
     print("# list wikis")
-    wikis = api.wiki.list("SANDBOX1")
-    print(json.dumps(wikis[:2]))
+    wikis = api.wiki.list("SampleProject")
+    print(json.dumps(wikis[0], indent=2))
 
     # get attachment
     # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-attachment/
     print("# get attachment")
-    wiki = [w for w in api.wiki.list("SANDBOX1") if len(w["attachments"]) > 0][0]
+    wiki = [w for w in api.wiki.list("SampleProject") if len(w["attachments"]) > 0][0]
     attachment = api.wiki.get_attachment(
         wikiId=wiki["id"],
         attachmentId=wiki["attachments"][0]["id"])
-    print(attachment)
-
-    return conf, api
+    print(json.dumps(attachment), indent=2)
 
 
 if __name__ == "__main__":
