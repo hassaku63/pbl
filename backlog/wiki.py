@@ -70,7 +70,17 @@ class Wiki(object):
         :param mailNotify:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
+        _method = "PATCH"
+        _request_param = {
+            "name": name,
+            "content": content,
+            "mainNotify": "true" if mailNotify else "false"
+        }
+
+        resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
+
+        return resp.json()
 
     def delete(self, wikiId, mailNotify=False):
         """
@@ -80,8 +90,16 @@ class Wiki(object):
         :param mailNotify:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
+        _method = "DELETE"
+        _mail_notify = mailNotify
+        _request_param = {
+            "mailNotify": "true" if _mail_notify else "false"
+        }
 
+        resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
+
+        return resp.json()
 
     def list_attachments(self, wikiId):
         """
@@ -105,7 +123,15 @@ class Wiki(object):
         :param attachmentId:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
+        _method = "POST"
+        _request_param = {
+            "attachmentId": attachmentId
+        }
+
+        resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
+
+        return resp.json()
 
     def get_attachment(self, wikiId, attachmentId):
         """
@@ -134,4 +160,12 @@ class Wiki(object):
         :param attachmentId:
         :return:
         """
-        raise NotImplementedError
+        _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(
+            wiki_id=wikiId,
+            attachment_id=attachmentId
+        )
+        _method = "DELETE"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()

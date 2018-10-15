@@ -51,7 +51,7 @@ class BaseAPI(object):
             resp = self.delete(method, uri, query_param, request_param, headers, **kwargs)
 
         elif method == "patch":
-            resp = self.delete(method, uri, query_param, request_param, headers, **kwargs)
+            resp = self.patch(method, uri, query_param, request_param, headers, **kwargs)
 
         else:
             raise BacklogError("Not supported http method: {}".format(method))
@@ -111,7 +111,7 @@ class BacklogAPI(BaseAPI):
         if headers is not None:
             resp = requests.delete(_url, headers=headers, **kwargs)
         else:
-            resp = requests.post(_url, **kwargs)
+            resp = requests.delete(_url, **kwargs)
 
         if resp.status_code == 200:
             return resp
@@ -130,8 +130,16 @@ class BacklogAPI(BaseAPI):
         :param kwargs:
         :return:
         """
-        raise NotImplementedError
+        _url = self.base_url + uri + "?" + urlencode(query_param)
+        if headers is not None:
+            resp = requests.ptach(_url, data=request_param, headers=headers, **kwargs)
+        else:
+            resp = requests.patch(_url, data=request_param, **kwargs)
 
+        if resp.status_code == 200:
+            return resp
+
+        raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
 
 class BacklogObject(object):
     def __init__(self, api):

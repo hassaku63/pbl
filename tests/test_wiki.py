@@ -215,11 +215,171 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(expects["id"], wiki["id"])
         self.assertEqual(expects["name"], wiki["name"])
 
+    @httpretty.activate
     def test_update_wiki(self):
-        pass
+        expects = {
+            "id": 1,
+            "projectId": 1,
+            "name": "Home",
+            "content": "test",
+            "tags": [
+                {
+                    "id": 12,
+                    "name": "議事録"
+                }
+            ],
+            "attachments": [
+                {
+                    "id": 1,
+                    "name": "test.json",
+                    "size": 8857,
+                    "createdUser": {
+                        "id": 1,
+                        "userId": "admin",
+                        "name": "admin",
+                        "roleType": 1,
+                        "lang": "ja",
+                        "mailAddress": "eguchi@nulab.example"
+                    },
+                    "created": "2014-01-06T11:10:45Z"
+                },
+            ],
+            "stars": [],
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2012-07-23T06:09:48Z",
+            "updatedUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "updated": "2012-07-23T06:09:48Z",
+        }
+        _wiki_id = expects["content"]
+        _name = expects["name"]
+        _content = expects["content"]
+        _mail_notify = False
+        _uri = "wikis/{wiki_id}".format(wiki_id=_wiki_id)
 
+        httpretty.register_uri(
+            httpretty.PATCH,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        wiki = self.api.wiki.update(
+            wikiId=_wiki_id,
+            name=_name,
+            content=_content,
+            mailNotify=_mail_notify
+        )
+
+        self.assertEqual(expects["id"], wiki["id"])
+        self.assertEqual(expects["name"], wiki["name"])
+        self.assertEqual(expects["content"], wiki["content"])
+
+    @httpretty.activate
     def test_delete_wiki(self):
-        pass
+        expects = {
+            "id": 1,
+            "projectId": 1,
+            "name": "Home",
+            "content": "test",
+            "tags": [
+                {
+                    "id": 12,
+                    "name": "議事録"
+                }
+            ],
+            "attachments": [
+                {
+                    "id": 1,
+                    "name": "test.json",
+                    "size": 8857,
+                    "createdUser": {
+                        "id": 1,
+                        "userId": "admin",
+                        "name": "admin",
+                        "roleType": 1,
+                        "lang": "ja",
+                        "mailAddress": "eguchi@nulab.example"
+                    },
+                    "created": "2014-01-06T11:10:45Z"
+                }
+            ],
+            "sharedFiles": [
+                {
+                    "id": 454403,
+                    "type": "file",
+                    "dir": "/ユーザアイコン/",
+                    "name": "01_サラリーマン.png",
+                    "size": 2735,
+                    "createdUser": {
+                        "id": 5686,
+                        "userId": "takada",
+                        "name": "takada",
+                        "roleType":2,
+                        "lang":"ja",
+                        "mailAddress":"takada@nulab.example"
+                    },
+                    "created": "2009-02-27T03:26:15Z",
+                    "updatedUser": {
+                        "id": 5686,
+                        "userId": "takada",
+                        "name": "takada",
+                        "roleType": 2,
+                        "lang": "ja",
+                        "mailAddress": "takada@nulab.example"
+                    },
+                    "updated":"2009-03-03T16:57:47Z"
+                }
+            ],
+            "stars": [],
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2012-07-23T06:09:48Z",
+            "updatedUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "updated": "2012-07-23T06:09:48Z",
+        }
+        _wiki_id = expects["id"]
+        _mail_notify = False
+        _uri = "wikis/{wikiId}".format(
+            wikiId=_wiki_id,
+            mailNotify=_mail_notify
+        )
+
+        httpretty.register_uri(
+            httpretty.DELETE,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        attachments = self.api.wiki.delete(_wiki_id)
+
+        # test
+        self.assertEqual(expects["id"], _wiki_id)
 
     @httpretty.activate
     def test_list_attachments(self):
@@ -247,8 +407,40 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(len(expects), len(attachments))
         self.assertEqual(expects[0]["id"], attachments[0]["id"])
 
+    @httpretty.activate
     def test_add_attachment(self):
-        pass
+        _wiki_id = 1
+        _attachment_id = 2
+        _uri = "wikis/{wiki_id}/attachments".format(wiki_id=_wiki_id)
+        expects = [
+                    {
+                "id": _attachment_id,
+                "name": "Duke.png",
+                "size": 196186,
+                "createdUser": {
+                    "id": 1,
+                    "userId": "admin",
+                    "name": "admin",
+                    "roleType": 1,
+                    "lang": None,
+                    "mailAddress": "eguchi@nulab.example"
+                },
+                "created": "2014-07-11T06:26:05Z"
+            }
+        ]
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        attachments = self.api.wiki.add_attachment(
+            wikiId=_wiki_id,
+            attachmentId=_attachment_id
+        )
+
+        self.assertEqual(expects[0]["id"], attachments[0]["id"])
 
     @httpretty.activate
     def test_get_attachment(self):
@@ -290,8 +482,41 @@ class TestWiki(unittest.TestCase):
 
             self.assertEqual(expects, resp)
 
+    @httpretty.activate
     def test_delete_attachment(self):
-        pass
+        expects = {
+            "id": 2,
+            "name": "Duke.png",
+            "size": 196186,
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": None,
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2014-07-11T06:26:05Z"
+        }
+        _wiki_id = 1
+        _attachment_id = expects["id"]
+        _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(
+            wiki_id=_wiki_id,
+            attachment_id=_attachment_id
+        )
+
+        httpretty.register_uri(
+            httpretty.DELETE,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        attachments = self.api.wiki.delete_attachment(
+            wikiId=_wiki_id,
+            attachmentId=_attachment_id
+        )
+
+        self.assertEqual(expects["id"], _attachment_id)
 
 
 if __name__ == "__main__":
