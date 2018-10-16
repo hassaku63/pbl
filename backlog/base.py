@@ -101,7 +101,7 @@ class BacklogAPI(BaseAPI):
         else:
             resp = requests.post(_url, data=request_param, **kwargs)
 
-        if resp.status_code == 200:
+        if resp.status_code % 100 == 2:
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
