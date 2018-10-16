@@ -1,7 +1,6 @@
 # coding: utf-8
 
 
-
 class Project(object):
     def __init__(self, api):
         """

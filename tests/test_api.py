@@ -27,10 +27,44 @@ class TestApi(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=URI),
             body=json.dumps(expects),
-            content_type="application/json"
+            content_type="application/json",
+            status=200
         )
 
         resp = self.api.invoke_method("GET", URI)
+        self.assertEqual(expects, resp.json())
+
+    @httpretty.activate
+    def test_invoke_post(self):
+        expects = {
+            "ok": True
+        }
+        URI = "test"
+
+        # Status 200
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=URI),
+            body=json.dumps(expects),
+            content_type="application/json",
+            status=200
+        )
+
+        resp = self.api.invoke_method("POST", URI)
+        self.assertEqual(200, resp.status_code)
+        self.assertEqual(expects, resp.json())
+
+        # status 201 (created)
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=URI),
+            body=json.dumps(expects),
+            content_type="application/json",
+            status=201
+        )
+
+        resp = self.api.invoke_method("POST", URI)
+        self.assertEqual(201, resp.status_code)
         self.assertEqual(expects, resp.json())
 
 

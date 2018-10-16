@@ -107,7 +107,8 @@ class TestWiki(unittest.TestCase):
         httpretty.register_uri(
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
-            boby=json.dumps(expects)
+            boby=json.dumps(expects),
+            status=201
         )
 
         # test
