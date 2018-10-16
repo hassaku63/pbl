@@ -101,7 +101,7 @@ class BacklogAPI(BaseAPI):
         else:
             resp = requests.post(_url, data=request_param, **kwargs)
 
-        if resp.status_code % 100 == 2:
+        if resp.status_code in (200, 201):
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
@@ -113,7 +113,7 @@ class BacklogAPI(BaseAPI):
         else:
             resp = requests.delete(_url, **kwargs)
 
-        if resp.status_code in (200, 201):
+        if resp.status_code == 200:
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
