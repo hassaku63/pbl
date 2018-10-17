@@ -16,8 +16,12 @@ class Issue(object):
         :param kwargs: query parameter
         :return:
         """
-        raise NotImplementedError
+        _uri = "issues"
+        _method = "GET"
 
+        resp = self.api.invoke_method(_method, _uri, query_param=kwargs)
+
+        return resp.json()
     def count(self, **kwargs):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/count-issue/
