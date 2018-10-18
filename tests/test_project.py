@@ -208,6 +208,114 @@ class TestProject(unittest.TestCase):
         self.assertEqual(expects["projectId"], resp["projectId"])
         self.assertEqual(expects["name"], resp["name"])
 
+    @httpretty.activate
+    def test_list_categories(self):
+        _project_id = 1
+        _uri = "projects/{project_id_or_key}/categories".format(
+            project_id_or_key=_project_id
+        )
+        expects = [
+            {
+                "id": 12,
+                "name": "開発",
+                "displayOrder": 0
+            }
+        ]
+
+        httpretty.register_uri(
+            httpretty.GET,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        resp = self.api.project.list_categories(
+            projectIdOrKey=_project_id,
+        )
+
+        self.assertEqual(expects[0]["id"], resp[0]["id"])
+
+    @httpretty.activate
+    def test_add_category(self):
+        _project_id = 1
+        _name = "開発"
+        _uri = "projects/{project_id_or_key}/categories".format(
+            project_id_or_key=_project_id
+        )
+        expects = {
+            "id": 1,
+            "name": _name,
+            "displayOrder": 0
+        }
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        resp = self.api.project.add_category(
+            projectIdOrKey=_project_id,
+            name=_name
+        )
+
+        self.assertEqual(expects["name"], resp["name"])
+
+    @httpretty.activate
+    def test_update_category(self):
+        _project_id = 1
+        _id = 1
+        _name = "開発"
+        _uri = "projects/{project_id_or_key}/categories/{id}".format(
+            project_id_or_key=_project_id,
+            id=_id
+        )
+        expects = {
+            "id": _id,
+            "name": _name,
+            "displayOrder": 0
+        }
+
+        httpretty.register_uri(
+            httpretty.PATCH,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        resp = self.api.project.update_category(
+            projectIdOrKey=_project_id,
+            id=_id,
+            name=_name
+        )
+
+        self.assertEqual(expects["name"], resp["name"])
+
+    @httpretty.activate
+    def test_delete_category(self):
+        _project_id = 1
+        _id = 1
+        _uri = "projects/{project_id_or_key}/categories/{id}".format(
+            project_id_or_key=_project_id,
+            id=_id
+        )
+        expects = {
+            "id": _id,
+            "name": "開発",
+            "displayOrder": 0
+        }
+
+        httpretty.register_uri(
+            httpretty.DELETE,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects)
+        )
+
+        resp = self.api.project.delete_category(
+            projectIdOrKey=_project_id,
+            id=_id
+        )
+
+        self.assertEqual(expects["id"], resp["id"])
+
 
 if __name__ == "__main__":
     unittest.main(warnings='ignore')

@@ -163,3 +163,73 @@ class Project(object):
         resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
 
         return resp.json()
+
+    def list_categories(self, projectIdOrKey):
+        """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-category-list/
+
+        :param projectIdOrKey:
+        :return:
+        """
+        _uri = "projects/{project_id_or_key}/categories".format(
+            project_id_or_key=projectIdOrKey,
+        )
+        _method = "GET"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
+
+    def add_category(self, projectIdOrKey, name):
+        """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-category/
+
+        :param projectIdOrKey:
+        :param name: (str) Category name
+        :return:
+        """
+        _uri = "projects/{project_id_or_key}/categories".format(
+            project_id_or_key=projectIdOrKey,
+        )
+        _method = "POST"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
+
+    def update_category(self, projectIdOrKey, id, name):
+        """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-category/
+
+        :param projectIdOrKey:
+        :param id:
+        :param name: (str) will modified
+        :return:
+        """
+        _uri = "projects/{project_id_or_key}/categories/{id}".format(
+            project_id_or_key=projectIdOrKey,
+            id=id
+        )
+        _method = "PATCH"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
+
+    def delete_category(self, projectIdOrKey, id):
+        """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-category/
+
+        :param projectIdOrKey:
+        :param id:
+        :return:
+        """
+        _uri = "projects/{project_id_or_key}/categories/{id}".format(
+            project_id_or_key=projectIdOrKey,
+            id=id
+        )
+        _method = "DELETE"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
