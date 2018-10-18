@@ -58,7 +58,12 @@ class Issue(object):
         :param issueIdOrKey:
         :return:
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
+        _method = "GET"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
 
     def update(self, issueIdOrKey, **kwargs):
         """
