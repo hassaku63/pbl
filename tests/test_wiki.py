@@ -17,6 +17,7 @@ class TestWiki(unittest.TestCase):
         self.api = BacklogAPI(self.conf["space"], self.conf["api_key"])
         self.space = self.conf["space"]
         self.api_key = self.conf["api_key"]
+        self.default_project = "default_project_key"
 
     @httpretty.activate
     def test_list_wiki(self):
@@ -57,7 +58,7 @@ class TestWiki(unittest.TestCase):
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
-        wikis = self.api.wiki.list(projectIdOrKey=self.conf["default_project"])
+        wikis = self.api.wiki.list(projectIdOrKey=self.default_project)
         self.assertTrue(type(wikis) == list)
 
     @httpretty.activate
