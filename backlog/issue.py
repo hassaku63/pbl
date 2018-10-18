@@ -73,7 +73,12 @@ class Issue(object):
         :param kwargs: issue param
         :return:
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
+        _method = "PATCH"
+
+        resp = self.api.invoke_method(_method, _uri, request_param=kwargs)
+
+        return resp.json()
 
     def delete(self, issueIdOrKey):
         """
