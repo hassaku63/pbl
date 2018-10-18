@@ -78,4 +78,4 @@ class Project(object):
 
         resp = self.api.invoke_method(_method, _uri, query_param=_query_param)
 
-        return resp
+        return resp.json()

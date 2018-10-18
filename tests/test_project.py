@@ -62,7 +62,8 @@ class TestProject(unittest.TestCase):
         )
 
         resp = self.api.project.list_users(projectIdOrKey=_projectIdOrKey)
-        self.assertEqual(expects, resp.json())
+
+        self.assertEqual(expects, resp)
 
         # Project key given
         _projectIdOrKey = "sample"
@@ -76,7 +77,8 @@ class TestProject(unittest.TestCase):
         )
 
         resp = self.api.project.list_users(projectIdOrKey=_projectIdOrKey)
-        self.assertEqual(expects, resp.json())
+
+        self.assertEqual(expects, resp)
 
     def test_delete_user(self):
         pass
