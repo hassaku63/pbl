@@ -155,7 +155,7 @@ class Issue(object):
         """
         raise NotImplementedError
 
-    def add_comment_notifycation(self, issueIdOrKey, commentId, notifiedUserId):
+    def add_comment_notification(self, issueIdOrKey, commentId, notifiedUserId):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-comment-notification/
 

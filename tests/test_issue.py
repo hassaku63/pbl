@@ -631,7 +631,7 @@ class TestIssue(unittest.TestCase):
     def test_get_comment_notifications(self):
         pass
 
-    def test_add_comment_notifycation(self):
+    def test_add_comment_notification(self):
         pass
 
     def test_list_issue_attachments(self):
