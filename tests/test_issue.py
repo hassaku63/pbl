@@ -503,8 +503,115 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual(expects["issueKey"], resp["issueKey"])
 
+    @httpretty.activate
     def test_delete(self):
-        pass
+        _issue_key = "BLG-1"
+        _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=_issue_key)
+        expects = {
+            "id": 1,
+            "projectId": 1,
+            "issueKey": _issue_key,
+            "keyId": 1,
+            "issueType": {
+                "id": 2,
+                "projectId": 1,
+                "name": "タスク",
+                "color": "#7ea800",
+                "displayOrder": 0
+            },
+            "summary": "first issue",
+            "description": "",
+            "resolutions": None,
+            "priority": {
+                "id": 3,
+                "name": "中"
+            },
+            "status": {
+                "id": 1,
+                "name": "未対応"
+            },
+            "assignee": {
+                "id": 2,
+                "name": "eguchi",
+                "roleType": 2,
+                "lang": None,
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "category": [],
+            "versions": [],
+            "milestone": [
+                {
+                    "id": 30,
+                    "projectId": 1,
+                    "name": "wait for release",
+                    "description": "",
+                    "startDate": None,
+                    "releaseDueDate": None,
+                    "archived": False,
+                    "displayOrder": 0
+                }
+            ],
+            "startDate": None,
+            "dueDate": None,
+            "estimatedHours": None,
+            "actualHours": None,
+            "parentIssueId": None,
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2012-07-23T06:10:15Z",
+            "updatedUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "updated": "2013-02-07T08:09:49Z",
+            "customFields": [],
+            "attachments": [
+                {
+                    "id": 1,
+                    "name": "IMGP0088.JPG",
+                    "size": 85079
+                }
+            ],
+            "sharedFiles": [],
+            "stars": [
+                {
+                    "id": 10,
+                    "comment": None,
+                    "url": "https://xx.backlog.jp/view/BLG-1",
+                    "title": "[BLG-1] first issue | 課題の表示 - Backlog",
+                    "presenter": {
+                        "id": 2,
+                        "userId": "eguchi",
+                        "name": "eguchi",
+                        "roleType": 2,
+                        "lang": "ja",
+                        "mailAddress": "eguchi@nulab.example"
+                    },
+                    "created": "2013-07-08T10:24:28Z"
+                }
+            ]
+        }
+
+        httpretty.register_uri(
+            httpretty.DELETE,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            status=200
+        )
+
+        resp = self.api.issue.delete(issueIdOrKey=_issue_key)
+
+        self.assertEqual(expects["issueKey"], resp["issueKey"])
 
     def test_get_comments(self):
         pass

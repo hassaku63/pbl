@@ -87,7 +87,12 @@ class Issue(object):
         :param issueIdOrKey:
         :return:
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
+        _method = "DELETE"
+
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
 
     def get_comments(self, issueIdOrKey):
         """
