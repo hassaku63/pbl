@@ -62,7 +62,7 @@ class Project(object):
         """
         raise NotImplementedError
 
-    def users(self, projectIdOrKey, excludeGroupMembers=False):
+    def list_users(self, projectIdOrKey, excludeGroupMembers=False):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-user-list/
 

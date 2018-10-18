@@ -28,8 +28,17 @@ class TestProject(unittest.TestCase):
     def test_update(self):
         pass
 
+    def test_get_icon(self):
+        pass
+
+    def test_get_history(self):
+        pass
+
+    def test_add_user(self):
+        pass
+
     @httpretty.activate
-    def test_users(self):
+    def test_list_users(self):
         # Project id given
         _projectIdOrKey = str(1000)
 
@@ -52,7 +61,7 @@ class TestProject(unittest.TestCase):
             body=json.dumps(expects)
         )
 
-        resp = self.api.project.users(projectIdOrKey=_projectIdOrKey)
+        resp = self.api.project.list_users(projectIdOrKey=_projectIdOrKey)
         self.assertEqual(expects, resp.json())
 
         # Project key given
@@ -66,8 +75,11 @@ class TestProject(unittest.TestCase):
             body=json.dumps(expects)
         )
 
-        resp = self.api.project.users(projectIdOrKey=_projectIdOrKey)
+        resp = self.api.project.list_users(projectIdOrKey=_projectIdOrKey)
         self.assertEqual(expects, resp.json())
+
+    def test_delete_user(self):
+        pass
 
 
 if __name__ == "__main__":

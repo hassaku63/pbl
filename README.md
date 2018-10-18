@@ -37,7 +37,7 @@ def main():
     # list project users
     # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
     print("# list project users")
-    users = api.project.users("SampleProject")
+    users = api.project.list_users("SampleProject")
     print(json.dumps(users.json(), indent=2))
 
 
