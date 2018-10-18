@@ -19,6 +19,7 @@ pip install git+git://github.com/hassaku63/backlog_util@<BRANCH_NAME>
 Code snipet
 
 ```python
+import base64
 import json
 from backlog.util import load_conf
 from backlog.base import BacklogAPI
@@ -38,7 +39,7 @@ def main():
     # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
     print("# list project users")
     users = api.project.list_users("SampleProject")
-    print(json.dumps(users.json(), indent=2))
+    print(json.dumps(users, indent=2))
 
 
     """
@@ -57,7 +58,8 @@ def main():
     attachment = api.wiki.get_attachment(
         wikiId=wiki["id"],
         attachmentId=wiki["attachments"][0]["id"])
-    print(json.dumps(attachment), indent=2)
+    attachment["data"] = base64.b64encode(attachment["data"]).decode()
+    print(json.dumps(attachment, indent=2))
 
 
 if __name__ == "__main__":
