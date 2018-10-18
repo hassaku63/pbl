@@ -82,7 +82,7 @@ class BacklogAPI(BaseAPI):
         self.wiki = Wiki(self)
         self.attachment = Attachment(self)
         self.project = Project(self)
-        self.issues = Issue(self)
+        self.issue = Issue(self)
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri + "?" + urlencode(query_param)
@@ -142,6 +142,7 @@ class BacklogAPI(BaseAPI):
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
+
 
 class BacklogObject(object):
     def __init__(self, api):

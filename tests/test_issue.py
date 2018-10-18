@@ -150,17 +150,138 @@ class TestIssue(unittest.TestCase):
         )
 
         # test
-        resp = self.api.issues.list(projectId=_project_id)
+        resp = self.api.issue.list(projectId=_project_id)
 
         self.assertEqual(len(expects), 1)
         self.assertEqual(expects[0]["id"], 1)
         self.assertEqual(expects[0]["projectId"], _project_id)
 
+    @httpretty.activate
     def test_count(self):
-        pass
+        _uri = "issues/count"
+        expects = {
+            "count": 43
+        }
 
+        httpretty.register_uri(
+            httpretty.GET,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            status=200
+        )
+
+        # test
+        resp = self.api.issue.count()
+
+        self.assertEqual(expects["count"], resp["count"])
+
+    @httpretty.activate
     def test_create(self):
-        pass
+        # Set parameter and expects
+        _uri = "issues"
+        _project_id = 1
+        _summary = "first issue"
+        _issue_type_id = 2
+        _priority_id = 3
+        expects = {
+            "id": 1,
+            "projectId": _project_id,
+            "issueKey": "BLG-1",
+            "keyId": 1,
+            "issueType": {
+                "id": _issue_type_id,
+                "projectId" :1,
+                "name": "タスク",
+                "color": "#7ea800",
+                "displayOrder": 0
+            },
+            "summary": _summary,
+            "description": "",
+            "resolutions": None,
+            "priority": {
+                "id": _priority_id,
+                "name": "中"
+            },
+            "status": {
+                "id": 1,
+                "name": "未対応"
+            },
+            "assignee": {
+                "id": 2,
+                "userId": "eguchi",
+                "name": "eguchi",
+                "roleType": 2,
+                "lang": None,
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "category": [],
+            "versions": [],
+            "milestone": [
+                {
+                    "id": 30,
+                    "projectId": 1,
+                    "name": "wait for release",
+                    "description": "",
+                    "startDate": None,
+                    "releaseDueDate": None,
+                    "archived": False,
+                    "displayOrder": 0
+                }
+            ],
+            "startDate": None,
+            "dueDate": None,
+            "estimatedHours": None,
+            "actualHours": None,
+            "parentIssueId": None,
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2012-07-23T06:10:15Z",
+            "updatedUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "updated": "2012-07-23T06:10:15Z",
+            "customFields": [],
+            "attachments": [
+                {
+                    "id": 1,
+                    "name": "IMGP0088.JPG",
+                    "size": 85079
+                }
+            ],
+            "sharedFiles": [],
+            "stars": []
+        }
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            boby=json.dumps(expects),
+            status=201  # Created response
+        )
+
+        # test
+        resp = self.api.issue.create(
+            projectId=_project_id,
+            summary=_summary,
+            issueTypeId=_issue_type_id,
+            priorityId=_priority_id
+        )
+
+        self.assertEqual(expects["projectId"], _project_id)
+        self.assertEqual(expects["summary"], _summary)
+        self.assertEqual(expects["issueType"]["id"], _issue_type_id)
+        self.assertEqual(expects["priority"]["id"], _priority_id)
 
     def test_get(self):
         pass
