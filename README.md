@@ -8,7 +8,7 @@
 Install
 
 ```bash
-cd path-to-this-project-root
+cd /path-to-this-project-root
 pip install .
 
 # or
@@ -66,6 +66,9 @@ if __name__ == "__main__":
     main()
 ```
 
+# See also
+
+Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 
 # Contact
 
