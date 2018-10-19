@@ -73,3 +73,4 @@ if __name__ == "__main__":
 |:---|:---|
 |Channel|#ext-dev-backlog-util|
 |Owner|@hashimoto|
+|Twitter|https://twitter.com/hassaku_63|
