@@ -67,10 +67,9 @@ if __name__ == "__main__":
 ```
 
 
-# Contact(Slack internal team)
+# Contact
 
 |key|value|
 |:---|:---|
-|Channel|#ext-dev-backlog-util|
-|Owner|@hashimoto|
+|Slack internal team|#ext-dev-backlog-util @hashimoto|
 |Twitter|https://twitter.com/hassaku_63|
