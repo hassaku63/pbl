@@ -8,7 +8,8 @@
 Install
 
 ```bash
-cd /path-to-this-project-root
+git clone git@github.com:hassaku63/backlog_util.git
+cd /path/to/this/package
 pip install .
 
 # or
