@@ -21,17 +21,17 @@ class TestApi(unittest.TestCase):
         expects = {
             "ok": True
         }
-        URI = "test"
+        _uri = "test"
 
         httpretty.register_uri(
             httpretty.GET,
-            API_ENDPOINT.format(space=self.space, uri=URI),
+            API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             content_type="application/json",
             status=200
         )
 
-        resp = self.api.invoke_method("GET", URI)
+        resp = self.api.invoke_method("GET", _uri)
         self.assertEqual(expects, resp.json())
 
     @httpretty.activate
@@ -39,32 +39,72 @@ class TestApi(unittest.TestCase):
         expects = {
             "ok": True
         }
-        URI = "test"
+        _uri = "test"
 
         # Status 200
         httpretty.register_uri(
             httpretty.POST,
-            API_ENDPOINT.format(space=self.space, uri=URI),
+            API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             content_type="application/json",
             status=200
         )
 
-        resp = self.api.invoke_method("POST", URI)
+        resp = self.api.invoke_method("POST", _uri)
         self.assertEqual(200, resp.status_code)
         self.assertEqual(expects, resp.json())
 
         # status 201 (created)
         httpretty.register_uri(
             httpretty.POST,
-            API_ENDPOINT.format(space=self.space, uri=URI),
+            API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             content_type="application/json",
             status=201
         )
 
-        resp = self.api.invoke_method("POST", URI)
+        resp = self.api.invoke_method("POST", _uri)
         self.assertEqual(201, resp.status_code)
+        self.assertEqual(expects, resp.json())
+
+    @httpretty.activate
+    def test_invoke_delete(self):
+        expects = {
+            "ok": True
+        }
+        _uri = "test"
+
+        # Status 200
+        httpretty.register_uri(
+            httpretty.DELETE,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            content_type="application/json",
+            status=200
+        )
+
+        resp = self.api.invoke_method("DELETE", _uri)
+        self.assertEqual(200, resp.status_code)
+        self.assertEqual(expects, resp.json())
+
+    @httpretty.activate
+    def test_invoke_patch(self):
+        expects = {
+            "ok": True
+        }
+        _uri = "test"
+
+        # Status 200
+        httpretty.register_uri(
+            httpretty.PATCH,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            content_type="application/json",
+            status=200
+        )
+
+        resp = self.api.invoke_method("PATCH", _uri)
+        self.assertEqual(200, resp.status_code)
         self.assertEqual(expects, resp.json())
 
 
