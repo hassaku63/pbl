@@ -23,16 +23,35 @@ class TestApi(unittest.TestCase):
         }
         _uri = "test"
 
+        # Status Pattern
+        _http_statuses = [200, 201]
+
+        for _status_code in _http_statuses:
+            with self.subTest(status_code=_status_code):
+                httpretty.register_uri(
+                    httpretty.GET,
+                    API_ENDPOINT.format(space=self.space, uri=_uri),
+                    body=json.dumps(expects),
+                    content_type="application/json",
+                    status=_status_code
+                )
+
+                resp = self.api.invoke_method("GET", _uri)
+                self.assertEqual(_status_code, resp.status_code)
+                self.assertEqual(expects, resp.json())
+
+        # Test 204(NO_CONTENT) Response
+        #   NOTE: 204 response MUST NOT include a message-body.
+        #   http://tools.ietf.org/search/rfc2616#section-10.2.5
         httpretty.register_uri(
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
-            body=json.dumps(expects),
             content_type="application/json",
-            status=200
+            status=204
         )
 
         resp = self.api.invoke_method("GET", _uri)
-        self.assertEqual(expects, resp.json())
+        self.assertEqual(204, resp.status_code)
 
     @httpretty.activate
     def test_invoke_post(self):
@@ -41,31 +60,22 @@ class TestApi(unittest.TestCase):
         }
         _uri = "test"
 
-        # Status 200
-        httpretty.register_uri(
-            httpretty.POST,
-            API_ENDPOINT.format(space=self.space, uri=_uri),
-            body=json.dumps(expects),
-            content_type="application/json",
-            status=200
-        )
+        # Status Pattern
+        _http_statuses = [200, 201]
 
-        resp = self.api.invoke_method("POST", _uri)
-        self.assertEqual(200, resp.status_code)
-        self.assertEqual(expects, resp.json())
+        for _status_code in _http_statuses:
+            with self.subTest(status_code=_status_code):
+                httpretty.register_uri(
+                    httpretty.POST,
+                    API_ENDPOINT.format(space=self.space, uri=_uri),
+                    body=json.dumps(expects),
+                    content_type="application/json",
+                    status=_status_code
+                )
 
-        # status 201 (created)
-        httpretty.register_uri(
-            httpretty.POST,
-            API_ENDPOINT.format(space=self.space, uri=_uri),
-            body=json.dumps(expects),
-            content_type="application/json",
-            status=201
-        )
-
-        resp = self.api.invoke_method("POST", _uri)
-        self.assertEqual(201, resp.status_code)
-        self.assertEqual(expects, resp.json())
+                resp = self.api.invoke_method("POST", _uri)
+                self.assertEqual(_status_code, resp.status_code)
+                self.assertEqual(expects, resp.json())
 
     @httpretty.activate
     def test_invoke_delete(self):
