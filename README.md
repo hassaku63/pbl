@@ -8,7 +8,8 @@
 Install
 
 ```bash
-cd /path-to-this-project-root
+git clone git@github.com:hassaku63/backlog_util.git
+cd /path/to/this/package
 pip install .
 
 # or
@@ -65,6 +66,16 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+# Auth
+
+Oct 2018, Currently API Key is supported. NOT support OAuth2 yet.
+
+API Client object is initialized with arguments credentials(space and api_key).
+
+This package provides a helper function to loading config yaml. This helper function is provided by `backlog.util.load_conf` .
+
+load_conf takes an argument path to yaml file. By defalt, `./conf.yml` is given.
 
 # See also
 

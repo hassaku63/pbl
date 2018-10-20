@@ -28,11 +28,11 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-wiki-page/
 
-        :param projectId: int: project id
-        :param name: str: wiki page name
-        :param content: str: page content
-        :param mailNotify: bool: notification
-        :return:
+        :param projectId: (int) Required. project id
+        :param name: (str) Required. wiki page name
+        :param content: (str) Required. page content
+        :param mailNotify: (bool) Optional. mail notification flag
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis"
         _method = "POST"
@@ -51,8 +51,8 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page/
 
-        :param wikiId:
-        :return:
+        :param wikiId: (int) Required wiki id
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "GET"
@@ -64,11 +64,11 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-wiki-page/
 
-        :param wikiId:
-        :param name:
-        :param content:
-        :param mailNotify:
-        :return:
+        :param wikiId: (int) Required. wiki id
+        :param name: (str) Required. wiki name
+        :param content: (str) Required. content string
+        :param mailNotify: (bool) Optional. mail notification falg.
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "PATCH"
@@ -86,9 +86,9 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-wiki-page/
 
-        :param wikiId:
-        :param mailNotify:
-        :return:
+        :param wikiId: (int) Required. wiki id
+        :param mailNotify: (bool) Optional. mail notification flag
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "DELETE"
@@ -105,8 +105,8 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-wiki-attachments/
 
-        :param wikiId:
-        :return:
+        :param wikiId: (int) Required. wiki id
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
         _method = "GET"
@@ -119,9 +119,9 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/attach-file-to-wiki/
 
-        :param wikiId:
-        :param attachmentId:
-        :return:
+        :param wikiId: (int) Required. wiki id
+        :param attachmentId: (int) Required. attachment id
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
         _method = "POST"
@@ -137,9 +137,10 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page-attachment
 
-        :param wikiId:
-        :param attachmentId:
-        :return: bytes object. NOT json.
+        :param wikiId: (int) Required. wiki id
+        :param attachmentId: (int) Required. attachment id
+        :return: dict object. This object contains values.
+         "id" as attachment id, "name" as attachment name, and "data" as binary content.
         """
         _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(wiki_id=wikiId, attachment_id=attachmentId)
         _method = "GET"
@@ -156,9 +157,9 @@ class Wiki(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/remove-wiki-attachment/
 
-        :param wikiId:
-        :param attachmentId:
-        :return:
+        :param wikiId: (int) Required. wiki id
+        :param attachmentId: (int) Required. attachment id
+        :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(
             wiki_id=wikiId,
