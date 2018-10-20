@@ -103,7 +103,7 @@ class BacklogAPI(BaseAPI):
         else:
             resp = requests.post(_url, data=request_param, **kwargs)
 
-        if resp.status_code in (200, 201):
+        if resp.status_code in (200, 201, 204):
             return resp
 
         raise BacklogError("Http response {status}: {message}".format(status=resp.status_code, message=resp.text))
