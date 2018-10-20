@@ -3,10 +3,8 @@
 import requests
 import os.path
 
+
 class Attachment(object):
-    """
-    tes
-    """
     def __init__(self, api):
         self.api = api
 
@@ -14,10 +12,19 @@ class Attachment(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/post-attachment-file/
 
-        :param filename:
-        :return: dict object has keys id, name, size
+        :param filename: (str) Required. filename to upload
+        :return: Compliant with Backlog API specification
         """
-        if os.path.exists(filename):
+        if not os.path.exists(filename):
             raise FileNotFoundError(filename)
 
-            # api.invoke("POST", )
+        with open(filename, "rb") as fp:
+            _uri = "space/attachment"
+            _method = "POST"
+            _files = {
+                os.path.basename(filename): fp
+            }
+
+            resp = self.api.invoke_method(_method, _uri, files=_files)
+
+            return resp.json()
