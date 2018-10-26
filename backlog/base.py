@@ -85,7 +85,7 @@ class BacklogAPI(BaseAPI):
         self.issue = Issue(self)
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
-        _url = self.base_url + uri + "?" + urlencode(query_param)
+        _url = self.base_url + uri
         if headers is not None:
             resp = requests.get(_url, params=query_param, headers=headers, **kwargs)
         else:
