@@ -18,6 +18,8 @@ setup(
     scripts=[],
     packages=find_packages(exclude=['tests*']),
     tests_require=[
-        "httpretty<0.9.5",
+        "httpretty==0.9.5",
+        "tox==3.5.2",
+        "pytest==3.9.1"
     ]
 )
