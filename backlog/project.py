@@ -9,15 +9,24 @@ class Project(object):
         """
         self.api = api
 
-    def list(self, archived=False):
+    def list(self, archived=False, all_=False):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
 
-        :param archived:
-        :param all:
+        :param archived: (book) Optional. default = False
+        :param all_: (bool) Optional. Admin only. not implemented.
         :return:
         """
-        raise NotImplementedError
+        _uri = "projects"
+        _method = "GET"
+        query_param = {
+            "archived": "true" if archived else "false",
+            "all": "true" if all_ else "false"
+        }
+
+        resp = self.api.invoke_method(_method, _uri, query_param=query_param)
+
+        return resp.json()
 
     def create(self, name, key, chatEnabled, projectLeaderCanEditProjectLeader,
                        subtaskingEnabled, textFormattingRule):

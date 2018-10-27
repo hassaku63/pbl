@@ -20,6 +20,7 @@ setup(
     tests_require=[
         "httpretty==0.9.5",
         "tox==3.5.2",
-        "pytest==3.9.1"
+        "nose==1.3.7",
+        "coverage==4.5.1"
     ]
 )
