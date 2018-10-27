@@ -16,8 +16,36 @@ class TestProject(unittest.TestCase):
         self.space = self.conf["space"]
         self.api_key = self.conf["api_key"]
 
+    @httpretty.activate
     def test_list(self):
-        pass
+        _uri = "projects"
+        _archived = False
+
+        expects = [
+            {
+                "id": 1,
+                "projectKey": "TEST",
+                "name": "test",
+                "chartEnabled": False,
+                "subtaskingEnabled": False,
+                "projectLeaderCanEditProjectLeader": False,
+                "textFormattingRule": "markdown",
+                "archived": _archived
+            }
+        ]
+
+        httpretty.register_uri(
+            httpretty.GET,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            match_querystring=True,
+            status=200
+        )
+        print(API_ENDPOINT.format(space=self.space, uri=_uri))
+
+        resp = self.api.project.list(archived=False)
+
+        self.assertEqual(expects, resp)
 
     def test_create(self):
         pass
