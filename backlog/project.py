@@ -47,10 +47,14 @@ class Project(object):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project/
 
-        :param projectIdOrKey:
-        :return:
+        :param projectIdOrKey: (str or int) Required. project id or project key
+        :return: Compliant with Backlog API specification
         """
-        raise NotImplementedError
+        _uri = "projects/{project_id_or_key}".format(project_id_or_key=projectIdOrKey)
+        _method = "GET"
+        resp = self.api.invoke_method(_method, _uri)
+
+        return resp.json()
 
     def update(self, projectIdOrKey, name, key, chartEnabled,
                subtaskingEnabled, projectLeaderCanEditProjectLeader,
