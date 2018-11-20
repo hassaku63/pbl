@@ -75,7 +75,7 @@ class Wiki(object):
         _request_param = {
             "name": name,
             "content": content,
-            "mainNotify": "true" if mailNotify else "false"
+            "mailNotify": "true" if mailNotify else "false"
         }
 
         resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
