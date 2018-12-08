@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='backlog_util',
+    name='pbl',
     version='0.1',
     install_requires=[
         'requests>=2.19.1',
