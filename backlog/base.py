@@ -6,6 +6,7 @@ from backlog.wiki import Wiki
 from backlog.attachment import Attachment
 from backlog.project import Project
 from backlog.issue import Issue
+from backlog.git import Git
 
 BACKLOG_BASE_URL = "https://{space}.backlog.jp"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -83,6 +84,7 @@ class BacklogAPI(BaseAPI):
         self.attachment = Attachment(self)
         self.project = Project(self)
         self.issue = Issue(self)
+        self.git = Git(self)
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri
