@@ -43,3 +43,29 @@ class Git(object):
         resp = self.api.invoke_method(_method, _uri, request_param=kwargs)
 
         return resp.json()
+
+    def add_pull_request_comment(self, projectIdOrKey, repoIdOrName, number, content, notifiedUserIds=[]):
+        """
+        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-pull-request-comment/
+
+        :param projectIdOrKey: (str or int) Required.
+        :param repoIdOrName: (str or int) Required.
+        :param number: (str or int) Required. PR number
+        :param content: (str) Required. comment string
+        :param notifiedUserIds: (int or list of int) Optional.
+        :return:
+        """
+        param = {
+            "content": content,
+            "notifiedUserId[]": notifiedUserIds
+        }
+        _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/comments".format(
+            projectIdOrKey=projectIdOrKey,
+            repoIdOrName=repoIdOrName,
+            number=number
+        )
+        _method = "POST"
+
+        resp = self.api.invoke_method(_method, _uri, request_param=param)
+
+        return resp.json()

@@ -284,7 +284,58 @@ class TestProject(unittest.TestCase):
 
     @httpretty.activate
     def test_add_pull_request_comment(self):
-        pass
+        _project_id_or_key = 3
+        _repository_id_or_key = 5
+        _number = 1
+        _content = "test",
+        _notified_user_ids = []
+        _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/comments".format(
+            projectIdOrKey=_project_id_or_key,
+            repoIdOrName=_repository_id_or_key,
+            number=_number
+        )
+
+        expects = {
+            "id": 35,
+            "content": "from api",
+            "changeLog": [
+                {
+                    "field": "dependentIssue",
+                    "newValue": "GIT-3",
+                    "originalValue": None
+                }
+            ],
+            "createdUser": {
+                "id": 1,
+                "userId": "admin",
+                "name": "admin",
+                "roleType": 1,
+                "lang": "ja",
+                "mailAddress": "eguchi@nulab.example"
+            },
+            "created": "2015-05-14T01:53:38Z",
+            "updated": "2015-05-14T01:53:38Z",
+            "stars": [],
+            "notifications": []
+        }
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            # match_querystring=True,
+            status=200
+        )
+
+        resp = self.api.git.add_pull_request_comment(
+            projectIdOrKey=_project_id_or_key,
+            repoIdOrName=_repository_id_or_key,
+            number=_number,
+            content=_content,
+            notifiedUserIds=_notified_user_ids
+        )
+
+        self.assertEqual(expects, resp)
 
     @httpretty.activate
     def test_count_pull_request_comments(self):
