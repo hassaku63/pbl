@@ -1,8 +1,7 @@
 # coding: utf-8
 
 import os
-from yaml import load as yaml_load
-
+import yaml
 
 CONFIG_SKELTON_YAML = """
 backlog:
@@ -14,7 +13,7 @@ backlog:
 
 def load_conf(filename="./conf.yml"):
   with open(filename) as f:
-    return yaml_load(f)
+    return yaml.load(f, Loader=yaml.Loader)
 
 
 def generate_default_config():
