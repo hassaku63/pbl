@@ -41,7 +41,6 @@ class TestProject(unittest.TestCase):
             match_querystring=True,
             status=200
         )
-        print(API_ENDPOINT.format(space=self.space, uri=_uri))
 
         resp = self.api.project.list(archived=False)
 
