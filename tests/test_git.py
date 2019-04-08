@@ -77,7 +77,77 @@ class TestProject(unittest.TestCase):
     #
     @httpretty.activate
     def test_list_pull_requests(self):
-        pass
+        _project_id_or_key = 3
+        _repo_id_or_name = 5
+        _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests".format(
+            projectIdOrKey=_project_id_or_key,
+            repoIdOrName=_repo_id_or_name
+        )
+
+        expects = [
+            {
+                "id": 2,
+                "projectId": 3,
+                "repositoryId": 5,
+                "number": 1,
+                "summary": "test",
+                "description": "test data",
+                "base": "master",
+                "branch": "develop",
+                "status": {
+                    "id": 1,
+                    "name": "Open"
+                },
+                "assignee": {
+                    "id": 5,
+                    "userId": "testuser2",
+                    "name": "testuser2",
+                    "roleType": 1,
+                    "lang": None,
+                    "mailAddress": "testuser2@nulab.test"
+                },
+                "issue": {
+                    "id": 31
+                },
+                "baseCommit": None,
+                "branchCommit": None,
+                "closeAt": None,
+                "mergeAt": None,
+                "createdUser": {
+                    "id": 1,
+                    "userId": "admin",
+                    "name": "admin",
+                    "roleType": 1,
+                    "lang": "ja",
+                    "mailAddress": "eguchi@nulab.example"
+                },
+                "created": "2015-04-23T03:04:14Z",
+                "updatedUser": {
+                    "id": 1,
+                    "userId": "admin",
+                    "name": "admin",
+                    "roleType": 1,
+                    "lang": "ja",
+                    "mailAddress": "eguchi@nulab.example"
+                },
+                "updated": "2015-04-23T03:04:14Z"
+            }
+        ]
+
+        httpretty.register_uri(
+            httpretty.GET,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            match_querystring=True,
+            status=200
+        )
+
+        resp = self.api.git.list_pull_requests(
+            projectIdOrKey=_project_id_or_key,
+            repoIdOrName=_repo_id_or_name
+        )
+
+        self.assertEqual(expects, resp)
 
     @httpretty.activate
     def test_count_pull_requests(self):
