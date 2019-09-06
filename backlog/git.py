@@ -69,3 +69,23 @@ class Git(object):
         resp = self.api.invoke_method(_method, _uri, request_param=param)
 
         return resp.json()
+
+    def list_pull_requests(self, projectIdOrKey, repoIdOrName, **kwargs):
+        """
+
+        https://developer.nulab.com/ja/docs/backlog/api/2/get-pull-request-list/
+
+        :param projectIdOrKey: (str or int) Required
+        :param repoIdOrName: (str or int) Required
+        :param kwargs: Optional. Query Parameters
+        :return: Compliant with Backlog API specification
+        """
+        _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests".format(
+            projectIdOrKey=projectIdOrKey,
+            repoIdOrName=repoIdOrName
+        )
+        _method = "GET"
+
+        resp = self.api.invoke_method(_method, _uri, query_param=kwargs)
+
+        return resp.json()
