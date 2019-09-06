@@ -20,7 +20,7 @@ setup(
     description='Backlog API v2 wrapper',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    author='hassaku63',}
+    author='hassaku63',
     author_email='takuyahashimoto1988@gmail.com',
     classifiers=[
         'Development Status :: 4 - Beta',
