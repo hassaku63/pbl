@@ -6,12 +6,7 @@ Backlog API V2対応のラッパーライブラリ
 Install
 
 ```bash
-git clone git@github.com:hassaku63/pbl.git
-cd /path/to/this/package
-pip install .
-
-# or
-pip install git+git://github.com/hassaku63/pbl@<BRANCH_NAME>
+pip install python-backlog
 ```
 
 
@@ -81,7 +76,4 @@ Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 
 # Contact
 
-|key|value|
-|:---|:---|
-|Slack internal team|#ext-dev-backlog-util @hashimoto|
-|Twitter|https://twitter.com/hassaku_63|
+Twitter: [hassaku63](https://twitter.com/hassaku_63)
