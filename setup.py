@@ -12,7 +12,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='python-backlog',
-    version='0.1.2',
+    version='0.1.3',
     install_requires=[
         'requests>=2.19.1',
         'PyYAML>=3.13'
@@ -22,6 +22,7 @@ setup(
     long_description_content_type='text/markdown',
     author='hassaku63',
     author_email='takuyahashimoto1988@gmail.com',
+    license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
