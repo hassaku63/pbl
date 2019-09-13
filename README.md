@@ -1,5 +1,5 @@
-# pbl
-Backlog API V2対応のラッパーライブラリ
+# python-backlog
+python-backlog is a Python3 library wraps Backlog API V2
 
 # Usage
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
 
 # Auth
 
-Oct 2018, Currently API Key is supported. NOT support OAuth2 yet.
+API Key is supported.
 
 API Client object is initialized with arguments credentials(space and api_key).
 

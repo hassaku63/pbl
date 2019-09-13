@@ -26,10 +26,10 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
-        'Natural Language :: Javanese'
+        'Natural Language :: Japanese'
     ],
     keywords='nulab backlog',
-    url='',
+    url='https://github.com/hassaku63/pbl',
     scripts=[],
     packages=find_packages(exclude=['tests*']),
     tests_require=[
