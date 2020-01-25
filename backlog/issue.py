@@ -103,7 +103,7 @@ class Issue(object):
         """
         raise NotImplementedError
 
-    def add_comment(self, issueIdOrKey, content, notifiedUserId=[], attachmentId=[]):
+    def add_comment(self, issueIdOrKey, content, notifiedUserId=None, attachmentId=None):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-comment/
 
@@ -113,7 +113,19 @@ class Issue(object):
         :param attachmentId:
         :return:
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}/comments".format(issue_id_or_key=issueIdOrKey)
+        _method = "POST"
+        _data = {
+            "content": content
+        }
+        if notifiedUserId is not None:
+            _data.update([("notifiedUserId[]", notifiedUserId)])
+        if attachmentId is not None:
+            _data.update([("attachmentId[]", attachmentId)])
+
+        resp = self.api.invoke_method(_method, _uri, _data)
+
+        return resp.json()
 
     def count_comments(self, issueIdOrKey):
         """
