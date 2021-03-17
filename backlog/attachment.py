@@ -1,7 +1,7 @@
 # coding: utf-8
 
-import requests
 import os.path
+import mimetypes
 
 
 class Attachment(object):
@@ -18,13 +18,12 @@ class Attachment(object):
         if not os.path.exists(filename):
             raise FileNotFoundError(filename)
 
-        with open(filename, "rb") as fp:
-            _uri = "space/attachment"
-            _method = "POST"
-            _files = {
-                os.path.basename(filename): fp
-            }
+        _uri = "space/attachment"
+        _method = "POST"
+        _files = {
+            'file': (os.path.basename(filename), open(filename, 'rb'), mimetypes.guess_type(filename))
+        }
 
-            resp = self.api.invoke_method(_method, _uri, files=_files)
+        resp = self.api.invoke_method(_method, _uri, files=_files)
 
-            return resp.json()
+        return resp.json()
