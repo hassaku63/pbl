@@ -1,9 +1,6 @@
 # coding: utf-8
 
 
-from requests.api import request
-
-
 class User(object):
     def __init__(self, api):
         """

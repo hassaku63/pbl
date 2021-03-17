@@ -1,0 +1,10 @@
+[flake8]
+exclude =
+    .venv,
+    .git,
+    .tox,
+    __pycache__,
+    node_modules/
+show-source = true
+max-line-length = 160
+max-complexity = 10
