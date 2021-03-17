@@ -1,6 +1,9 @@
 # coding: utf-8
 
 
+from requests.api import request
+
+
 class User(object):
     def __init__(self, api):
         """
@@ -47,16 +50,17 @@ class User(object):
         :param roleType: (int) Required. administrator=1, general-user=2, reporter=3, viewer=4, guest-reporter=5, guest-viewer=6
         :return: Compliant with Backlog API specification
         """
-        _uri = "users".format(
+        _uri = "users"
+        _method = "POST"
+        params = dict(
             userId=userId,
             passowrd=password,
             name=name,
             mailAddress=mailAddress,
             roleType=roleType
         )
-        _method = "POST"
 
-        resp = self.api.invoke_method(_method, _uri)
+        resp = self.api.invoke_method(_method, _uri, request_param=params)
 
         return resp.json()
 
