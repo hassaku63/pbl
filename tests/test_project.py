@@ -75,7 +75,7 @@ class TestProject(unittest.TestCase):
         # test
         resp = self.api.project.get(projectIdOrKey=_project_id)
 
-        self.assertEqual(expects["id"], _project_id)
+        self.assertEqual(resp["id"], _project_id)
 
     def test_update(self):
         pass
@@ -108,7 +108,7 @@ class TestProject(unittest.TestCase):
         httpretty.register_uri(
             httpretty.GET,
             API_ENDPOINT.format(
-                space=self.space ,
+                space=self.space,
                 uri="projects/{projectIdOrKey}/users".format(projectIdOrKey=_projectIdOrKey)),
             body=json.dumps(expects)
         )

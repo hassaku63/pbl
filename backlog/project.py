@@ -28,8 +28,7 @@ class Project(object):
 
         return resp.json()
 
-    def create(self, name, key, chatEnabled, projectLeaderCanEditProjectLeader,
-                       subtaskingEnabled, textFormattingRule):
+    def create(self, name, key, chatEnabled, projectLeaderCanEditProjectLeader, subtaskingEnabled, textFormattingRule):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-project/
 

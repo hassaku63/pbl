@@ -1,8 +1,5 @@
 # coding: utf-8
 
-import os.path
-
-
 class Wiki(object):
     def __init__(self, api):
         """
@@ -24,7 +21,7 @@ class Wiki(object):
 
         return resp.json()
 
-    def create(self, projectId, name, content, mailNotify):
+    def create(self, projectId, name, content, mailNotify=False):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-wiki-page/
 
@@ -140,7 +137,7 @@ class Wiki(object):
         :param wikiId: (int) Required. wiki id
         :param attachmentId: (int) Required. attachment id
         :return: dict object. This object contains values.
-         "id" as attachment id, "name" as attachment name, and "data" as binary content.
+            "id" as attachment id, "name" as attachment name, and "data" as binary content.
         """
         _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(wiki_id=wikiId, attachment_id=attachmentId)
         _method = "GET"
