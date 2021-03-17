@@ -106,3 +106,6 @@ venv.bak/
 # ignore configuration
 conf.yml
 main.py
+
+# env
+.env*

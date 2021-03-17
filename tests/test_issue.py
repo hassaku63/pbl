@@ -616,8 +616,43 @@ class TestIssue(unittest.TestCase):
     def test_get_comments(self):
         pass
 
+    @httpretty.activate
     def test_add_comment(self):
-        pass
+        _issue_key = "BLG-1"
+        _uri = "issues/{issue_id_or_key}/comments".format(issue_id_or_key=_issue_key)
+        expects = { 
+            "id": 6586, 
+            "content": "test comment", 
+            "changeLog": None, 
+            "createdUser": { 
+                "id": 1, 
+                "userId": "admin", 
+                "name": "admin", 
+                "roleType": 1, 
+                "lang": "ja", 
+                "mailAddress": "eguchi@nulab.example" 
+            }, 
+            "created": "2013-08-05T06:15:06Z", 
+            "updated": "2013-08-05T06:15:06Z", 
+            "stars": [], 
+            "notifications": [] 
+        }
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            status=201,
+        )
+
+        resp = self.api.issue.add_comment(
+            issueIdOrKey=_issue_key,
+            content='test comment',
+            notifiedUserId=[],
+            attachmentId=[])
+
+        self.assertEqual(expects["content"], 'test comment')
+
 
     def test_count_comments(self):
         pass
