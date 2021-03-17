@@ -5,7 +5,6 @@ import httpretty
 import json
 import os
 import tempfile
-import shutil
 from backlog.util import load_conf
 from backlog.base import BacklogAPI
 
@@ -48,11 +47,10 @@ class TestAttachment(unittest.TestCase):
 
     @httpretty.activate
     def test_upload_attachment_file_not_found(self):
-        _uri = "space/attachment"
         _filename = "not_exist_file.txt"
 
         with self.assertRaises(FileNotFoundError):
-            resp = self.api.attachment.upload(filename=_filename)
+            self.api.attachment.upload(filename=_filename)
 
 
 if __name__ == "__main__":

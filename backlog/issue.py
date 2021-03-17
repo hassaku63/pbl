@@ -233,4 +233,3 @@ class Issue(object):
         :return:
         """
         raise NotImplementedError
-

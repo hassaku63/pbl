@@ -232,7 +232,7 @@ class TestProject(unittest.TestCase):
                 "actualHours": None,
                 "parentIssueId": None,
                 "createdUser": {
-                   "id": 1,
+                    "id": 1,
                     "userId": "admin",
                     "name": "admin",
                     "roleType": 1,
@@ -268,9 +268,9 @@ class TestProject(unittest.TestCase):
                             "id": 5686,
                             "userId": "takada",
                             "name": "takada",
-                            "roleType":2,
-                            "lang":"ja",
-                            "mailAddress":"takada@nulab.example"
+                            "roleType": 2,
+                            "lang": "ja",
+                            "mailAddress": "takada@nulab.example"
                         },
                         "created": "2009-02-27T03:26:15Z",
                         "updatedUser": {
@@ -281,7 +281,7 @@ class TestProject(unittest.TestCase):
                             "lang": "ja",
                             "mailAddress": "takada@nulab.example"
                         },
-                        "updated":"2009-03-03T16:57:47Z"
+                        "updated": "2009-03-03T16:57:47Z"
                     }
                 ],
                 "stars": [
@@ -298,7 +298,7 @@ class TestProject(unittest.TestCase):
                             "lang": "ja",
                             "mailAddress": "eguchi@nulab.example"
                         },
-                        "created":"2013-07-08T10:24:28Z"
+                        "created": "2013-07-08T10:24:28Z"
                     }
                 ]
             },
