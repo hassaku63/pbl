@@ -2,7 +2,6 @@
 # coding: utf-8
 
 from setuptools import setup, find_packages
-from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
@@ -10,9 +9,12 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+with open(path.join(here, 'VERSION'), encoding='utf-8') as f:
+    version = f.read()
+
 setup(
     name='python-backlog',
-    version='0.1.3',
+    version=version,
     install_requires=[
         'requests>=2.19.1',
         'PyYAML>=3.13'
@@ -26,7 +28,7 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Programming Language :: Python',
-        'Natural Language :: Javanese'
+        'Natural Language :: Japanese'
     ],
     keywords='nulab backlog',
     url='',
