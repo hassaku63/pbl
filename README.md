@@ -20,7 +20,7 @@ from backlog.base import BacklogAPI
 
 def main():
     """
-    Load conf.yml
+    Initialize API Object
     """
     api = BacklogAPI("your-space", "your-api-key")
 
