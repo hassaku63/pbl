@@ -1,14 +1,14 @@
 # pbl
-Backlog API V2対応のラッパーライブラリ
 
-# Usage
+A Python package wraps Backlog API V2
+
+## Usage
 
 Install
 
 ```bash
 pip install python-backlog
 ```
-
 
 Code snipet
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     main()
 ```
 
-# Auth
+## Auth
 
 Oct 2018, Currently API Key is supported. NOT support OAuth2 yet.
 
@@ -70,10 +70,14 @@ This package provides a helper function to loading config yaml. This helper func
 
 load_conf takes an argument path to yaml file. By defalt, `./conf.yml` is given.
 
-# See also
+### Note
+
+Feature `backlog.util.load_conf` will omit in future. Because there is only little significance in supporting a specific format in this package. (see #17)
+
+## See also
 
 Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 
-# Contact
+## Contact
 
 Twitter: [hassaku63](https://twitter.com/hassaku_63)
