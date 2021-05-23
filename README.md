@@ -15,7 +15,6 @@ Code snipet
 ```python
 import base64
 import json
-from backlog.util import load_conf
 from backlog.base import BacklogAPI
 
 
@@ -23,8 +22,7 @@ def main():
     """
     Load conf.yml
     """
-    conf = load_conf("conf.yml")["backlog"]
-    api = BacklogAPI(conf["space"], conf["api_key"])
+    api = BacklogAPI("your-space", "your-api-key")
 
     """
     Project API
