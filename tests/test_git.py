@@ -9,7 +9,7 @@ from backlog.base import BacklogAPI
 API_ENDPOINT = "https://{space}.backlog.jp/api/v2/{uri}"
 
 
-class TestProject(unittest.TestCase):
+class TestGit(unittest.TestCase):
     def setUp(self):
         self.conf = load_conf("./conf.default.yml")["backlog"]
         self.api = BacklogAPI(self.conf["space"], self.conf["api_key"])
