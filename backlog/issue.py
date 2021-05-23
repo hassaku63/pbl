@@ -95,7 +95,8 @@ class Issue(object):
         return resp.json()
 
     def get_comments(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-comment-list/
 
         :param issueIdOrKey:
@@ -128,7 +129,8 @@ class Issue(object):
         return resp.json()
 
     def count_comments(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/count-comment/
 
         :param issueIdOrKey:
@@ -137,7 +139,8 @@ class Issue(object):
         raise NotImplementedError
 
     def get_comment(self, issueIdOrKey, commentId):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-comment/
 
         :param issueIdOrKey:
@@ -147,7 +150,8 @@ class Issue(object):
         raise NotImplementedError
 
     def update_comment(self, issueIdOrKey, commentId, content):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-comment/
 
         :param issueIdOrKey:
@@ -158,7 +162,8 @@ class Issue(object):
         raise NotImplementedError
 
     def get_comment_notifications(self, issueIdOrKey, commentId):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-comment-notifications/
 
         :param issueIdOrKey:
@@ -168,7 +173,8 @@ class Issue(object):
         raise NotImplementedError
 
     def add_comment_notification(self, issueIdOrKey, commentId, notifiedUserId):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-comment-notification/
 
         :param issueIdOrKey:
@@ -179,7 +185,8 @@ class Issue(object):
         raise NotImplementedError
 
     def list_issue_attachments(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-issue-attachments/
 
         :param issueIdOrKey:
@@ -188,7 +195,8 @@ class Issue(object):
         raise NotImplementedError
 
     def get_issue_attachments(self, issueIdOrKey, attachmentId):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-attachment/
 
         :param issueIdOrKey:
@@ -198,7 +206,8 @@ class Issue(object):
         raise NotImplementedError
 
     def delete_issue_attachment(self, issueIdOrKey, attachmentId):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-issue-attachment/
 
         :param issueIdOrKey:
@@ -208,7 +217,8 @@ class Issue(object):
         raise NotImplementedError
 
     def list_issue_shared_files(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-linked-shared-files/
 
         :param issueIdOrKey:
@@ -217,7 +227,8 @@ class Issue(object):
         raise NotImplementedError
 
     def link_issue_shared_files(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/link-shared-files-to-issue/
 
         :param issueIdOrKey:
@@ -226,7 +237,8 @@ class Issue(object):
         raise NotImplementedError
 
     def unlink_issue_shared_file(self, issueIdOrKey):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/remove-link-to-shared-file-from-issue/
 
         :param issueIdOrKey:
