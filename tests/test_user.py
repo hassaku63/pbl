@@ -35,7 +35,6 @@ class TestUser(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -61,7 +60,6 @@ class TestUser(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -91,7 +89,6 @@ class TestUser(unittest.TestCase):
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=201
         )
 
@@ -127,7 +124,6 @@ class TestUser(unittest.TestCase):
             httpretty.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -159,7 +155,6 @@ class TestUser(unittest.TestCase):
             httpretty.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 

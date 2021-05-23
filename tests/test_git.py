@@ -60,7 +60,6 @@ class TestGit(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -138,7 +137,6 @@ class TestGit(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -330,7 +328,6 @@ class TestGit(unittest.TestCase):
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            # match_querystring=True,
             status=200
         )
 
@@ -393,7 +390,6 @@ class TestGit(unittest.TestCase):
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            # match_querystring=True,
             status=200
         )
 
