@@ -62,15 +62,23 @@ class BaseAPI(object):
         return resp
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
+        """Sorry, not implemented yet
+        """
         raise NotImplementedError
 
     def post(self, method, uri, query_param, request_param, headers, **kwargs):
+        """Sorry, not implemented yet
+        """
         raise NotImplementedError
 
     def delete(self, method, uri, query_param, request_param, headers, **kwargs):
+        """Sorry, not implemented yet
+        """
         raise NotImplementedError
 
     def patch(self, method, uri, query_param, request_param, headers, **kwargs):
+        """Sorry, not implemented yet
+        """
         raise NotImplementedError
 
 

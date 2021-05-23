@@ -29,7 +29,8 @@ class Project(object):
         return resp.json()
 
     def create(self, name, key, chatEnabled, projectLeaderCanEditProjectLeader, subtaskingEnabled, textFormattingRule):
-        """
+        """Sorry, not implemented yet
+
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-project/
 
         :param name:
@@ -58,7 +59,8 @@ class Project(object):
     def update(self, projectIdOrKey, name, key, chartEnabled,
                subtaskingEnabled, projectLeaderCanEditProjectLeader,
                textFormattingRule, archived):
-        """
+        """Sorry, not implemented yet
+
         Admin or Project admin only
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-project/
 
