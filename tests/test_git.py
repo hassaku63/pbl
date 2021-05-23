@@ -9,7 +9,7 @@ from backlog.base import BacklogAPI
 API_ENDPOINT = "https://{space}.backlog.jp/api/v2/{uri}"
 
 
-class TestProject(unittest.TestCase):
+class TestGit(unittest.TestCase):
     def setUp(self):
         self.conf = load_conf("./conf.default.yml")["backlog"]
         self.api = BacklogAPI(self.conf["space"], self.conf["api_key"])
@@ -60,7 +60,6 @@ class TestProject(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -138,7 +137,6 @@ class TestProject(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
@@ -330,7 +328,6 @@ class TestProject(unittest.TestCase):
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            # match_querystring=True,
             status=200
         )
 
@@ -393,7 +390,6 @@ class TestProject(unittest.TestCase):
             httpretty.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            # match_querystring=True,
             status=200
         )
 

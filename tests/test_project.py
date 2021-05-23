@@ -38,7 +38,6 @@ class TestProject(unittest.TestCase):
             httpretty.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
-            match_querystring=True,
             status=200
         )
 
