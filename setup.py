@@ -40,7 +40,7 @@ setup(
     packages=find_packages(exclude=['tests*']),
     python_requires=">=3.6",
     tests_require=[
-        "httpretty==0.9.5",
+        "httpretty>=0.9.7",
         "tox==3.5.2",
         "nose==1.3.7",
         "coverage==4.5.1"
