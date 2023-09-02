@@ -22,5 +22,4 @@ jobs:
 
       - uses: aws-actions/codeguru-reviewer@v1.1
         with:
-          build_path: target # build artifact(s) directory
           s3_bucket: ${{ secrets.CODEGURU_BUCKET }}
