@@ -1,0 +1,25 @@
+name: CodeGuru Review
+
+on:
+  pull_request:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  review:
+    name: CodeGuru Reviewer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # assume rule
+      - uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - uses: aws-actions/codeguru-reviewer@v1.1
+        with:
+          build_path: target # build artifact(s) directory
+          s3_bucket: ${{ secrets.CODEGURU_BUCKET }}
