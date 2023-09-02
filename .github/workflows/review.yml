@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # assume rule
+        with:
+          fetch-depth: 0
       - uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
