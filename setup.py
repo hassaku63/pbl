@@ -16,8 +16,7 @@ setup(
     name='python-backlog',
     version=version,
     install_requires=[
-        'requests>=2.19.1',
-        'PyYAML>=5.1'
+        'requests~=2.31.0',
     ],
     description='Backlog API v2 wrapper',
     long_description=long_description,
@@ -40,10 +39,10 @@ setup(
     packages=find_packages(exclude=['tests*']),
     python_requires=">=3.6",
     tests_require=[
-        "httpretty>=0.9.7",
-        "tox>=3.5.2",
-        "nose>=1.3.7",
-        "coverage>=4.5.1"
+        "flake8~=6.1.0",
+        "tox~=4.11.0",
+        "httpretty~=1.1.0",
+        "coverage~=7.3.0",
     ],
     project_urls={
         'Source': 'https://github.com/hassaku63/pbl',
