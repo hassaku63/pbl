@@ -2,6 +2,7 @@ name: CodeGuru Security
 on:
   push:
     branches:
+      - 'master'
       - 'main'
 
 permissions:
