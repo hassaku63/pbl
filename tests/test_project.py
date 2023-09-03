@@ -43,8 +43,41 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
+    @httpretty.activate
     def test_create(self):
-        pass
+        _uri = "projects"
+        project_key = "test-project"
+        project_name = "test-project"
+        expects = {
+            "id": 1,
+            "projectKey": project_key,
+            "name": project_name,
+            "chartEnabled": False,
+            "useResolvedForChart": False,
+            "subtaskingEnabled": False,
+            "projectLeaderCanEditProjectLeader": False,
+            "useWiki": True,
+            "useFileSharing": True,
+            "useWikiTreeView": True,
+            "useOriginalImageSizeAtWiki": False,
+            "useSubversion": True,
+            "useGit": True,
+            "textFormattingRule": "markdown",
+            "archived": False,
+            "displayOrder": 2147483646,
+            "useDevAttributes": True,
+        }
+
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            status=201
+        )
+
+        resp = self.api.project.create(key=project_key, name=project_name)
+
+        self.assertEqual(expects, resp)
 
     @httpretty.activate
     def test_get(self):
@@ -74,8 +107,43 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(resp["id"], _project_id)
 
+    @httpretty.activate
     def test_update(self):
-        pass
+        project_key = "test-project"
+        project_updated_name = "updated"
+        expects = {
+            "id": 1,
+            "projectKey": project_key,
+            "name": project_updated_name,
+            "chartEnabled": False,
+            "useResolvedForChart": False,
+            "subtaskingEnabled": False,
+            "projectLeaderCanEditProjectLeader": False,
+            "useWiki": True,
+            "useFileSharing": True,
+            "useWikiTreeView": True,
+            "useOriginalImageSizeAtWiki": False,
+            "useSubversion": True,
+            "textFormattingRule": "markdown",
+            "archived": False,
+            "displayOrder": 2147483646,
+            "useDevAttributes": True,
+        }
+        _uri = "projects/{project_id_or_key}".format(project_id_or_key=project_key)
+        httpretty.register_uri(
+            httpretty.PATCH,
+            API_ENDPOINT.format(space=self.space, uri=_uri),
+            body=json.dumps(expects),
+            status=200
+        )
+
+        resp = self.api.project.update(projectIdOrKey=project_key, name=project_updated_name)
+
+        self.assertEqual(expects, resp)
+
+    def test_update_no_value(self):
+        with self.assertRaises(ValueError):
+            self.api.project.update(projectIdOrKey='key')
 
     def test_get_icon(self):
         pass
