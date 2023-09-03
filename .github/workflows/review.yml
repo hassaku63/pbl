@@ -19,7 +19,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
-
       - uses: aws-actions/codeguru-reviewer@v1.1
         with:
           s3_bucket: ${{ secrets.CODEGURU_BUCKET }}
+      - name: Upload review result
+        if: ${{ github.event_name != 'push' }}
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: codeguru-results.sarif.json
