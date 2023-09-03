@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, TypedDict, NewType, Optional
+from typing import List, TypedDict, NewType, Optional, Union
 
 
 class CustomFieldResponse(TypedDict):
@@ -57,11 +57,12 @@ AddSingleListCustomFieldResponse = NewType("AddSingleListCustomFieldResponse", L
 AddMultipleListCustomFieldResponse = NewType("AddMultipleListCustomFieldResponse", ListCustomFieldResponse)
 AddCheckboxCustomFieldResponse = NewType("AddCheckboxCustomFieldResponse", ListCustomFieldResponse)
 AddRadioCustomFieldResponse = NewType("AddRadioCustomFieldResponse", ListCustomFieldResponse)
-AddCustomFiledResponse = \
-    AddTextCustomFieldResponse | AddSentenceCustomFieldResponse | \
-    AddNumberCustomFieldResponse | AddDateCustomFieldResponse | \
-    AddSingleListCustomFieldResponse | AddMultipleListCustomFieldResponse | \
-    AddCheckboxCustomFieldResponse | AddRadioCustomFieldResponse
+AddCustomFiledResponse = Union[
+    AddTextCustomFieldResponse, AddSentenceCustomFieldResponse,
+    AddNumberCustomFieldResponse, AddDateCustomFieldResponse,
+    AddSingleListCustomFieldResponse, AddMultipleListCustomFieldResponse,
+    AddCheckboxCustomFieldResponse, AddRadioCustomFieldResponse,
+]
 
 DeleteTextCustomFieldResponse = NewType("DeleteTextCustomFieldResponse", CustomFieldResponse)
 DeleteSentenceCustomFieldResponse = NewType("DeleteSentenceCustomFieldResponse", CustomFieldResponse)
@@ -71,11 +72,12 @@ DeleteSingleListCustomFieldResponse = NewType("DeleteSingleListCustomFieldRespon
 DeleteMultipleListCustomFieldResponse = NewType("DeleteMultipleListCustomFieldResponse", ListCustomFieldResponse)
 DeleteCheckboxCustomFieldResponse = NewType("DeleteCheckboxCustomFieldResponse", ListCustomFieldResponse)
 DeleteRadioCustomFieldResponse = NewType("DeleteRadioCustomFieldResponse", ListCustomFieldResponse)
-DeleteCustomFiledResponse = \
-    DeleteTextCustomFieldResponse | DeleteSentenceCustomFieldResponse | \
-    DeleteNumberCustomFieldResponse | DeleteDateCustomFieldResponse | \
-    DeleteSingleListCustomFieldResponse | DeleteMultipleListCustomFieldResponse | \
-    DeleteCheckboxCustomFieldResponse | DeleteRadioCustomFieldResponse
+DeleteCustomFiledResponse = Union[
+    DeleteTextCustomFieldResponse, DeleteSentenceCustomFieldResponse,
+    DeleteNumberCustomFieldResponse, DeleteDateCustomFieldResponse,
+    DeleteSingleListCustomFieldResponse, DeleteMultipleListCustomFieldResponse,
+    DeleteCheckboxCustomFieldResponse, DeleteRadioCustomFieldResponse,
+]
 
 
 class CustomField(object):
@@ -114,7 +116,7 @@ class CustomField(object):
     def add(
         self,
         projectIdOrKey: str,
-        typeId: TypeId | int,
+        typeId: Union[TypeId, int],
         name: str,
         applicableIssueTypes: Optional[List[int]] = None,
         description: Optional[str] = None,
