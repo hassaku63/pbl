@@ -223,7 +223,7 @@ class Project(object):
         for k, v in request_param.copy().items():
             if v is None:
                 del request_param[k]
-        if len(request_param.keys()) == 0:
+        if not request_param:
             raise ValueError("No parameter to update")
 
         resp = self.api.invoke_method(_method, _path, request_param=request_param)
