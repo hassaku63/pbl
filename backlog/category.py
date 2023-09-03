@@ -1,4 +1,4 @@
-from typing import List, TypedDict, TypeAlias
+from typing import List, TypedDict, NewType
 
 
 class CategoryResponse(TypedDict):
@@ -8,10 +8,10 @@ class CategoryResponse(TypedDict):
     displayOrder: int
 
 
-ListCategoryResponse: TypeAlias = List[CategoryResponse]
-AddCategoryResponse: TypeAlias = CategoryResponse
-UpdateCategoryResponse: TypeAlias = CategoryResponse
-DeleteCategoryResponse: TypeAlias = CategoryResponse
+ListCategoryResponse = NewType("ListCategoryResponse", List[CategoryResponse])
+AddCategoryResponse = NewType("AddCategoryResponse", CategoryResponse)
+UpdateCategoryResponse = NewType("UpdateCategoryResponse", CategoryResponse)
+DeleteCategoryResponse = NewType("DeleteCategoryResponse", CategoryResponse)
 
 
 class Category(object):
