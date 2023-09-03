@@ -9,6 +9,7 @@ from backlog.issue import Issue
 from backlog.git import Git
 from backlog.user import User
 from backlog.category import Category
+from backlog.custom_field import CustomField
 
 BACKLOG_BASE_URL = "https://{space}.backlog.jp"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -97,6 +98,7 @@ class BacklogAPI(BaseAPI):
         self.git = Git(self)
         self.user = User(self)
         self.category = Category(self)
+        self.custom_field = CustomField(self)
 
     def get(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri

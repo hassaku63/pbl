@@ -4,7 +4,8 @@ exclude =
     .git,
     .tox,
     __pycache__,
-    node_modules/
+    node_modules/,
+    main.py
 show-source = true
 max-line-length = 160
 max-complexity = 10
