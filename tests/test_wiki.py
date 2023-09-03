@@ -58,7 +58,7 @@ class TestWiki(unittest.TestCase):
             body=json.dumps(expects)
         )
         wikis = self.api.wiki.list(projectIdOrKey=self.default_project)
-        self.assertTrue(type(wikis) == list)
+        self.assertTrue(isinstance(wikis, list))
 
     @httpretty.activate
     def test_create_wiki(self):
@@ -116,7 +116,6 @@ class TestWiki(unittest.TestCase):
             mailNotify="true" if _mail_notify else "false"
         )
 
-        print(resp)
         self.assertEqual(resp["projectId"], _project_id)
         self.assertEqual(resp["name"], _wiki_name)
         self.assertEqual(resp["content"], _wiki_content)

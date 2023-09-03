@@ -10,7 +10,7 @@ Install
 pip install python-backlog
 ```
 
-Code snipet
+Code snippet
 
 ```python
 import base64
@@ -58,24 +58,10 @@ if __name__ == "__main__":
     main()
 ```
 
-## Auth
-
-Oct 2018, Currently API Key is supported. NOT support OAuth2 yet.
-
-API Client object is initialized with arguments credentials(space and api_key).
-
-This package provides a helper function to loading config yaml. This helper function is provided by `backlog.util.load_conf` .
-
-load_conf takes an argument path to yaml file. By defalt, `./conf.yml` is given.
-
-### Note
-
-Feature `backlog.util.load_conf` will omit in future. Because there is only little significance in supporting a specific format in this package. (see #17)
-
 ## See also
 
 Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 
 ## Contact
 
-Twitter: [hassaku63](https://twitter.com/hassaku_63)
+Twitter: [hassaku_63](https://twitter.com/hassaku_63)
