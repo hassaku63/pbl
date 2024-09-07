@@ -1,4 +1,6 @@
 # pbl
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhassaku63%2Fpbl.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhassaku63%2Fpbl?ref=badge_shield)
+
 
 A Python package wraps Backlog API V2
 
@@ -65,3 +67,7 @@ Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 ## Contact
 
 Twitter: [hassaku_63](https://twitter.com/hassaku_63)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhassaku63%2Fpbl.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhassaku63%2Fpbl?ref=badge_large)
