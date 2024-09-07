@@ -12,12 +12,16 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 with open(path.join(here, 'VERSION'), encoding='utf-8') as f:
     version = f.read().strip()
 
+with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
+    install_requires = f.read().splitlines()
+
+with open(path.join(here, 'requirements-dev.txt'), encoding='utf-8') as f:
+    tests_require = f.read().splitlines()
+
 setup(
     name='python-backlog',
     version=version,
-    install_requires=[
-        'requests~=2.31.0',
-    ],
+    install_requires=install_requires,
     description='Backlog API v2 wrapper',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -38,12 +42,7 @@ setup(
     scripts=[],
     packages=find_packages(exclude=['tests*']),
     python_requires=">=3.8",
-    tests_require=[
-        "flake8~=6.1.0",
-        "tox~=4.11.0",
-        "httpretty~=1.1.0",
-        "coverage~=7.3.0",
-    ],
+    tests_require=install_requires + tests_require,
     project_urls={
         'Source': 'https://github.com/hassaku63/pbl',
     }
