@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 with open(path.join(here, 'VERSION'), encoding='utf-8') as f:
-    version = f.read()
+    version = f.read().strip()
 
 setup(
     name='python-backlog',
