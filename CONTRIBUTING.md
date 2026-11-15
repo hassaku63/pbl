@@ -10,7 +10,7 @@ It would be great if you could create an issue or pull request. However, since I
 
 ```bash
 pip install -e '.[dev]'
-flake8
+ruff check
 python -m unittest
 ```
 

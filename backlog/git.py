@@ -44,7 +44,7 @@ class Git(object):
 
         return resp.json()
 
-    def add_pull_request_comment(self, projectIdOrKey, repoIdOrName, number, content, notifiedUserIds=[]):
+    def add_pull_request_comment(self, projectIdOrKey, repoIdOrName, number, content, notifiedUserIds=None):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-pull-request-comment/
 
@@ -57,7 +57,7 @@ class Git(object):
         """
         param = {
             "content": content,
-            "notifiedUserId[]": notifiedUserIds
+            "notifiedUserId[]": notifiedUserIds if notifiedUserIds is not None else []
         }
         _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/comments".format(
             projectIdOrKey=projectIdOrKey,
