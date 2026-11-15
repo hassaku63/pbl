@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **75 of 152 endpoints (49%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **79 of 152 endpoints (52%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -17,7 +17,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Activities](#activities) | 0 / 1 |
 | [Documents](#documents) | 0 / 10 |
 | [Git](#git) | 14 / 14 |
-| [Issues](#issues) | 20 / 24 |
+| [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 0 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
 | [Projects](#projects) | 18 / 48 |
@@ -90,10 +90,10 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Get List of Comment Notifications](https://developer.nulab.com/docs/backlog/api/2/get-list-of-comment-notifications/) | 2026-11-15 | `Issue.get_comment_notifications()` |
 | POST | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Add Comment Notification](https://developer.nulab.com/docs/backlog/api/2/add-comment-notification/) | 2026-11-15 | `Issue.add_comment_notification()` |
 | GET | `issues/:issueIdOrKey/comments/count` | [Count Comment](https://developer.nulab.com/docs/backlog/api/2/count-comment/) | 2026-11-15 | `Issue.count_comments()` |
-| GET | `issues/:issueIdOrKey/participants` | [Get Issue Participant List](https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/) | 2026-11-15 | — |
-| GET | `issues/:issueIdOrKey/relatedIssues` | [Get List of Related Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/) | 2026-11-15 | — |
-| POST | `issues/:issueIdOrKey/relatedIssues` | [Add Related Issue](https://developer.nulab.com/docs/backlog/api/2/add-related-issue/) | 2026-11-15 | — |
-| DELETE | `issues/:issueIdOrKey/relatedIssues/:relatedIssueId` | [Remove Related Issue](https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/) | 2026-11-15 | — |
+| GET | `issues/:issueIdOrKey/participants` | [Get Issue Participant List](https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/) | 2026-11-15 | `Issue.list_participants()` |
+| GET | `issues/:issueIdOrKey/relatedIssues` | [Get List of Related Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/) | 2026-11-15 | `Issue.list_related_issues()` |
+| POST | `issues/:issueIdOrKey/relatedIssues` | [Add Related Issue](https://developer.nulab.com/docs/backlog/api/2/add-related-issue/) | 2026-11-15 | `Issue.add_related_issue()` |
+| DELETE | `issues/:issueIdOrKey/relatedIssues/:relatedIssueId` | [Remove Related Issue](https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/) | 2026-11-15 | `Issue.remove_related_issue()` |
 | GET | `issues/:issueIdOrKey/sharedFiles` | [Get List of Linked Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-linked-shared-files/) | 2026-11-15 | `Issue.list_issue_shared_files()` |
 | POST | `issues/:issueIdOrKey/sharedFiles` | [Link Shared Files to Issue](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-issue/) | 2026-11-15 | `Issue.link_issue_shared_files()` |
 | DELETE | `issues/:issueIdOrKey/sharedFiles/:id` | [Remove Link to Shared File from Issue](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-issue/) | 2026-11-15 | `Issue.unlink_issue_shared_file()` |
