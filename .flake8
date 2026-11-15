@@ -2,10 +2,9 @@
 exclude =
     .venv,
     .git,
-    .tox,
     __pycache__,
-    node_modules/,
-    main.py
+    build,
+    dist
 show-source = true
 max-line-length = 160
 max-complexity = 10
