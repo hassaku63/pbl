@@ -118,6 +118,10 @@ jobs:
         path: dist/
     - name: Publish distribution 📦 to PyPI
       uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+      with:
+        # Make re-runs safe: if a previous run published to PyPI but failed to create the tag or
+        # GitHub Release, re-running (or the next push to master) skips the upload and finishes the release.
+        skip-existing: true
 
   github-release:
     name: >-
