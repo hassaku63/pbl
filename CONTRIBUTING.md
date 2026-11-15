@@ -14,6 +14,13 @@ flake8
 python -m unittest
 ```
 
-It would also be nice if you could update the number in the VERSION file in the top directory before sending a pull request.
+## Releasing
 
-The procedure for releasing a new version can be found here. https://github.com/hassaku63/pbl/wiki/Release-flow
+Releases are automated by `.github/workflows/pypi-release.yml`:
+
+1. Open a pull request that bumps the number in the `VERSION` file (together with the changes, or on its own).
+2. Merge it into `master`. If no `v<VERSION>` tag exists yet, the workflow builds the package, publishes it to PyPI and creates the `v<VERSION>` tag and a GitHub Release on that commit.
+
+Changes that do not affect the package (CI, docs, etc.) do not need a version bump; they are released with the next version.
+
+To release an older commit on `master`, run the "Release" workflow manually (workflow_dispatch) with that commit as `ref`.
