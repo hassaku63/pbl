@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **57 of 152 endpoints (38%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **67 of 152 endpoints (44%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -16,7 +16,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 |---|---|
 | [Activities](#activities) | 0 / 1 |
 | [Documents](#documents) | 0 / 10 |
-| [Git](#git) | 4 / 14 |
+| [Git](#git) | 14 / 14 |
 | [Issues](#issues) | 20 / 24 |
 | [Notifications](#notifications) | 0 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
@@ -56,19 +56,19 @@ Methods that call endpoints which are not in the official API reference (they ma
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
 | GET | `projects/:projectIdOrKey/git/repositories` | [Get List of Git Repositories](https://developer.nulab.com/docs/backlog/api/2/get-list-of-git-repositories/) | 2026-11-15 | `Git.list_git_repositories()` |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName` | [Get Git Repository](https://developer.nulab.com/docs/backlog/api/2/get-git-repository/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName` | [Get Git Repository](https://developer.nulab.com/docs/backlog/api/2/get-git-repository/) | 2026-11-15 | `Git.get_git_repository()` |
 | GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Get Pull Request List](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-list/) | 2026-11-15 | `Git.list_pull_requests()` |
 | POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Add Pull Request](https://developer.nulab.com/docs/backlog/api/2/add-pull-request/) | 2026-11-15 | `Git.add_pull_request()` |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Get Pull Request](https://developer.nulab.com/docs/backlog/api/2/get-pull-request/) | 2026-11-15 | — |
-| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Update Pull Request](https://developer.nulab.com/docs/backlog/api/2/update-pull-request/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments` | [Get List of Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/get-list-of-pull-request-attachment/) | 2026-11-15 | — |
-| DELETE | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Delete Pull Request Attachments](https://developer.nulab.com/docs/backlog/api/2/delete-pull-request-attachments/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Download Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/download-pull-request-attachment/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Get Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-comment/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Get Pull Request](https://developer.nulab.com/docs/backlog/api/2/get-pull-request/) | 2026-11-15 | `Git.get_pull_request()` |
+| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Update Pull Request](https://developer.nulab.com/docs/backlog/api/2/update-pull-request/) | 2026-11-15 | `Git.update_pull_request()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments` | [Get List of Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/get-list-of-pull-request-attachment/) | 2026-11-15 | `Git.list_pull_request_attachments()` |
+| DELETE | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Delete Pull Request Attachments](https://developer.nulab.com/docs/backlog/api/2/delete-pull-request-attachments/) | 2026-11-15 | `Git.delete_pull_request_attachment()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Download Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/download-pull-request-attachment/) | 2026-11-15 | `Git.get_pull_request_attachment()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Get Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-comment/) | 2026-11-15 | `Git.list_pull_request_comments()` |
 | POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Add Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/add-pull-request-comment/) | 2026-11-15 | `Git.add_pull_request_comment()` |
-| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId` | [Update Pull Request Comment Information](https://developer.nulab.com/docs/backlog/api/2/update-pull-request-comment-information/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count` | [Get Number of Pull Request Comments](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-request-comments/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count` | [Get Number of Pull Requests](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-requests/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId` | [Update Pull Request Comment Information](https://developer.nulab.com/docs/backlog/api/2/update-pull-request-comment-information/) | 2026-11-15 | `Git.update_pull_request_comment()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count` | [Get Number of Pull Request Comments](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-request-comments/) | 2026-11-15 | `Git.count_pull_request_comments()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count` | [Get Number of Pull Requests](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-requests/) | 2026-11-15 | `Git.count_pull_requests()` |
 
 ## Issues
 
