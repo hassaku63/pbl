@@ -1,7 +1,9 @@
 # coding: utf-8
 
 import unittest
-import httpretty
+import responses
+
+from tests.helpers import last_request
 import json
 from unittest import mock
 from backlog.base import BacklogAPI, DEFAULT_TIMEOUT
@@ -15,7 +17,7 @@ class TestApi(unittest.TestCase):
         self.space = "space"
         self.api_key = "api_key"
 
-    @httpretty.activate
+    @responses.activate
     def test_invoke_get(self):
         expects = {
             "ok": True
@@ -27,8 +29,8 @@ class TestApi(unittest.TestCase):
 
         for _status_code in _http_statuses:
             with self.subTest(status_code=_status_code):
-                httpretty.register_uri(
-                    httpretty.GET,
+                responses.add(
+                    responses.GET,
                     API_ENDPOINT.format(space=self.space, uri=_uri),
                     body=json.dumps(expects),
                     content_type="application/json",
@@ -42,8 +44,8 @@ class TestApi(unittest.TestCase):
         # Test 204(NO_CONTENT) Response
         #   NOTE: 204 response MUST NOT include a message-body.
         #   http://tools.ietf.org/search/rfc2616#section-10.2.5
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             content_type="application/json",
             status=204
@@ -52,7 +54,7 @@ class TestApi(unittest.TestCase):
         resp = self.api.invoke_method("GET", _uri)
         self.assertEqual(204, resp.status_code)
 
-    @httpretty.activate
+    @responses.activate
     def test_invoke_post(self):
         expects = {
             "ok": True
@@ -64,8 +66,8 @@ class TestApi(unittest.TestCase):
 
         for _status_code in _http_statuses:
             with self.subTest(status_code=_status_code):
-                httpretty.register_uri(
-                    httpretty.POST,
+                responses.add(
+                    responses.POST,
                     API_ENDPOINT.format(space=self.space, uri=_uri),
                     body=json.dumps(expects),
                     content_type="application/json",
@@ -76,7 +78,7 @@ class TestApi(unittest.TestCase):
                 self.assertEqual(_status_code, resp.status_code)
                 self.assertEqual(expects, resp.json())
 
-    @httpretty.activate
+    @responses.activate
     def test_invoke_delete(self):
         expects = {
             "ok": True
@@ -84,8 +86,8 @@ class TestApi(unittest.TestCase):
         _uri = "test"
 
         # Status 200
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             content_type="application/json",
@@ -96,7 +98,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         self.assertEqual(expects, resp.json())
 
-    @httpretty.activate
+    @responses.activate
     def test_invoke_patch(self):
         expects = {
             "ok": True
@@ -104,8 +106,8 @@ class TestApi(unittest.TestCase):
         _uri = "test"
 
         # Status 200
-        httpretty.register_uri(
-            httpretty.PATCH,
+        responses.add(
+            responses.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             content_type="application/json",
@@ -116,12 +118,12 @@ class TestApi(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         self.assertEqual(expects, resp.json())
 
-    @httpretty.activate
+    @responses.activate
     def test_api_key_is_sent_in_header_not_query(self):
         for _method in ["GET", "POST", "DELETE", "PATCH"]:
             with self.subTest(method=_method):
-                httpretty.register_uri(
-                    getattr(httpretty, _method),
+                responses.add(
+                    getattr(responses, _method),
                     API_ENDPOINT.format(space=self.space, uri="test"),
                     body="{}",
                     status=200
@@ -129,17 +131,17 @@ class TestApi(unittest.TestCase):
 
                 self.api.invoke_method(_method, "test")
 
-                req = httpretty.last_request()
+                req = last_request()
                 self.assertEqual(self.api_key, req.headers.get("Backlog-API-Key"))
                 self.assertNotIn("apiKey", req.querystring)
                 self.assertNotIn(self.api_key, req.path)
 
-    @httpretty.activate
+    @responses.activate
     def test_api_key_does_not_leak_between_instances(self):
         """Regression: a shared mutable default argument used to keep the first instance's API key."""
         for _space in ["space-a", "space-b"]:
-            httpretty.register_uri(
-                httpretty.GET,
+            responses.add(
+                responses.GET,
                 API_ENDPOINT.format(space=_space, uri="users"),
                 body="[]",
                 status=200
@@ -150,14 +152,14 @@ class TestApi(unittest.TestCase):
         api_a.invoke_method("GET", "users")
         api_b.invoke_method("GET", "users")
 
-        req = httpretty.last_request()
-        self.assertEqual("space-b.backlog.jp", req.headers.get("Host"))
+        req = last_request()
+        self.assertEqual("space-b.backlog.jp", req.host)
         self.assertEqual("KEY_B", req.headers.get("Backlog-API-Key"))
 
-    @httpretty.activate
+    @responses.activate
     def test_caller_arguments_are_not_mutated(self):
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri="test"),
             body="{}",
             status=200
@@ -171,7 +173,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual({"q": "1"}, query_param)
         self.assertEqual({"name": "x"}, request_param)
         self.assertEqual({"X-Test": "1"}, headers)
-        req = httpretty.last_request()
+        req = last_request()
         self.assertEqual("1", req.headers.get("X-Test"))
         self.assertEqual(self.api_key, req.headers.get("Backlog-API-Key"))
 

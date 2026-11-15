@@ -10,7 +10,9 @@ import tempfile
 import unittest
 from urllib.parse import parse_qs
 
-import httpretty
+import responses
+
+from tests.helpers import last_request
 
 from backlog.base import BacklogAPI
 
@@ -27,7 +29,7 @@ class TestRequestParams(unittest.TestCase):
         self.api = BacklogAPI(self.space, "api_key")
 
     def _register(self, method, uri, body="{}", **kwargs):
-        httpretty.register_uri(
+        responses.add(
             method,
             API_ENDPOINT.format(space=self.space, uri=uri),
             body=body,
@@ -35,100 +37,100 @@ class TestRequestParams(unittest.TestCase):
             **kwargs
         )
 
-    @httpretty.activate
+    @responses.activate
     def test_delete_sends_body(self):
-        self._register(httpretty.DELETE, "projects/1/issueTypes/2")
+        self._register(responses.DELETE, "projects/1/issueTypes/2")
 
         self.api.project.delete_issue_type(projectIdOrKey=1, id=2, substituteIssueTypeId=3)
 
-        self.assertEqual({"substituteIssueTypeId": "3"}, _form(httpretty.last_request()))
+        self.assertEqual({"substituteIssueTypeId": "3"}, _form(last_request()))
 
-    @httpretty.activate
+    @responses.activate
     def test_wiki_delete_sends_mail_notify(self):
-        self._register(httpretty.DELETE, "wikis/1")
+        self._register(responses.DELETE, "wikis/1")
 
         self.api.wiki.delete(wikiId=1, mailNotify=True)
 
-        self.assertEqual({"mailNotify": "true"}, _form(httpretty.last_request()))
+        self.assertEqual({"mailNotify": "true"}, _form(last_request()))
 
-    @httpretty.activate
+    @responses.activate
     def test_2xx_responses_are_success_for_delete_and_patch(self):
-        for _method in [httpretty.DELETE, httpretty.PATCH]:
+        for _method in [responses.DELETE, responses.PATCH]:
             with self.subTest(method=_method):
                 self._register(_method, "test", status=202)
                 resp = self.api.invoke_method(_method, "test")
                 self.assertEqual(202, resp.status_code)
 
-    @httpretty.activate
+    @responses.activate
     def test_add_comment_sends_content_in_body(self):
-        self._register(httpretty.POST, "issues/PRJ-1/comments")
+        self._register(responses.POST, "issues/PRJ-1/comments")
 
         self.api.issue.add_comment("PRJ-1", "hello", notifiedUserId=10, attachmentId=20)
 
-        req = httpretty.last_request()
+        req = last_request()
         self.assertEqual({}, req.querystring)
         self.assertEqual(
             {"content": "hello", "notifiedUserId[]": "10", "attachmentId[]": "20"},
             _form(req)
         )
 
-    @httpretty.activate
+    @responses.activate
     def test_project_add_category_sends_name(self):
-        self._register(httpretty.POST, "projects/1/categories")
+        self._register(responses.POST, "projects/1/categories")
 
         self.api.project.add_category(projectIdOrKey=1, name="dev")
 
-        self.assertEqual({"name": "dev"}, _form(httpretty.last_request()))
+        self.assertEqual({"name": "dev"}, _form(last_request()))
 
-    @httpretty.activate
+    @responses.activate
     def test_project_update_category_sends_name(self):
-        self._register(httpretty.PATCH, "projects/1/categories/2")
+        self._register(responses.PATCH, "projects/1/categories/2")
 
         self.api.project.update_category(projectIdOrKey=1, id=2, name="dev")
 
-        self.assertEqual({"name": "dev"}, _form(httpretty.last_request()))
+        self.assertEqual({"name": "dev"}, _form(last_request()))
 
-    @httpretty.activate
+    @responses.activate
     def test_project_list_users_exclude_group_members(self):
-        self._register(httpretty.GET, "projects/1/users", body="[]")
+        self._register(responses.GET, "projects/1/users", body="[]")
 
         for _flag, _expected in [(True, "true"), (False, "false")]:
             with self.subTest(excludeGroupMembers=_flag):
                 self.api.project.list_users(1, excludeGroupMembers=_flag)
-                self.assertEqual([_expected], httpretty.last_request().querystring["excludeGroupMembers"])
+                self.assertEqual([_expected], last_request().querystring["excludeGroupMembers"])
 
-    @httpretty.activate
+    @responses.activate
     def test_project_create_chart_enabled(self):
-        self._register(httpretty.POST, "projects")
+        self._register(responses.POST, "projects")
 
         for _kwargs in [{"chartEnabled": True}, {"chatEnabled": True}]:
             with self.subTest(**_kwargs):
                 self.api.project.create(name="n", key="K", **_kwargs)
-                self.assertEqual("True", _form(httpretty.last_request())["chartEnabled"])
+                self.assertEqual("True", _form(last_request())["chartEnabled"])
 
         with self.assertRaises(ValueError):
             self.api.project.create(name="n", key="K", chartEnabled=True, chatEnabled=False)
 
-    @httpretty.activate
+    @responses.activate
     def test_user_add_sends_password(self):
-        self._register(httpretty.POST, "users")
+        self._register(responses.POST, "users")
 
         self.api.user.add(userId="u", password="p", name="n", mailAddress="m@example.com", roleType=2)
 
         self.assertEqual(
             {"userId": "u", "password": "p", "name": "n", "mailAddress": "m@example.com", "roleType": "2"},
-            _form(httpretty.last_request())
+            _form(last_request())
         )
 
-    @httpretty.activate
+    @responses.activate
     def test_user_update_sends_only_given_fields(self):
-        self._register(httpretty.PATCH, "users/1")
+        self._register(responses.PATCH, "users/1")
 
         self.api.user.update(1, password="p")
 
-        self.assertEqual({"password": "p"}, _form(httpretty.last_request()))
+        self.assertEqual({"password": "p"}, _form(last_request()))
 
-    @httpretty.activate
+    @responses.activate
     def test_wiki_get_attachment_name(self):
         _uri = "wikis/1/attachments/2"
         cases = [
@@ -139,12 +141,12 @@ class TestRequestParams(unittest.TestCase):
         for _header, _expected in cases:
             with self.subTest(header=_header):
                 _headers = {"Content-Disposition": _header} if _header else {}
-                httpretty.register_uri(
-                    httpretty.GET,
+                responses.add(
+                    responses.GET,
                     API_ENDPOINT.format(space=self.space, uri=_uri),
                     body=b"data",
                     content_type="application/octet-stream",
-                    adding_headers=_headers
+                    headers=_headers
                 )
 
                 resp = self.api.wiki.get_attachment(wikiId=1, attachmentId=2)
@@ -152,9 +154,9 @@ class TestRequestParams(unittest.TestCase):
                 self.assertEqual(_expected, resp["name"])
                 self.assertEqual(b"data", resp["data"])
 
-    @httpretty.activate
+    @responses.activate
     def test_attachment_upload_closes_file_and_sends_content_type(self):
-        self._register(httpretty.POST, "space/attachment", body=json.dumps({"id": 1}))
+        self._register(responses.POST, "space/attachment", body=json.dumps({"id": 1}))
         with tempfile.TemporaryDirectory() as d:
             _path = os.path.join(d, "a.txt")
             with open(_path, "w") as f:
@@ -163,7 +165,7 @@ class TestRequestParams(unittest.TestCase):
             with self.assertNoResourceWarning():
                 self.api.attachment.upload(_path)
 
-        body = httpretty.last_request().body
+        body = last_request().body
         self.assertIn(b'filename="a.txt"', body)
         self.assertIn(b"Content-Type: text/plain", body)
 

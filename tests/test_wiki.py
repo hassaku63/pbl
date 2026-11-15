@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-import httpretty
+import responses
 import json
 import tempfile
 from uuid import uuid4
@@ -18,7 +18,7 @@ class TestWiki(unittest.TestCase):
         self.api = BacklogAPI(self.space, self.api_key)
         self.default_project = "default_project_key"
 
-    @httpretty.activate
+    @responses.activate
     def test_list_wiki(self):
         _uri = "wikis"
         expects = [
@@ -52,15 +52,15 @@ class TestWiki(unittest.TestCase):
                 "updated": "2013-05-30T09:11:36Z"
             }
         ]
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
         wikis = self.api.wiki.list(projectIdOrKey=self.default_project)
         self.assertTrue(isinstance(wikis, list))
 
-    @httpretty.activate
+    @responses.activate
     def test_create_wiki(self):
         # Set parameter and expects
         _uri = "wikis"
@@ -102,9 +102,9 @@ class TestWiki(unittest.TestCase):
             "updated": "2012-07-23T06:09:48Z",
         }
 
-        httpretty.register_uri(
-            method=httpretty.POST,
-            uri=API_ENDPOINT.format(space=self.space, uri=_uri),
+        responses.add(
+            method=responses.POST,
+            url=API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
 
@@ -120,7 +120,7 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(resp["name"], _wiki_name)
         self.assertEqual(resp["content"], _wiki_content)
 
-    @httpretty.activate
+    @responses.activate
     def test_get_wiki(self):
         expects = {
             "id": 1,
@@ -201,8 +201,8 @@ class TestWiki(unittest.TestCase):
             wikiId=_wiki_id
         )
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -213,7 +213,7 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(expects["id"], wiki["id"])
         self.assertEqual(expects["name"], wiki["name"])
 
-    @httpretty.activate
+    @responses.activate
     def test_update_wiki(self):
         expects = {
             "id": 1,
@@ -268,8 +268,8 @@ class TestWiki(unittest.TestCase):
         _mail_notify = False
         _uri = "wikis/{wiki_id}".format(wiki_id=_wiki_id)
 
-        httpretty.register_uri(
-            httpretty.PATCH,
+        responses.add(
+            responses.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -285,7 +285,7 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(expects["name"], wiki["name"])
         self.assertEqual(expects["content"], wiki["content"])
 
-    @httpretty.activate
+    @responses.activate
     def test_delete_wiki(self):
         expects = {
             "id": 1,
@@ -367,8 +367,8 @@ class TestWiki(unittest.TestCase):
             wikiId=_wiki_id
         )
 
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -378,7 +378,7 @@ class TestWiki(unittest.TestCase):
         # test
         self.assertEqual(attachments["id"], _wiki_id)
 
-    @httpretty.activate
+    @responses.activate
     def test_list_attachments(self):
         expects = [
             {
@@ -392,8 +392,8 @@ class TestWiki(unittest.TestCase):
             wikiId=_wiki_id
         )
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -404,7 +404,7 @@ class TestWiki(unittest.TestCase):
         self.assertEqual(len(expects), len(attachments))
         self.assertEqual(expects[0]["id"], attachments[0]["id"])
 
-    @httpretty.activate
+    @responses.activate
     def test_add_attachment(self):
         _wiki_id = 1
         _attachment_id = 2
@@ -426,8 +426,8 @@ class TestWiki(unittest.TestCase):
             }
         ]
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -439,7 +439,7 @@ class TestWiki(unittest.TestCase):
 
         self.assertEqual(expects[0]["id"], attachments[0]["id"])
 
-    @httpretty.activate
+    @responses.activate
     def test_get_attachment(self):
         with tempfile.NamedTemporaryFile(delete=True) as tmp:
             # Set parameter and expects
@@ -464,12 +464,12 @@ class TestWiki(unittest.TestCase):
             }
 
             # mock
-            httpretty.register_uri(
-                httpretty.GET,
+            responses.add(
+                responses.GET,
                 API_ENDPOINT.format(space=self.space, uri=_uri),
                 body=tmp.file.read(),
                 content_type="application/octet-stream",
-                adding_headers={"Content-Disposition": "attachment;filename*=UTF-8''{}".format(_name)}
+                headers={"Content-Disposition": "attachment;filename*=UTF-8''{}".format(_name)}
             )
 
             # test
@@ -480,7 +480,7 @@ class TestWiki(unittest.TestCase):
 
             self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_delete_attachment(self):
         expects = {
             "id": 2,
@@ -503,8 +503,8 @@ class TestWiki(unittest.TestCase):
             attachment_id=_attachment_id
         )
 
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-import httpretty
+import responses
 import json
 from backlog.base import BacklogAPI
 
@@ -17,7 +17,7 @@ class TestGit(unittest.TestCase):
     #
     # For Git Repository
     #
-    @httpretty.activate
+    @responses.activate
     def test_list_git_repositories(self):
         _project_id_or_key = 151
         _uri = "projects/{projectIdOrKey}/git/repositories".format(projectIdOrKey=_project_id_or_key)
@@ -54,8 +54,8 @@ class TestGit(unittest.TestCase):
             }
         ]
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -65,14 +65,14 @@ class TestGit(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_get_git_repositories(self):
         pass
 
     #
     # For Pull Request
     #
-    @httpretty.activate
+    @responses.activate
     def test_list_pull_requests(self):
         _project_id_or_key = 3
         _repo_id_or_name = 5
@@ -131,8 +131,8 @@ class TestGit(unittest.TestCase):
             }
         ]
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -145,11 +145,11 @@ class TestGit(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_count_pull_requests(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_add_pull_request(self):
         _project_id_or_key = 3
         _repository_id_or_key = 5
@@ -322,8 +322,8 @@ class TestGit(unittest.TestCase):
             "updated": "2015-04-23T03:04:14Z"
         }
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -335,19 +335,19 @@ class TestGit(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_get_pull_requests(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_update_pull_requests(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_get_pull_request_comment(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_add_pull_request_comment(self):
         _project_id_or_key = 3
         _repository_id_or_key = 5
@@ -384,8 +384,8 @@ class TestGit(unittest.TestCase):
             "notifications": []
         }
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -401,23 +401,23 @@ class TestGit(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_count_pull_request_comments(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_update_pull_request_comment(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_list_pull_request_attachments(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_get_pull_request_attachment(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_delelte_pull_request_attachment(self):
         pass
 

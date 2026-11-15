@@ -33,7 +33,7 @@ classifiers = [
 dev = [
     "flake8>=7",
     "coverage>=7.6",
-    "httpretty>=1.1.4",
+    "responses>=0.25",
     "tox>=4",
 ]
 

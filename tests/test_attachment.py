@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-import httpretty
+import responses
 import json
 import os
 import tempfile
@@ -24,7 +24,7 @@ class TestAttachment(unittest.TestCase):
         with open(self.test_fd, "wb") as fp:
             fp.write(self.test_data)
 
-    @httpretty.activate
+    @responses.activate
     def test_upload_attachment(self):
         _uri = "space/attachment"
         _filename = os.path.basename(self.test_file)
@@ -33,8 +33,8 @@ class TestAttachment(unittest.TestCase):
             "name": _filename,
             "size": 8857
         }
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -43,7 +43,7 @@ class TestAttachment(unittest.TestCase):
         resp = self.api.attachment.upload(filename=self.test_file)
         self.assertTrue(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_upload_attachment_file_not_found(self):
         _filename = "not_exist_file.txt"
 

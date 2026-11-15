@@ -1,6 +1,6 @@
 import unittest
 import json
-import httpretty
+import responses
 from backlog.base import BacklogAPI
 
 API_ENDPOINT = "https://{space}.backlog.jp/api/v2/{path}"
@@ -13,7 +13,7 @@ class TestCategory(unittest.TestCase):
         self.api_key = "api_key"
         self.project = "test-project"
 
-    @httpretty.activate
+    @responses.activate
     def test_list(self):
         expects = [
             {
@@ -24,8 +24,8 @@ class TestCategory(unittest.TestCase):
             },
         ]
         path = f"projects/{self.project}/categories"
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -34,7 +34,7 @@ class TestCategory(unittest.TestCase):
         resp = self.api.category.list(self.project)
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_add(self):
         category = "test-category"
         expects = {
@@ -44,8 +44,8 @@ class TestCategory(unittest.TestCase):
             "displayOrder": 1
         }
         path = f"projects/{self.project}/categories"
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -54,7 +54,7 @@ class TestCategory(unittest.TestCase):
         resp = self.api.category.add(self.project, category)
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_update(self):
         category_id = 100
         category = "updated-category"
@@ -65,8 +65,8 @@ class TestCategory(unittest.TestCase):
             "displayOrder": 1
         }
         path = f"projects/{self.project}/categories/{category_id}"
-        httpretty.register_uri(
-            httpretty.PATCH,
+        responses.add(
+            responses.PATCH,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -75,7 +75,7 @@ class TestCategory(unittest.TestCase):
         resp = self.api.category.update(self.project, category_id, category)
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_delete(self):
         category_id = 100
         category = "deleted-category"
@@ -86,8 +86,8 @@ class TestCategory(unittest.TestCase):
             "displayOrder": 1
         }
         path = f"projects/{self.project}/categories/{category_id}"
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
