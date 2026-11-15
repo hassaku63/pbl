@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-backlog"
+dynamic = ["version"]
+description = "Backlog API v2 wrapper"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "hassaku63", email = "hassaku63@gmail.com" }]
+keywords = ["nulab", "backlog"]
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.32.2,<3",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Natural Language :: Japanese",
+    "Natural Language :: English",
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8>=7",
+    "coverage>=7.6",
+    "httpretty>=1.1.4",
+    "tox>=4",
+]
+
+[project.urls]
+Homepage = "https://github.com/hassaku63/pbl"
+Source = "https://github.com/hassaku63/pbl"
+Issues = "https://github.com/hassaku63/pbl/issues"
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
+[tool.setuptools.packages.find]
+include = ["backlog*"]
