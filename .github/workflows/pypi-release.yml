@@ -1,37 +1,96 @@
-name: Publish Python 🐍 distribution 📦 to PyPI
+name: Release
+
+# Releases are driven by the VERSION file:
+# - A push to master whose VERSION has no matching "v<VERSION>" tag yet builds the package,
+#   publishes it to PyPI, then creates the tag and a GitHub Release on that commit.
+# - workflow_dispatch does the same for a given commit on master (e.g. to release an older commit).
+# - Pull requests only build the package.
 
 on:
   push:
     branches:
       - master
-    tags:
-      - 'v*'
   pull_request:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Commit (or branch) on master to release"
+        required: true
+        default: master
 
 permissions:
   contents: read
+
+concurrency:
+  group: release-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
     name: Build distribution 📦
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+      sha: ${{ steps.release.outputs.sha }}
+      release: ${{ steps.release.outputs.release }}
+      latest: ${{ steps.release.outputs.latest }}
 
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
+        ref: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.sha }}
+        fetch-depth: 0  # tags and master history are needed to decide whether to release
         persist-credentials: false
     - name: Set up Python
       uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
       with:
         python-version: "3.x"
+    - name: Decide whether to release
+      id: release
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        REF: ${{ github.ref }}
+      run: |
+        set -euo pipefail
+        version=$(tr -d '[:space:]' < VERSION)
+        if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          echo "::error::Invalid VERSION: $version"
+          exit 1
+        fi
+        sha=$(git rev-parse HEAD)
+
+        release=true
+        if [ "$EVENT_NAME" = "pull_request" ] || [ "$REF" != "refs/heads/master" ]; then
+          release=false
+        elif git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+          echo "Tag v$version already exists; nothing to release."
+          release=false
+        elif ! git merge-base --is-ancestor "$sha" origin/master; then
+          echo "::error::$sha is not on master"
+          exit 1
+        fi
+
+        highest=$( (git tag --list 'v*' | sed 's/^v//'; echo "$version") | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+        latest=false
+        [ "$highest" = "$version" ] && latest=true
+
+        {
+          echo "version=$version"
+          echo "sha=$sha"
+          echo "release=$release"
+          echo "latest=$latest"
+        } >> "$GITHUB_OUTPUT"
+        echo "version=$version sha=$sha release=$release latest=$latest"
     - name: Install pypa/build
-      run: >-
-        python3 -m
-        pip install
-        build
-        --user
+      run: python3 -m pip install build --user
     - name: Build a binary wheel and a source tarball
       run: python3 -m build
+    - name: Check the built version
+      env:
+        VERSION: ${{ steps.release.outputs.version }}
+      run: |
+        ls dist/
+        ls "dist/python_backlog-$VERSION.tar.gz" "dist/python_backlog-$VERSION-py3-none-any.whl"
     - name: Store the distribution packages
       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
@@ -41,7 +100,7 @@ jobs:
   publish-to-pypi:
     name: >-
       Publish Python 🐍 distribution 📦 to PyPI
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')  # only publish to PyPI on tag pushes
+    if: needs.build.outputs.release == 'true'
     needs:
     - build
     runs-on: ubuntu-latest
@@ -63,8 +122,9 @@ jobs:
   github-release:
     name: >-
       Sign the Python 🐍 distribution 📦 with Sigstore
-      and upload them to GitHub Release
+      and create the tag and GitHub Release
     needs:
+    - build
     - publish-to-pypi
     runs-on: ubuntu-latest
 
@@ -84,21 +144,18 @@ jobs:
         inputs: >-
           ./dist/*.tar.gz
           ./dist/*.whl
-    - name: Create GitHub Release
+    - name: Create the tag and GitHub Release
       env:
         GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ needs.build.outputs.version }}
+        SHA: ${{ needs.build.outputs.sha }}
+        LATEST: ${{ needs.build.outputs.latest }}
+      # `gh release create` creates the tag on the target commit.
+      # dist/ contains the built packages and the sigstore-produced bundles.
       run: >-
-        gh release create
-        '${{ github.ref_name }}'
-        --repo '${{ github.repository }}'
-        --notes ""
-    - name: Upload artifact signatures to GitHub Release
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      # Upload to GitHub Release using the `gh` CLI.
-      # `dist/` contains the built packages, and the
-      # sigstore-produced signatures and certificates.
-      run: >-
-        gh release upload
-        '${{ github.ref_name }}' dist/**
-        --repo '${{ github.repository }}'
+        gh release create "v$VERSION" dist/*
+        --repo "$GITHUB_REPOSITORY"
+        --target "$SHA"
+        --title "v$VERSION"
+        --generate-notes
+        --latest="$LATEST"
