@@ -1,6 +1,6 @@
 import unittest
 import json
-import httpretty
+import responses
 from backlog.base import BacklogAPI
 
 API_ENDPOINT = "https://{space}.backlog.jp/api/v2/{uri}"
@@ -12,7 +12,7 @@ class TestIssue(unittest.TestCase):
         self.space = "space"
         self.api_key = "api_key"
 
-    @httpretty.activate
+    @responses.activate
     def test_list(self):
         # Set parameter and expects
         _uri = "issues"
@@ -140,8 +140,8 @@ class TestIssue(unittest.TestCase):
             }
         ]
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -154,15 +154,15 @@ class TestIssue(unittest.TestCase):
         self.assertEqual(resp[0]["id"], 1)
         self.assertEqual(resp[0]["projectId"], _project_id)
 
-    @httpretty.activate
+    @responses.activate
     def test_count(self):
         _uri = "issues/count"
         expects = {
             "count": 43
         }
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -173,7 +173,7 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual(expects["count"], resp["count"])
 
-    @httpretty.activate
+    @responses.activate
     def test_create(self):
         # Set parameter and expects
         _uri = "issues"
@@ -261,8 +261,8 @@ class TestIssue(unittest.TestCase):
             "stars": []
         }
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=201  # Created response
@@ -281,7 +281,7 @@ class TestIssue(unittest.TestCase):
         self.assertEqual(resp["issueType"]["id"], _issue_type_id)
         self.assertEqual(resp["priority"]["id"], _priority_id)
 
-    @httpretty.activate
+    @responses.activate
     def test_get(self):
         _issue_key = "BLG-1"
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=_issue_key)
@@ -380,8 +380,8 @@ class TestIssue(unittest.TestCase):
             ]
         }
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -391,7 +391,7 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual(expects["issueKey"], resp["issueKey"])
 
-    @httpretty.activate
+    @responses.activate
     def test_update(self):
         _issue_key = "BLG-1"
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=_issue_key)
@@ -490,8 +490,8 @@ class TestIssue(unittest.TestCase):
             ]
         }
 
-        httpretty.register_uri(
-            httpretty.PATCH,
+        responses.add(
+            responses.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -501,7 +501,7 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual(expects["issueKey"], resp["issueKey"])
 
-    @httpretty.activate
+    @responses.activate
     def test_delete(self):
         _issue_key = "BLG-1"
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=_issue_key)
@@ -600,8 +600,8 @@ class TestIssue(unittest.TestCase):
             ]
         }
 
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -614,7 +614,7 @@ class TestIssue(unittest.TestCase):
     def test_get_comments(self):
         pass
 
-    @httpretty.activate
+    @responses.activate
     def test_add_comment(self):
         _issue_key = "BLG-1"
         _uri = "issues/{issue_id_or_key}/comments".format(issue_id_or_key=_issue_key)
@@ -636,8 +636,8 @@ class TestIssue(unittest.TestCase):
             "notifications": [],
         }
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=201,

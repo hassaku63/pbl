@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-import httpretty
+import responses
 import json
 from backlog.base import BacklogAPI
 
@@ -14,7 +14,7 @@ class TestUser(unittest.TestCase):
         self.space = "space"
         self.api_key = "api_key"
 
-    @httpretty.activate
+    @responses.activate
     def test_list(self):
         _uri = "users"
 
@@ -29,8 +29,8 @@ class TestUser(unittest.TestCase):
             },
         ]
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -40,7 +40,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_get(self):
         _user_id = "1"
         _uri = "users/{user_id}".format(user_id=_user_id)
@@ -54,8 +54,8 @@ class TestUser(unittest.TestCase):
             "mailAddress": "eguchi@nulab.example"
         }
 
-        httpretty.register_uri(
-            httpretty.GET,
+        responses.add(
+            responses.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -65,7 +65,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_add(self):
         _user_id = "admin"
         _password = "hoge"
@@ -83,8 +83,8 @@ class TestUser(unittest.TestCase):
             "mailAddress": _mail_address
         }
 
-        httpretty.register_uri(
-            httpretty.POST,
+        responses.add(
+            responses.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=201
@@ -100,7 +100,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_update(self):
         _user_id = "admin"
         _password = "hoge"
@@ -118,8 +118,8 @@ class TestUser(unittest.TestCase):
             "mailAddress": _mail_address
         }
 
-        httpretty.register_uri(
-            httpretty.PATCH,
+        responses.add(
+            responses.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -135,7 +135,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_delete(self):
         _id = "1"
         _uri = "users/{id}".format(id=_id)
@@ -149,8 +149,8 @@ class TestUser(unittest.TestCase):
             "mailAddress": "eguchi@nulab.example"
         }
 
-        httpretty.register_uri(
-            httpretty.DELETE,
+        responses.add(
+            responses.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -160,7 +160,7 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @httpretty.activate
+    @responses.activate
     def test_get_own(self):
         pass
 
