@@ -73,6 +73,10 @@ class TestProjectRead(unittest.TestCase):
         self.assertIsInstance(self.api.issue.list(count=1, **params), list)
         self.assertIn("count", self.api.issue.count(**params))
 
+    def test_documents(self):
+        self.assertIsInstance(self.api.document.list(projectId=self.project["id"], count=1), list)
+        self.assertIn("count", self.api.document.count(PROJECT_KEY))
+
     def test_wikis(self):
         if not self.project.get("useWiki"):
             self.skipTest("Wiki is disabled in the project")

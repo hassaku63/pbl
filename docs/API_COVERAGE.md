@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **83 of 152 endpoints (55%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **93 of 152 endpoints (61%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -15,7 +15,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | Group | Implemented |
 |---|---|
 | [Activities](#activities) | 0 / 1 |
-| [Documents](#documents) | 0 / 10 |
+| [Documents](#documents) | 10 / 10 |
 | [Git](#git) | 14 / 14 |
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
@@ -40,16 +40,16 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| GET | `documents` | [Get document list](https://developer.nulab.com/docs/backlog/api/2/get-document-list/) | 2026-11-15 | — |
-| POST | `documents` | [Add document](https://developer.nulab.com/docs/backlog/api/2/add-document/) | 2026-11-15 | — |
-| DELETE | `documents/:documentId` | [Delete document](https://developer.nulab.com/docs/backlog/api/2/delete-document/) | 2026-11-15 | — |
-| GET | `documents/:documentId` | [Get document](https://developer.nulab.com/docs/backlog/api/2/get-document/) | 2026-11-15 | — |
-| GET | `documents/:documentId/attachments/:attachmentId` | [Get document Attachments](https://developer.nulab.com/docs/backlog/api/2/get-document-attachments/) | 2026-11-15 | — |
-| GET | `documents/:documentId/comments` | [Get document comment](https://developer.nulab.com/docs/backlog/api/2/get-document-comment/) | 2026-11-15 | — |
-| DELETE | `documents/:documentId/tags` | [Remove document tag](https://developer.nulab.com/docs/backlog/api/2/remove-document-tag/) | 2026-11-15 | — |
-| POST | `documents/:documentId/tags` | [Add document tag](https://developer.nulab.com/docs/backlog/api/2/add-document-tag/) | 2026-11-15 | — |
-| GET | `documents/count` | [Count document](https://developer.nulab.com/docs/backlog/api/2/count-document/) | 2026-11-15 | — |
-| GET | `documents/tree` | [Get document tree](https://developer.nulab.com/docs/backlog/api/2/get-document-tree/) | 2026-11-15 | — |
+| GET | `documents` | [Get document list](https://developer.nulab.com/docs/backlog/api/2/get-document-list/) | 2026-11-15 | `Document.list()` |
+| POST | `documents` | [Add document](https://developer.nulab.com/docs/backlog/api/2/add-document/) | 2026-11-15 | `Document.add()` |
+| DELETE | `documents/:documentId` | [Delete document](https://developer.nulab.com/docs/backlog/api/2/delete-document/) | 2026-11-15 | `Document.delete()` |
+| GET | `documents/:documentId` | [Get document](https://developer.nulab.com/docs/backlog/api/2/get-document/) | 2026-11-15 | `Document.get()` |
+| GET | `documents/:documentId/attachments/:attachmentId` | [Get document Attachments](https://developer.nulab.com/docs/backlog/api/2/get-document-attachments/) | 2026-11-15 | `Document.get_attachment()` |
+| GET | `documents/:documentId/comments` | [Get document comment](https://developer.nulab.com/docs/backlog/api/2/get-document-comment/) | 2026-11-15 | `Document.list_comments()` |
+| DELETE | `documents/:documentId/tags` | [Remove document tag](https://developer.nulab.com/docs/backlog/api/2/remove-document-tag/) | 2026-11-15 | `Document.remove_tags()` |
+| POST | `documents/:documentId/tags` | [Add document tag](https://developer.nulab.com/docs/backlog/api/2/add-document-tag/) | 2026-11-15 | `Document.add_tags()` |
+| GET | `documents/count` | [Count document](https://developer.nulab.com/docs/backlog/api/2/count-document/) | 2026-11-15 | `Document.count()` |
+| GET | `documents/tree` | [Get document tree](https://developer.nulab.com/docs/backlog/api/2/get-document-tree/) | 2026-11-15 | `Document.tree()` |
 
 ## Git
 

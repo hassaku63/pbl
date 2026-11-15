@@ -48,6 +48,11 @@ def main():
     print(api.notification.count(resourceAlreadyRead=False))  # number of unread notifications
     print(api.notification.list(count=10))
 
+    # Documents
+    project = api.project.get("SampleProject")
+    print(api.document.list(projectId=project["id"], keyword="spec"))
+    print(api.document.tree("SampleProject"))
+
     """
     Project API
     """
