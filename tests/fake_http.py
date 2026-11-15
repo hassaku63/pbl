@@ -53,13 +53,32 @@ def add(method, url, body="", status=200, content_type="text/plain", headers=Non
     _registry.append((method.upper(), _strip_query(url), status, _headers, body))
 
 
+def add_sequence(method, url, responses):
+    """
+    Register responses returned one after another for the same method and URL
+    (the last one keeps being returned). Each item is a dict of add() keyword arguments.
+    """
+    for kwargs in responses:
+        add(method, url, **kwargs)
+    _sequences[(method.upper(), _strip_query(url))] = len(responses)
+
+
+_sequences = {}
+
+
 def _fake_open(req, timeout):
     recorded = RecordedRequest(req, timeout)
     calls.append(recorded)
     matches = [r for r in _registry if r[0] == recorded.method and r[1] == _strip_query(recorded.url)]
     if not matches:
         raise urllib.error.URLError("fake_http: no response registered for {} {}".format(recorded.method, recorded.url))
-    _, _, status, headers, body = matches[-1]
+    key = (recorded.method, _strip_query(recorded.url))
+    if _sequences.get(key, 0) > 1:
+        chosen = matches[-_sequences[key]]
+        _sequences[key] -= 1
+    else:
+        chosen = matches[-1]
+    _, _, status, headers, body = chosen
     return status, headers, body, recorded.url
 
 
@@ -70,12 +89,14 @@ def activate(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         _registry.clear()
+        _sequences.clear()
         calls.clear()
         with mock.patch("backlog._http._open", _fake_open):
             try:
                 return func(*args, **kwargs)
             finally:
                 _registry.clear()
+                _sequences.clear()
                 calls.clear()
     return wrapper
 
