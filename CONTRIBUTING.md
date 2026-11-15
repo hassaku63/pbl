@@ -14,6 +14,18 @@ ruff check
 python -m unittest
 ```
 
+## End-to-end tests
+
+`tests/e2e/` contains happy-path tests that call a real Backlog space. They are skipped unless `BACKLOG_E2E_SPACE` and `BACKLOG_E2E_API_KEY` are set, so a normal `python -m unittest` run stays offline. See `tests/e2e/__init__.py` for the variables.
+
+```bash
+BACKLOG_E2E_SPACE=... BACKLOG_E2E_API_KEY=... BACKLOG_E2E_PROJECT_KEY=... python -m unittest discover -v -s tests/e2e -t .
+```
+
+- Requests are throttled (`BACKLOG_E2E_INTERVAL`, default 1 second) to stay well below the rate limits of the free plan.
+- Tests that create data run only with `BACKLOG_E2E_WRITE=1`, use the test project only, and delete what they create.
+- On GitHub, `.github/workflows/e2e.yml` runs them weekly and on demand (Actions → E2E → Run workflow) in the `backlog-e2e` environment. A failed scheduled run opens an issue labeled `e2e-failure`.
+
 ## Releasing
 
 Releases are automated by `.github/workflows/pypi-release.yml`. Merging into `master` does not release anything by itself; only a change of the `VERSION` file does.

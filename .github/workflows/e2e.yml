@@ -1,0 +1,117 @@
+name: E2E
+
+# End-to-end tests against a real Backlog space (see tests/e2e/__init__.py).
+# They run weekly and on demand only, never on pull requests, so the credentials are not
+# reachable from forks. The credentials live in the "backlog-e2e" environment.
+#
+# Required configuration of the "backlog-e2e" environment:
+#   secrets:   BACKLOG_E2E_SPACE, BACKLOG_E2E_API_KEY, BACKLOG_E2E_PROJECT_KEY
+#   variables: BACKLOG_E2E_DOMAIN (optional, default backlog.jp)
+#
+# When a scheduled run fails, an issue labeled "e2e-failure" is opened (or commented on, if one is already open).
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"  # Mondays 03:17 UTC
+  workflow_dispatch:
+    inputs:
+      tests:
+        description: 'Test modules to run, e.g. "tests.e2e.test_read tests.e2e.test_user_endpoints" (empty: all)'
+        required: false
+        default: ""
+      write:
+        description: "Also run tests that create and delete data in the test project"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e
+  cancel-in-progress: false
+
+jobs:
+  e2e:
+    name: E2E tests
+    runs-on: ubuntu-latest
+    environment: backlog-e2e
+    timeout-minutes: 30
+    outputs:
+      summary: ${{ steps.run.outputs.summary }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.x"
+      - name: Install
+        run: pip install -e .
+      - name: Run E2E tests
+        id: run
+        env:
+          BACKLOG_E2E_SPACE: ${{ secrets.BACKLOG_E2E_SPACE }}
+          BACKLOG_E2E_API_KEY: ${{ secrets.BACKLOG_E2E_API_KEY }}
+          BACKLOG_E2E_PROJECT_KEY: ${{ secrets.BACKLOG_E2E_PROJECT_KEY }}
+          BACKLOG_E2E_DOMAIN: ${{ vars.BACKLOG_E2E_DOMAIN }}
+          BACKLOG_E2E_WRITE: ${{ (github.event_name == 'workflow_dispatch' && inputs.write) && '1' || '0' }}
+          TESTS: ${{ inputs.tests }}
+        run: |
+          set -uo pipefail
+          if [ -z "$BACKLOG_E2E_SPACE" ] || [ -z "$BACKLOG_E2E_API_KEY" ]; then
+            echo "::error::BACKLOG_E2E_SPACE / BACKLOG_E2E_API_KEY are not configured in the backlog-e2e environment"
+            exit 1
+          fi
+          if [ -n "${TESTS:-}" ]; then
+            if ! printf '%s' "$TESTS" | grep -Eq '^[A-Za-z0-9_. ]+$'; then
+              echo "::error::Invalid tests input"
+              exit 1
+            fi
+            # shellcheck disable=SC2086  # word splitting of the module list is intended
+            python -m unittest -v $TESTS 2>&1 | tee e2e.log
+          else
+            python -m unittest discover -v -s tests/e2e -t . 2>&1 | tee e2e.log
+          fi
+          status=${PIPESTATUS[0]}
+          # Only test names and result lines: never copy raw output (it could contain the space name) into an issue.
+          summary=$(grep -E '^(FAIL|ERROR): |^(Ran|OK|FAILED)' e2e.log | head -n 30 | sed 's/`//g')
+          {
+            echo "summary<<__E2E_SUMMARY__"
+            echo "$summary"
+            echo "__E2E_SUMMARY__"
+          } >> "$GITHUB_OUTPUT"
+          exit "$status"
+
+  report:
+    name: Report failure
+    needs: e2e
+    if: always() && github.event_name == 'schedule' && needs.e2e.result == 'failure'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open or update the e2e-failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SUMMARY: ${{ needs.e2e.outputs.summary }}
+        run: |
+          set -euo pipefail
+          {
+            echo "The scheduled E2E run against the real Backlog API failed: $RUN_URL"
+            echo
+            echo '```'
+            if [ -n "$SUMMARY" ]; then echo "$SUMMARY"; else echo "(no test summary; the job failed before or outside the tests)"; fi
+            echo '```'
+            echo
+            echo "Check whether the Backlog API changed or the test environment needs attention."
+          } > body.md
+          gh label create e2e-failure --repo "$REPO" --color B60205 --description "Scheduled E2E tests failed" --force >/dev/null
+          number=$(gh issue list --repo "$REPO" --label e2e-failure --state open --json number --jq '.[0].number // empty')
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --repo "$REPO" --body-file body.md
+          else
+            gh issue create --repo "$REPO" --title "Scheduled E2E tests failed" --label e2e-failure --body-file body.md
+          fi
