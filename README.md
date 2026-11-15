@@ -1,6 +1,9 @@
 # pbl
 
-A Python package wraps Backlog API V2
+A Python package that wraps the [Backlog API v2](https://developer.nulab.com/docs/backlog/).
+
+- Requires Python 3.10 or later.
+- No runtime dependencies: only the Python standard library is used.
 
 ## Usage
 
@@ -26,11 +29,15 @@ def main():
     # Requests time out after 30 seconds by default (configurable with `timeout=`).
     api = BacklogAPI("your-space", "your-api-key")
 
+    # Categories
+    # https://developer.nulab.com/docs/backlog/api/2/get-category-list/
+    print(api.category.list("SampleProject"))
+
     """
     Project API
     """
     # list project users
-    # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
+    # https://developer.nulab.com/docs/backlog/api/2/get-project-list/
     print("# list project users")
     users = api.project.list_users("SampleProject")
     print(json.dumps(users, indent=2))
@@ -40,13 +47,13 @@ def main():
     Wiki API
     """
     # list wikis
-    # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page-list/
+    # https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-list/
     print("# list wikis")
     wikis = api.wiki.list("SampleProject")
     print(json.dumps(wikis[0], indent=2))
 
     # get attachment
-    # https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-attachment/
+    # https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/
     print("# get attachment")
     wiki = [w for w in api.wiki.list("SampleProject") if len(w["attachments"]) > 0][0]
     attachment = api.wiki.get_attachment(
@@ -60,10 +67,31 @@ if __name__ == "__main__":
     main()
 ```
 
+## Errors
+
+- `backlog.base.BacklogError` is raised when the API returns a non-2xx response.
+- `backlog.base.BacklogConnectionError` (a subclass of `BacklogError`) is raised when the request could not be sent or no response was received, for example on a timeout.
+
+## TLS certificates
+
+HTTPS certificates are verified against the system trust store (it also honors `SSL_CERT_FILE` and `SSL_CERT_DIR`). If `certifi` is installed, or `REQUESTS_CA_BUNDLE` or `CURL_CA_BUNDLE` is set, those CA certificates are trusted as well.
+
+## Upgrading to 0.9
+
+0.9.0 removed the dependency on `requests`:
+
+- `BaseAPI.invoke_method()` returns a `backlog._http.Response` instead of a `requests.Response`. It provides `status_code`, `ok`, `headers`, `content`, `text` and `json()`.
+- `invoke_method()` only accepts the `timeout` and `files` keyword arguments. Requests-specific options such as `verify` or `proxies` raise `TypeError`. Proxies are still read from the `HTTP(S)_PROXY` and `NO_PROXY` environment variables.
+- Network errors raise `BacklogConnectionError` instead of `requests.exceptions.*`.
+- Redirects are not followed, so the API key is never sent to another host.
+- `Project.list_categories()`, `add_category()`, `update_category()` and `delete_category()` are deprecated. Use `BacklogAPI.category` instead.
+
 ## See also
 
 Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
 
 ## Contact
+
+Please open an issue on [GitHub](https://github.com/hassaku63/pbl/issues).
 
 Twitter: [hassaku_63](https://twitter.com/hassaku_63)

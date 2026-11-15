@@ -1,4 +1,6 @@
 # coding: utf-8
+
+import warnings
 from typing import TypedDict, Literal, Optional, NewType
 
 
@@ -346,6 +348,11 @@ class Project(object):
         :param projectIdOrKey:
         :return:
         """
+        warnings.warn(
+            "Project.list_categories() is deprecated and will be removed in a future release; use BacklogAPI.category.list() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         _uri = "projects/{project_id_or_key}/categories".format(
             project_id_or_key=projectIdOrKey,
         )
@@ -363,6 +370,11 @@ class Project(object):
         :param name: (str) Category name
         :return:
         """
+        warnings.warn(
+            "Project.add_category() is deprecated and will be removed in a future release; use BacklogAPI.category.add() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         _uri = "projects/{project_id_or_key}/categories".format(
             project_id_or_key=projectIdOrKey,
         )
@@ -381,6 +393,11 @@ class Project(object):
         :param name: (str) will modified
         :return:
         """
+        warnings.warn(
+            "Project.update_category() is deprecated and will be removed in a future release; use BacklogAPI.category.update() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         _uri = "projects/{project_id_or_key}/categories/{id}".format(
             project_id_or_key=projectIdOrKey,
             id=id
@@ -399,6 +416,11 @@ class Project(object):
         :param id:
         :return:
         """
+        warnings.warn(
+            "Project.delete_category() is deprecated and will be removed in a future release; use BacklogAPI.category.delete() instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         _uri = "projects/{project_id_or_key}/categories/{id}".format(
             project_id_or_key=projectIdOrKey,
             id=id

@@ -10,9 +10,8 @@ import tempfile
 import unittest
 from urllib.parse import parse_qs
 
-import responses
+from tests import fake_http
 
-from tests.helpers import last_request
 
 from backlog.base import BacklogAPI
 
@@ -29,7 +28,7 @@ class TestRequestParams(unittest.TestCase):
         self.api = BacklogAPI(self.space, "api_key")
 
     def _register(self, method, uri, body="{}", **kwargs):
-        responses.add(
+        fake_http.add(
             method,
             API_ENDPOINT.format(space=self.space, uri=uri),
             body=body,
@@ -37,100 +36,100 @@ class TestRequestParams(unittest.TestCase):
             **kwargs
         )
 
-    @responses.activate
+    @fake_http.activate
     def test_delete_sends_body(self):
-        self._register(responses.DELETE, "projects/1/issueTypes/2")
+        self._register(fake_http.DELETE, "projects/1/issueTypes/2")
 
         self.api.project.delete_issue_type(projectIdOrKey=1, id=2, substituteIssueTypeId=3)
 
-        self.assertEqual({"substituteIssueTypeId": "3"}, _form(last_request()))
+        self.assertEqual({"substituteIssueTypeId": "3"}, _form(fake_http.last_request()))
 
-    @responses.activate
+    @fake_http.activate
     def test_wiki_delete_sends_mail_notify(self):
-        self._register(responses.DELETE, "wikis/1")
+        self._register(fake_http.DELETE, "wikis/1")
 
         self.api.wiki.delete(wikiId=1, mailNotify=True)
 
-        self.assertEqual({"mailNotify": "true"}, _form(last_request()))
+        self.assertEqual({"mailNotify": "true"}, _form(fake_http.last_request()))
 
-    @responses.activate
+    @fake_http.activate
     def test_2xx_responses_are_success_for_delete_and_patch(self):
-        for _method in [responses.DELETE, responses.PATCH]:
+        for _method in [fake_http.DELETE, fake_http.PATCH]:
             with self.subTest(method=_method):
                 self._register(_method, "test", status=202)
                 resp = self.api.invoke_method(_method, "test")
                 self.assertEqual(202, resp.status_code)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_comment_sends_content_in_body(self):
-        self._register(responses.POST, "issues/PRJ-1/comments")
+        self._register(fake_http.POST, "issues/PRJ-1/comments")
 
         self.api.issue.add_comment("PRJ-1", "hello", notifiedUserId=10, attachmentId=20)
 
-        req = last_request()
+        req = fake_http.last_request()
         self.assertEqual({}, req.querystring)
         self.assertEqual(
             {"content": "hello", "notifiedUserId[]": "10", "attachmentId[]": "20"},
             _form(req)
         )
 
-    @responses.activate
+    @fake_http.activate
     def test_project_add_category_sends_name(self):
-        self._register(responses.POST, "projects/1/categories")
+        self._register(fake_http.POST, "projects/1/categories")
 
         self.api.project.add_category(projectIdOrKey=1, name="dev")
 
-        self.assertEqual({"name": "dev"}, _form(last_request()))
+        self.assertEqual({"name": "dev"}, _form(fake_http.last_request()))
 
-    @responses.activate
+    @fake_http.activate
     def test_project_update_category_sends_name(self):
-        self._register(responses.PATCH, "projects/1/categories/2")
+        self._register(fake_http.PATCH, "projects/1/categories/2")
 
         self.api.project.update_category(projectIdOrKey=1, id=2, name="dev")
 
-        self.assertEqual({"name": "dev"}, _form(last_request()))
+        self.assertEqual({"name": "dev"}, _form(fake_http.last_request()))
 
-    @responses.activate
+    @fake_http.activate
     def test_project_list_users_exclude_group_members(self):
-        self._register(responses.GET, "projects/1/users", body="[]")
+        self._register(fake_http.GET, "projects/1/users", body="[]")
 
         for _flag, _expected in [(True, "true"), (False, "false")]:
             with self.subTest(excludeGroupMembers=_flag):
                 self.api.project.list_users(1, excludeGroupMembers=_flag)
-                self.assertEqual([_expected], last_request().querystring["excludeGroupMembers"])
+                self.assertEqual([_expected], fake_http.last_request().querystring["excludeGroupMembers"])
 
-    @responses.activate
+    @fake_http.activate
     def test_project_create_chart_enabled(self):
-        self._register(responses.POST, "projects")
+        self._register(fake_http.POST, "projects")
 
         for _kwargs in [{"chartEnabled": True}, {"chatEnabled": True}]:
             with self.subTest(**_kwargs):
                 self.api.project.create(name="n", key="K", **_kwargs)
-                self.assertEqual("True", _form(last_request())["chartEnabled"])
+                self.assertEqual("True", _form(fake_http.last_request())["chartEnabled"])
 
         with self.assertRaises(ValueError):
             self.api.project.create(name="n", key="K", chartEnabled=True, chatEnabled=False)
 
-    @responses.activate
+    @fake_http.activate
     def test_user_add_sends_password(self):
-        self._register(responses.POST, "users")
+        self._register(fake_http.POST, "users")
 
         self.api.user.add(userId="u", password="p", name="n", mailAddress="m@example.com", roleType=2)
 
         self.assertEqual(
             {"userId": "u", "password": "p", "name": "n", "mailAddress": "m@example.com", "roleType": "2"},
-            _form(last_request())
+            _form(fake_http.last_request())
         )
 
-    @responses.activate
+    @fake_http.activate
     def test_user_update_sends_only_given_fields(self):
-        self._register(responses.PATCH, "users/1")
+        self._register(fake_http.PATCH, "users/1")
 
         self.api.user.update(1, password="p")
 
-        self.assertEqual({"password": "p"}, _form(last_request()))
+        self.assertEqual({"password": "p"}, _form(fake_http.last_request()))
 
-    @responses.activate
+    @fake_http.activate
     def test_wiki_get_attachment_name(self):
         _uri = "wikis/1/attachments/2"
         cases = [
@@ -141,8 +140,8 @@ class TestRequestParams(unittest.TestCase):
         for _header, _expected in cases:
             with self.subTest(header=_header):
                 _headers = {"Content-Disposition": _header} if _header else {}
-                responses.add(
-                    responses.GET,
+                fake_http.add(
+                    fake_http.GET,
                     API_ENDPOINT.format(space=self.space, uri=_uri),
                     body=b"data",
                     content_type="application/octet-stream",
@@ -154,9 +153,9 @@ class TestRequestParams(unittest.TestCase):
                 self.assertEqual(_expected, resp["name"])
                 self.assertEqual(b"data", resp["data"])
 
-    @responses.activate
+    @fake_http.activate
     def test_attachment_upload_closes_file_and_sends_content_type(self):
-        self._register(responses.POST, "space/attachment", body=json.dumps({"id": 1}))
+        self._register(fake_http.POST, "space/attachment", body=json.dumps({"id": 1}))
         with tempfile.TemporaryDirectory() as d:
             _path = os.path.join(d, "a.txt")
             with open(_path, "w") as f:
@@ -165,7 +164,7 @@ class TestRequestParams(unittest.TestCase):
             with self.assertNoResourceWarning():
                 self.api.attachment.upload(_path)
 
-        body = last_request().body
+        body = fake_http.last_request().body
         self.assertIn(b'filename="a.txt"', body)
         self.assertIn(b"Content-Type: text/plain", body)
 
