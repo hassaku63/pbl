@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from backlog.wiki import _filename_from_response
+
 
 class Issue(object):
     def __init__(self, api):
@@ -94,15 +96,23 @@ class Issue(object):
 
         return resp.json()
 
-    def get_comments(self, issueIdOrKey):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-comment-list/
-
-        :param issueIdOrKey:
-        :return:
+    def get_comments(self, issueIdOrKey, minId=None, maxId=None, count=None, order=None):
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/get-comment-list/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param minId: (int) Optional. minimum comment ID
+        :param maxId: (int) Optional. maximum comment ID
+        :param count: (int) Optional. number of records to retrieve (1-100), default 20
+        :param order: (str) Optional. "asc" or "desc", default "desc"
+        :return: list of comments
+        """
+        _uri = "issues/{issue_id_or_key}/comments".format(issue_id_or_key=issueIdOrKey)
+        _query_param = {"minId": minId, "maxId": maxId, "count": count, "order": order}
+
+        resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
+
+        return resp.json()
 
     def add_comment(self, issueIdOrKey, content, notifiedUserId=None, attachmentId=None):
         """
@@ -129,119 +139,173 @@ class Issue(object):
         return resp.json()
 
     def count_comments(self, issueIdOrKey):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/count-comment/
-
-        :param issueIdOrKey:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/count-comment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: {"count": int}
+        """
+        _uri = "issues/{issue_id_or_key}/comments/count".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
 
     def get_comment(self, issueIdOrKey, commentId):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-comment/
-
-        :param issueIdOrKey:
-        :param commentId:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/get-comment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param commentId: (int) Comment ID
+        :return: comment
+        """
+        resp = self.api.invoke_method("GET", self._comment_uri(issueIdOrKey, commentId))
+
+        return resp.json()
 
     def update_comment(self, issueIdOrKey, commentId, content):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-comment/
-
-        :param issueIdOrKey:
-        :param commentId:
-        :param content:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/update-comment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param commentId: (int) Comment ID
+        :param content: (str) new content. Mention notation is available.
+        :return: updated comment
+        """
+        resp = self.api.invoke_method("PATCH", self._comment_uri(issueIdOrKey, commentId), request_param={"content": content})
+
+        return resp.json()
+
+    def delete_comment(self, issueIdOrKey, commentId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/delete-comment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param commentId: (int) Comment ID
+        :return: deleted comment
+        """
+        resp = self.api.invoke_method("DELETE", self._comment_uri(issueIdOrKey, commentId))
+
+        return resp.json()
 
     def get_comment_notifications(self, issueIdOrKey, commentId):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-comment-notifications/
-
-        :param issueIdOrKey:
-        :param commentId:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-comment-notifications/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param commentId: (int) Comment ID
+        :return: list of notifications
+        """
+        resp = self.api.invoke_method("GET", self._comment_uri(issueIdOrKey, commentId) + "/notifications")
+
+        return resp.json()
 
     def add_comment_notification(self, issueIdOrKey, commentId, notifiedUserId):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-comment-notification/
-
-        :param issueIdOrKey:
-        :param commentId:
-        :param notifiedUserId:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/add-comment-notification/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param commentId: (int) Comment ID
+        :param notifiedUserId: (int or list of int) user ID(s) to notify
+        :return: comment
+        """
+        resp = self.api.invoke_method(
+            "POST",
+            self._comment_uri(issueIdOrKey, commentId) + "/notifications",
+            request_param={"notifiedUserId[]": notifiedUserId},
+        )
+
+        return resp.json()
 
     def list_issue_attachments(self, issueIdOrKey):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-issue-attachments/
-
-        :param issueIdOrKey:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-issue-attachments/
 
-    def get_issue_attachments(self, issueIdOrKey, attachmentId):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-attachment/
-
-        :param issueIdOrKey:
-        :param attachmentId:
-        :return:
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: list of attachments
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}/attachments".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def get_issue_attachment(self, issueIdOrKey, attachmentId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param attachmentId: (int) Attachment file ID
+        :return: dict with "id" (attachment ID), "name" (file name, or None if unknown) and "data" (bytes)
+        """
+        _uri = "issues/{issue_id_or_key}/attachments/{attachment_id}".format(issue_id_or_key=issueIdOrKey, attachment_id=attachmentId)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return {
+            "id": attachmentId,
+            "name": _filename_from_response(resp),
+            "data": resp.content,
+        }
+
+    # Kept for backward compatibility with the original (plural) name.
+    get_issue_attachments = get_issue_attachment
 
     def delete_issue_attachment(self, issueIdOrKey, attachmentId):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-issue-attachment/
-
-        :param issueIdOrKey:
-        :param attachmentId:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/delete-issue-attachment/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param attachmentId: (int) Attachment file ID
+        :return: deleted attachment
+        """
+        _uri = "issues/{issue_id_or_key}/attachments/{attachment_id}".format(issue_id_or_key=issueIdOrKey, attachment_id=attachmentId)
+
+        resp = self.api.invoke_method("DELETE", _uri)
+
+        return resp.json()
 
     def list_issue_shared_files(self, issueIdOrKey):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-linked-shared-files/
-
-        :param issueIdOrKey:
-        :return:
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-linked-shared-files/
 
-    def link_issue_shared_files(self, issueIdOrKey):
-        """Sorry, not implemented yet
-
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/link-shared-files-to-issue/
-
-        :param issueIdOrKey:
-        :return:
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: list of shared files
         """
-        raise NotImplementedError
+        _uri = "issues/{issue_id_or_key}/sharedFiles".format(issue_id_or_key=issueIdOrKey)
 
-    def unlink_issue_shared_file(self, issueIdOrKey):
-        """Sorry, not implemented yet
+        resp = self.api.invoke_method("GET", _uri)
 
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/remove-link-to-shared-file-from-issue/
+        return resp.json()
 
-        :param issueIdOrKey:
-        :return:
+    def link_issue_shared_files(self, issueIdOrKey, fileId):
         """
-        raise NotImplementedError
+        https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-issue/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param fileId: (int or list of int) shared file ID(s)
+        :return: list of linked shared files
+        """
+        _uri = "issues/{issue_id_or_key}/sharedFiles".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("POST", _uri, request_param={"fileId[]": fileId})
+
+        return resp.json()
+
+    def unlink_issue_shared_file(self, issueIdOrKey, id):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-issue/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param id: (int) shared file ID
+        :return: the unlinked shared file
+        """
+        _uri = "issues/{issue_id_or_key}/sharedFiles/{id}".format(issue_id_or_key=issueIdOrKey, id=id)
+
+        resp = self.api.invoke_method("DELETE", _uri)
+
+        return resp.json()
+
+    @staticmethod
+    def _comment_uri(issueIdOrKey, commentId):
+        return "issues/{issue_id_or_key}/comments/{comment_id}".format(issue_id_or_key=issueIdOrKey, comment_id=commentId)

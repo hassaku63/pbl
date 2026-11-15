@@ -4,6 +4,7 @@ A Python package that wraps the [Backlog API v2](https://developer.nulab.com/doc
 
 - Requires Python 3.10 or later.
 - No runtime dependencies: only the Python standard library is used.
+- [API coverage](https://github.com/hassaku63/pbl/blob/master/docs/API_COVERAGE.md): which Backlog API endpoints have dedicated methods.
 
 ## Usage
 
