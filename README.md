@@ -34,6 +34,12 @@ def main():
     # https://developer.nulab.com/docs/backlog/api/2/get-category-list/
     print(api.category.list("SampleProject"))
 
+    # IDs to use when adding or updating issues
+    print(api.priority.list())                         # priorityId
+    print(api.resolution.list())                       # resolutionId
+    print(api.project.list_statuses("SampleProject"))  # statusId
+    print(api.project.list_versions("SampleProject"))  # versionId[] / milestoneId[]
+
     """
     Project API
     """
