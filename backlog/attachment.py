@@ -20,10 +20,12 @@ class Attachment(object):
 
         _uri = "space/attachment"
         _method = "POST"
-        _files = {
-            'file': (os.path.basename(filename), open(filename, 'rb'), mimetypes.guess_type(filename))
-        }
+        _content_type = mimetypes.guess_type(filename)[0] or "application/octet-stream"
 
-        resp = self.api.invoke_method(_method, _uri, files=_files)
+        with open(filename, 'rb') as f:
+            _files = {
+                'file': (os.path.basename(filename), f, _content_type)
+            }
+            resp = self.api.invoke_method(_method, _uri, files=_files)
 
         return resp.json()

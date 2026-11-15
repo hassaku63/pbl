@@ -1,5 +1,22 @@
 # coding: utf-8
 
+from email.message import Message
+
+
+def _filename_from_response(resp):
+    """
+    Extract the file name from the Content-Disposition header (supports RFC 6266 filename*).
+
+    :return: file name, or None if the header does not contain one
+    """
+    _content_disposition = resp.headers.get("Content-Disposition")
+    if not _content_disposition:
+        return None
+    _message = Message()
+    _message["Content-Disposition"] = _content_disposition
+    return _message.get_filename()
+
+
 class Wiki(object):
     def __init__(self, api):
         """
@@ -146,7 +163,7 @@ class Wiki(object):
 
         return {
             "id": attachmentId,
-            "name": "test",
+            "name": _filename_from_response(resp),
             "data": resp.content
         }
 

@@ -51,7 +51,7 @@ class User(object):
         _method = "POST"
         params = dict(
             userId=userId,
-            passowrd=password,
+            password=password,
             name=name,
             mailAddress=mailAddress,
             roleType=roleType
@@ -61,7 +61,7 @@ class User(object):
 
         return resp.json()
 
-    def update(self, userId, password, name, mailAddress, roleType):
+    def update(self, userId, password=None, name=None, mailAddress=None, roleType=None):
         """
         https://developer.nulab.com/ja/docs/backlog/api/2/update-user/
 
@@ -75,12 +75,12 @@ class User(object):
         _uri = "users/{user_id}".format(user_id=userId)
         _method = "PATCH"
         params = dict(
-            userId=userId,
-            passowrd=password,
+            password=password,
             name=name,
             mailAddress=mailAddress,
             roleType=roleType
         )
+        params = {k: v for k, v in params.items() if v is not None}
 
         resp = self.api.invoke_method(_method, _uri, request_param=params)
 
