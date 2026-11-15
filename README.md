@@ -67,10 +67,43 @@ if __name__ == "__main__":
     main()
 ```
 
+## Options
+
+```python
+from backlog.base import BacklogAPI
+
+# Spaces on backlog.com (or backlogtool.com); the default is backlog.jp
+api = BacklogAPI("your-space", "your-api-key", domain="backlog.com")
+
+# Retry requests rejected with 429 Too Many Requests, waiting until the rate limit resets
+# (at most rate_limit_max_wait seconds per retry). Disabled by default.
+api = BacklogAPI("your-space", "your-api-key", rate_limit_retries=3, rate_limit_max_wait=60)
+print(api.get_rate_limit())
+```
+
+## OAuth 2.0
+
+Instead of an API key, you can use an OAuth 2.0 access token, which is sent in the `Authorization: Bearer` header.
+`backlog.oauth` helps with the [Authorization Code Grant](https://developer.nulab.com/docs/backlog/auth/):
+
+```python
+from backlog import oauth
+from backlog.base import BacklogAPI
+
+url = oauth.authorization_url("your-space", client_id, redirect_uri, state=state)  # send the user here
+token = oauth.request_access_token("your-space", client_id, client_secret, code, redirect_uri)
+api = BacklogAPI("your-space", access_token=token["access_token"])
+
+# Access tokens expire after an hour
+token = oauth.refresh_access_token("your-space", client_id, client_secret, token["refresh_token"])
+api.set_access_token(token["access_token"])
+```
+
 ## Errors
 
 - `backlog.base.BacklogError` is raised when the API returns a non-2xx response.
 - `backlog.base.BacklogConnectionError` (a subclass of `BacklogError`) is raised when the request could not be sent or no response was received, for example on a timeout.
+- `backlog.base.BacklogRateLimitError` (a subclass of `BacklogError`) is raised on 429 Too Many Requests. Its `limit`, `remaining` and `reset` attributes hold the `X-RateLimit-*` headers.
 
 ## TLS certificates
 
