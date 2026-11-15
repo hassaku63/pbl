@@ -306,6 +306,64 @@ class Issue(object):
 
         return resp.json()
 
+    def list_participants(self, issueIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: list of users participating in the issue
+        """
+        _uri = "issues/{issue_id_or_key}/participants".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def list_related_issues(self, issueIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: list of related issues; each has a "type" field (currently always "RELATES")
+        """
+        _uri = "issues/{issue_id_or_key}/relatedIssues".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def add_related_issue(self, issueIdOrKey, targetIssueId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/add-related-issue/
+
+        Up to 50 related issues can be added per issue. Adding an existing relation is not an error.
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param targetIssueId: (int) ID of the issue to relate
+        :return: the issue
+        """
+        _uri = "issues/{issue_id_or_key}/relatedIssues".format(issue_id_or_key=issueIdOrKey)
+
+        resp = self.api.invoke_method("POST", _uri, request_param={"targetIssueId": targetIssueId})
+
+        return resp.json()
+
+    def remove_related_issue(self, issueIdOrKey, relatedIssueId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param relatedIssueId: (int) ID of the related issue to remove
+        :return: the issue
+        """
+        _uri = "issues/{issue_id_or_key}/relatedIssues/{related_issue_id}".format(
+            issue_id_or_key=issueIdOrKey, related_issue_id=relatedIssueId
+        )
+
+        resp = self.api.invoke_method("DELETE", _uri)
+
+        return resp.json()
+
     @staticmethod
     def _comment_uri(issueIdOrKey, commentId):
         return "issues/{issue_id_or_key}/comments/{comment_id}".format(issue_id_or_key=issueIdOrKey, comment_id=commentId)

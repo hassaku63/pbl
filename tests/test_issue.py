@@ -685,6 +685,14 @@ class TestIssue(unittest.TestCase):
              "POST", base + "/sharedFiles", {}, {"fileId[]": ["3"]}),
             ("unlink_issue_shared_file", lambda: self.api.issue.unlink_issue_shared_file("BLG-1", 3),
              "DELETE", base + "/sharedFiles/3", {}, {}),
+            ("list_participants", lambda: self.api.issue.list_participants("BLG-1"),
+             "GET", base + "/participants", {}, {}),
+            ("list_related_issues", lambda: self.api.issue.list_related_issues("BLG-1"),
+             "GET", base + "/relatedIssues", {}, {}),
+            ("add_related_issue", lambda: self.api.issue.add_related_issue("BLG-1", 42),
+             "POST", base + "/relatedIssues", {}, {"targetIssueId": ["42"]}),
+            ("remove_related_issue", lambda: self.api.issue.remove_related_issue("BLG-1", 42),
+             "DELETE", base + "/relatedIssues/42", {}, {}),
         ]
         for name, call, method, uri, query, form in cases:
             with self.subTest(name):
