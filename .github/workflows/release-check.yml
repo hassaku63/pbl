@@ -1,0 +1,150 @@
+name: Release check
+
+# Tells on each pull request whether merging it releases a new version, and enforces that
+# VERSION is only bumped in dedicated release pull requests.
+#
+# Security: this workflow uses pull_request_target so that it can comment on pull requests from
+# forks. It must never check out or run code from the pull request. It only reads the list of
+# changed files and the VERSION file through the GitHub API, and treats them as data.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: release-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  release-check:
+    name: Release check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect VERSION changes
+        id: inspect
+        if: github.event.action != 'closed'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          read_version() {
+            gh api "repos/$REPO/contents/VERSION?ref=$1" --jq .content | base64 -d | tr -d '[:space:]'
+          }
+          valid() {
+            printf '%s' "$1" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'
+          }
+
+          files=$(gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files" --jq '.[].filename')
+          total=$(printf '%s\n' "$files" | grep -c . || true)
+          version_changed=false
+          if printf '%s\n' "$files" | grep -Fxq VERSION; then
+            version_changed=true
+          fi
+
+          base_version=$(read_version "$BASE_SHA")
+          head_version=$(read_version "$HEAD_SHA" || echo "")
+
+          status=no-release
+          problem=""
+          if [ "$version_changed" = true ]; then
+            status=release
+            if [ "$total" -gt 1 ]; then
+              problem="VERSION is changed together with other files. Bump VERSION in a dedicated release pull request instead."
+            elif ! valid "$head_version"; then
+              problem="VERSION must be in the X.Y.Z format."
+            elif [ "$(printf '%s\n%s\n' "$base_version" "$head_version" | sort -V | tail -n 1)" != "$head_version" ] \
+                || [ "$base_version" = "$head_version" ]; then
+              problem="VERSION must be higher than the current version ($base_version)."
+            elif gh api "repos/$REPO/git/ref/tags/v$head_version" >/dev/null 2>&1; then
+              problem="The tag v$head_version already exists."
+            fi
+          fi
+          [ -n "$problem" ] && status=invalid
+
+          {
+            echo "status=$status"
+            echo "base_version=$base_version"
+            echo "head_version=$head_version"
+            echo "problem=$problem"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Comment on the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          ACTION: ${{ github.event.action }}
+          MERGED: ${{ github.event.pull_request.merged }}
+          STATUS: ${{ steps.inspect.outputs.status }}
+          BASE_VERSION: ${{ steps.inspect.outputs.base_version }}
+          HEAD_VERSION: ${{ steps.inspect.outputs.head_version }}
+          PROBLEM: ${{ steps.inspect.outputs.problem }}
+        run: |
+          set -euo pipefail
+          marker='<!-- pbl-release-check -->'
+
+          comment_id=$(gh api --paginate "repos/$REPO/issues/$PR_NUMBER/comments" \
+            --jq ".[] | select(.user.login == \"github-actions[bot]\" and (.body | contains(\"$marker\"))) | .id" | head -n 1)
+
+          if [ "$ACTION" = "closed" ]; then
+            [ -z "$comment_id" ] && exit 0
+            if [ "$MERGED" = "true" ]; then outcome="merged"; else outcome="closed without merging"; fi
+            old_body=$(gh api "repos/$REPO/issues/comments/$comment_id" --jq .body)
+            if printf '%s' "$old_body" | grep -q '^> \*\*Outdated'; then
+              exit 0
+            fi
+            {
+              echo "$marker"
+              echo "> **Outdated:** this pull request was $outcome. The release information below no longer applies."
+              echo
+              echo "<details><summary>Previous release information</summary>"
+              echo
+              printf '%s\n' "$old_body" | grep -vF "$marker"
+              echo
+              echo "</details>"
+            } > body.md
+          else
+            {
+              echo "$marker"
+              case "$STATUS" in
+                no-release)
+                  echo "ℹ️ **This pull request does not change the package version** (\`VERSION\` stays at \`$BASE_VERSION\`), so merging it does not release a new version. The changes will be included in the next release."
+                  echo
+                  echo "If this is intentional, you can ignore this comment."
+                  ;;
+                release)
+                  echo "🚀 **This pull request bumps the package version from \`$BASE_VERSION\` to \`$HEAD_VERSION\`.** Merging it publishes \`$HEAD_VERSION\` to PyPI and creates the \`v$HEAD_VERSION\` tag and GitHub Release."
+                  ;;
+                invalid)
+                  echo "❌ **This pull request changes \`VERSION\` in a way that cannot be released:** $PROBLEM"
+                  echo
+                  echo "See the \"Releasing\" section of CONTRIBUTING.md."
+                  ;;
+              esac
+              echo
+              echo "<sub>This comment is updated automatically and will be marked as outdated when the pull request is closed.</sub>"
+            } > body.md
+          fi
+
+          if [ -n "$comment_id" ]; then
+            gh api --method PATCH "repos/$REPO/issues/comments/$comment_id" -F body=@body.md >/dev/null
+          else
+            gh api --method POST "repos/$REPO/issues/$PR_NUMBER/comments" -F body=@body.md >/dev/null
+          fi
+
+      - name: Fail on an invalid VERSION change
+        if: steps.inspect.outputs.status == 'invalid'
+        env:
+          PROBLEM: ${{ steps.inspect.outputs.problem }}
+        run: |
+          echo "::error::$PROBLEM"
+          exit 1

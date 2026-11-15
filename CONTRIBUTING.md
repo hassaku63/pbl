@@ -16,11 +16,10 @@ python -m unittest
 
 ## Releasing
 
-Releases are automated by `.github/workflows/pypi-release.yml`:
+Releases are automated by `.github/workflows/pypi-release.yml`. Merging into `master` does not release anything by itself; only a change of the `VERSION` file does.
 
-1. Open a pull request that bumps the number in the `VERSION` file (together with the changes, or on its own).
-2. Merge it into `master`. If no `v<VERSION>` tag exists yet, the workflow builds the package, publishes it to PyPI and creates the `v<VERSION>` tag and a GitHub Release on that commit.
-
-Changes that do not affect the package (CI, docs, etc.) do not need a version bump; they are released with the next version.
+- **Do not change `VERSION` in feature or fix pull requests.** Changes are merged into `master` without a version bump and accumulate there until the next release. The "Release check" workflow fails if a pull request changes `VERSION` together with other files.
+- **To release**, open a dedicated pull request that changes only `VERSION`. When it is merged, the workflow builds the package, publishes it to PyPI and creates the `v<VERSION>` tag and a GitHub Release on that commit.
+- The "Release check" workflow comments on every pull request whether merging it releases a new version.
 
 To release an older commit on `master`, run the "Release" workflow manually (workflow_dispatch) with that commit as `ref`.
