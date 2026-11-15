@@ -1,5 +1,6 @@
 import unittest
 import json
+from urllib.parse import parse_qs
 from tests import fake_http
 from backlog.base import BacklogAPI
 
@@ -611,9 +612,6 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual(expects["issueKey"], resp["issueKey"])
 
-    def test_get_comments(self):
-        pass
-
     @fake_http.activate
     def test_add_comment(self):
         _issue_key = "BLG-1"
@@ -651,35 +649,66 @@ class TestIssue(unittest.TestCase):
 
         self.assertEqual('test comment', resp["content"])
 
-    def test_count_comments(self):
-        pass
+    @fake_http.activate
+    def test_comment_attachment_and_shared_file_apis(self):
+        """
+        Each call sends the documented method, path, query string and form body,
+        and returns the decoded JSON response.
+        """
+        base = "issues/BLG-1"
+        cases = [
+            ("get_comments", lambda: self.api.issue.get_comments("BLG-1", minId=1, count=10, order="asc"),
+             "GET", base + "/comments", {"minId": ["1"], "count": ["10"], "order": ["asc"]}, {}),
+            ("get_comments (defaults)", lambda: self.api.issue.get_comments("BLG-1"),
+             "GET", base + "/comments", {}, {}),
+            ("count_comments", lambda: self.api.issue.count_comments("BLG-1"),
+             "GET", base + "/comments/count", {}, {}),
+            ("get_comment", lambda: self.api.issue.get_comment("BLG-1", 10),
+             "GET", base + "/comments/10", {}, {}),
+            ("update_comment", lambda: self.api.issue.update_comment("BLG-1", 10, "new text"),
+             "PATCH", base + "/comments/10", {}, {"content": ["new text"]}),
+            ("delete_comment", lambda: self.api.issue.delete_comment("BLG-1", 10),
+             "DELETE", base + "/comments/10", {}, {}),
+            ("get_comment_notifications", lambda: self.api.issue.get_comment_notifications("BLG-1", 10),
+             "GET", base + "/comments/10/notifications", {}, {}),
+            ("add_comment_notification", lambda: self.api.issue.add_comment_notification("BLG-1", 10, [1, 2]),
+             "POST", base + "/comments/10/notifications", {}, {"notifiedUserId[]": ["1", "2"]}),
+            ("list_issue_attachments", lambda: self.api.issue.list_issue_attachments("BLG-1"),
+             "GET", base + "/attachments", {}, {}),
+            ("delete_issue_attachment", lambda: self.api.issue.delete_issue_attachment("BLG-1", 8),
+             "DELETE", base + "/attachments/8", {}, {}),
+            ("list_issue_shared_files", lambda: self.api.issue.list_issue_shared_files("BLG-1"),
+             "GET", base + "/sharedFiles", {}, {}),
+            ("link_issue_shared_files", lambda: self.api.issue.link_issue_shared_files("BLG-1", [3, 4]),
+             "POST", base + "/sharedFiles", {}, {"fileId[]": ["3", "4"]}),
+            ("link_issue_shared_files (single)", lambda: self.api.issue.link_issue_shared_files("BLG-1", 3),
+             "POST", base + "/sharedFiles", {}, {"fileId[]": ["3"]}),
+            ("unlink_issue_shared_file", lambda: self.api.issue.unlink_issue_shared_file("BLG-1", 3),
+             "DELETE", base + "/sharedFiles/3", {}, {}),
+        ]
+        for name, call, method, uri, query, form in cases:
+            with self.subTest(name):
+                fake_http.add(method, API_ENDPOINT.format(space=self.space, uri=uri), body=json.dumps({"called": name}))
 
-    def test_get_comment(self):
-        pass
+                result = call()
 
-    def test_update_comment(self):
-        pass
+                req = fake_http.last_request()
+                self.assertEqual(method, req.method)
+                self.assertEqual("/api/v2/" + uri, req.path.split("?")[0])
+                self.assertEqual(query, req.querystring)
+                self.assertEqual(form, parse_qs(req.body.decode()))
+                self.assertEqual({"called": name}, result)
 
-    def test_get_comment_notifications(self):
-        pass
+    @fake_http.activate
+    def test_get_issue_attachment(self):
+        fake_http.add(
+            fake_http.GET,
+            API_ENDPOINT.format(space=self.space, uri="issues/BLG-1/attachments/8"),
+            body=b"\x89PNG",
+            content_type="image/png",
+            headers={"Content-Disposition": "attachment;filename*=UTF-8''%E5%9B%B3.png"},
+        )
 
-    def test_add_comment_notification(self):
-        pass
-
-    def test_list_issue_attachments(self):
-        pass
-
-    def test_get_issue_attachments(self):
-        pass
-
-    def test_delete_issue_attachment(self):
-        pass
-
-    def test_list_issue_shared_files(self):
-        pass
-
-    def test_link_issue_shared_files(self):
-        pass
-
-    def test_unlink_issue_shared_file(self):
-        pass
+        for method in [self.api.issue.get_issue_attachment, self.api.issue.get_issue_attachments]:
+            with self.subTest(method=method.__name__):
+                self.assertEqual({"id": 8, "name": "図.png", "data": b"\x89PNG"}, method("BLG-1", 8))
