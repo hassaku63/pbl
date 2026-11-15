@@ -34,7 +34,6 @@ dev = [
     "flake8>=7",
     "coverage>=7.6",
     "responses>=0.25",
-    "tox>=4",
 ]
 
 [project.urls]
