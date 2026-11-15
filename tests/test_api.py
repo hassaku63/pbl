@@ -3,7 +3,8 @@
 import unittest
 import httpretty
 import json
-from backlog.base import BacklogAPI
+from unittest import mock
+from backlog.base import BacklogAPI, DEFAULT_TIMEOUT
 
 API_ENDPOINT = "https://{space}.backlog.jp/api/v2/{uri}"
 
@@ -114,6 +115,87 @@ class TestApi(unittest.TestCase):
         resp = self.api.invoke_method("PATCH", _uri)
         self.assertEqual(200, resp.status_code)
         self.assertEqual(expects, resp.json())
+
+    @httpretty.activate
+    def test_api_key_is_sent_in_header_not_query(self):
+        for _method in ["GET", "POST", "DELETE", "PATCH"]:
+            with self.subTest(method=_method):
+                httpretty.register_uri(
+                    getattr(httpretty, _method),
+                    API_ENDPOINT.format(space=self.space, uri="test"),
+                    body="{}",
+                    status=200
+                )
+
+                self.api.invoke_method(_method, "test")
+
+                req = httpretty.last_request()
+                self.assertEqual(self.api_key, req.headers.get("Backlog-API-Key"))
+                self.assertNotIn("apiKey", req.querystring)
+                self.assertNotIn(self.api_key, req.path)
+
+    @httpretty.activate
+    def test_api_key_does_not_leak_between_instances(self):
+        """Regression: a shared mutable default argument used to keep the first instance's API key."""
+        for _space in ["space-a", "space-b"]:
+            httpretty.register_uri(
+                httpretty.GET,
+                API_ENDPOINT.format(space=_space, uri="users"),
+                body="[]",
+                status=200
+            )
+        api_a = BacklogAPI("space-a", "KEY_A")
+        api_b = BacklogAPI("space-b", "KEY_B")
+
+        api_a.invoke_method("GET", "users")
+        api_b.invoke_method("GET", "users")
+
+        req = httpretty.last_request()
+        self.assertEqual("space-b.backlog.jp", req.headers.get("Host"))
+        self.assertEqual("KEY_B", req.headers.get("Backlog-API-Key"))
+
+    @httpretty.activate
+    def test_caller_arguments_are_not_mutated(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            API_ENDPOINT.format(space=self.space, uri="test"),
+            body="{}",
+            status=200
+        )
+        query_param = {"q": "1"}
+        request_param = {"name": "x"}
+        headers = {"X-Test": "1"}
+
+        self.api.invoke_method("POST", "test", query_param=query_param, request_param=request_param, headers=headers)
+
+        self.assertEqual({"q": "1"}, query_param)
+        self.assertEqual({"name": "x"}, request_param)
+        self.assertEqual({"X-Test": "1"}, headers)
+        req = httpretty.last_request()
+        self.assertEqual("1", req.headers.get("X-Test"))
+        self.assertEqual(self.api_key, req.headers.get("Backlog-API-Key"))
+
+    def test_timeout(self):
+        resp = mock.Mock(status_code=200)
+        with mock.patch("backlog.base.requests.get", return_value=resp) as m:
+            self.api.invoke_method("GET", "test")
+            self.assertEqual(DEFAULT_TIMEOUT, m.call_args.kwargs["timeout"])
+
+            BacklogAPI("space", "api_key", timeout=5).invoke_method("GET", "test")
+            self.assertEqual(5, m.call_args.kwargs["timeout"])
+
+            self.api.invoke_method("GET", "test", timeout=1)
+            self.assertEqual(1, m.call_args.kwargs["timeout"])
+
+    def test_invalid_space(self):
+        for _space in ["", "evil.example.com/#", "space.backlog.com", "a b", "-space", None]:
+            with self.subTest(space=_space):
+                with self.assertRaises(ValueError):
+                    BacklogAPI(_space, "api_key")
+
+        for _space in ["space", "my-space", "Space01"]:
+            with self.subTest(space=_space):
+                BacklogAPI(_space, "api_key")
 
 
 if __name__ == "__main__":

@@ -22,6 +22,8 @@ def main():
     """
     Initialize API Object
     """
+    # The API key is sent in the "Backlog-API-Key" request header.
+    # Requests time out after 30 seconds by default (configurable with `timeout=`).
     api = BacklogAPI("your-space", "your-api-key")
 
     """
