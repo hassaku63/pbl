@@ -14,6 +14,14 @@ ruff check
 python -m unittest
 ```
 
+## Adding or changing API methods
+
+Follow `.claude/skills/api-change/SKILL.md`. In short:
+
+- `docs/API_COVERAGE.md` is generated. After changing `backlog/*.py`, run `python scripts/api_coverage.py generate` and commit the result; the "API coverage doc" CI job checks it.
+- Decide whether README.md needs an update, and say so in the pull request.
+- The list of endpoints, `docs/api_endpoints.json`, is maintained by reading the official API reference: each entry has the page URL and the date it was last accessed. Nothing downloads or parses the documentation site automatically.
+
 ## End-to-end tests
 
 `tests/e2e/` contains happy-path tests that call a real Backlog space. They are skipped unless `BACKLOG_E2E_SPACE` and `BACKLOG_E2E_API_KEY` are set, so a normal `python -m unittest` run stays offline. See `tests/e2e/__init__.py` for the variables.

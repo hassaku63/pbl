@@ -44,6 +44,11 @@ jobs:
           }
 
           files=$(gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files" --jq '.[].filename')
+          # Changes to the package code that may need README / API coverage updates (see .claude/skills/api-change/).
+          package_changed=false
+          docs_changed=false
+          if printf '%s\n' "$files" | grep -Eq '^backlog/'; then package_changed=true; fi
+          if printf '%s\n' "$files" | grep -Eqx 'README.md|docs/API_COVERAGE.md'; then docs_changed=true; fi
           version_changed=false
           if printf '%s\n' "$files" | grep -Fxq VERSION; then
             version_changed=true
@@ -72,6 +77,7 @@ jobs:
             echo "base_version=$base_version"
             echo "head_version=$head_version"
             echo "problem=$problem"
+            echo "docs_reminder=$([ "$package_changed" = true ] && [ "$docs_changed" = false ] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
       - name: Comment on the pull request
@@ -85,6 +91,7 @@ jobs:
           BASE_VERSION: ${{ steps.inspect.outputs.base_version }}
           HEAD_VERSION: ${{ steps.inspect.outputs.head_version }}
           PROBLEM: ${{ steps.inspect.outputs.problem }}
+          DOCS_REMINDER: ${{ steps.inspect.outputs.docs_reminder }}
         run: |
           set -euo pipefail
           marker='<!-- pbl-release-check -->'
@@ -127,6 +134,10 @@ jobs:
                   echo "See the \"Releasing\" section of CONTRIBUTING.md."
                   ;;
               esac
+              if [ "$DOCS_REMINDER" = "true" ]; then
+                echo
+                echo "📝 This pull request changes \`backlog/\` but not \`README.md\` or \`docs/API_COVERAGE.md\`. If it adds or changes API methods, check whether the README needs an update. (The coverage document itself is verified by CI.)"
+              fi
               echo
               echo "<sub>This comment is updated automatically and will be marked as outdated when the pull request is closed.</sub>"
             } > body.md
