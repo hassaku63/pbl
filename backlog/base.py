@@ -15,6 +15,7 @@ from backlog.custom_field import CustomField
 from backlog.priority import Priority
 from backlog.resolution import Resolution
 from backlog.watching import Watching
+from backlog.notification import Notification
 
 BACKLOG_BASE_URL = "https://{space}.{domain}"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -228,6 +229,7 @@ class BacklogAPI(BaseAPI):
         self.priority = Priority(self)
         self.resolution = Resolution(self)
         self.watching = Watching(self)
+        self.notification = Notification(self)
 
     def get_rate_limit(self):
         """

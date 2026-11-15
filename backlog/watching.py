@@ -1,11 +1,6 @@
 # coding: utf-8
 
-
-def _bool_params(params):
-    """
-    Send booleans as "true" / "false", the form the Backlog API documents.
-    """
-    return {k: ("true" if v else "false") if isinstance(v, bool) else v for k, v in params.items()}
+from backlog._params import bool_params
 
 
 class Watching(object):
@@ -27,7 +22,7 @@ class Watching(object):
         """
         _uri = "users/{user_id}/watchings".format(user_id=userId)
 
-        resp = self.api.invoke_method("GET", _uri, query_param=_bool_params(kwargs))
+        resp = self.api.invoke_method("GET", _uri, query_param=bool_params(kwargs))
 
         return resp.json()
 
@@ -42,7 +37,7 @@ class Watching(object):
         :return: {"count": int}
         """
         _uri = "users/{user_id}/watchings/count".format(user_id=userId)
-        _query_param = _bool_params({"resourceAlreadyRead": resourceAlreadyRead, "alreadyRead": alreadyRead})
+        _query_param = bool_params({"resourceAlreadyRead": resourceAlreadyRead, "alreadyRead": alreadyRead})
 
         resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
 

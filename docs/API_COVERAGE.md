@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **79 of 152 endpoints (52%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **83 of 152 endpoints (55%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -18,7 +18,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Documents](#documents) | 0 / 10 |
 | [Git](#git) | 14 / 14 |
 | [Issues](#issues) | 24 / 24 |
-| [Notifications](#notifications) | 0 / 4 |
+| [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
 | [Projects](#projects) | 18 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
@@ -103,10 +103,10 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| GET | `notifications` | [Get Notification](https://developer.nulab.com/docs/backlog/api/2/get-notification/) | 2026-11-15 | — |
-| POST | `notifications/:id/markAsRead` | [Read Notification](https://developer.nulab.com/docs/backlog/api/2/read-notification/) | 2026-11-15 | — |
-| GET | `notifications/count` | [Count Notification](https://developer.nulab.com/docs/backlog/api/2/count-notification/) | 2026-11-15 | — |
-| POST | `notifications/markAsRead` | [Reset Unread Notification Count](https://developer.nulab.com/docs/backlog/api/2/reset-unread-notification-count/) | 2026-11-15 | — |
+| GET | `notifications` | [Get Notification](https://developer.nulab.com/docs/backlog/api/2/get-notification/) | 2026-11-15 | `Notification.list()` |
+| POST | `notifications/:id/markAsRead` | [Read Notification](https://developer.nulab.com/docs/backlog/api/2/read-notification/) | 2026-11-15 | `Notification.mark_as_read()` |
+| GET | `notifications/count` | [Count Notification](https://developer.nulab.com/docs/backlog/api/2/count-notification/) | 2026-11-15 | `Notification.count()` |
+| POST | `notifications/markAsRead` | [Reset Unread Notification Count](https://developer.nulab.com/docs/backlog/api/2/reset-unread-notification-count/) | 2026-11-15 | `Notification.reset_unread_count()` |
 
 ## Priorities
 
