@@ -1,7 +1,7 @@
 name: Release check
 
-# Tells on each pull request whether merging it releases a new version, and enforces that
-# VERSION is only bumped in dedicated release pull requests.
+# Tells on each pull request whether merging it releases a new version, and fails when the
+# VERSION change cannot be released.
 #
 # Security: this workflow uses pull_request_target so that it can comment on pull requests from
 # forks. It must never check out or run code from the pull request. It only reads the list of
@@ -44,7 +44,6 @@ jobs:
           }
 
           files=$(gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files" --jq '.[].filename')
-          total=$(printf '%s\n' "$files" | grep -c . || true)
           version_changed=false
           if printf '%s\n' "$files" | grep -Fxq VERSION; then
             version_changed=true
@@ -57,9 +56,7 @@ jobs:
           problem=""
           if [ "$version_changed" = true ]; then
             status=release
-            if [ "$total" -gt 1 ]; then
-              problem="VERSION is changed together with other files. Bump VERSION in a dedicated release pull request instead."
-            elif ! valid "$head_version"; then
+            if ! valid "$head_version"; then
               problem="VERSION must be in the X.Y.Z format."
             elif [ "$(printf '%s\n%s\n' "$base_version" "$head_version" | sort -V | tail -n 1)" != "$head_version" ] \
                 || [ "$base_version" = "$head_version" ]; then
