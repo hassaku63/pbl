@@ -124,7 +124,7 @@ class Issue(object):
         if attachmentId is not None:
             _data.update([("attachmentId[]", attachmentId)])
 
-        resp = self.api.invoke_method(_method, _uri, _data)
+        resp = self.api.invoke_method(_method, _uri, request_param=_data)
 
         return resp.json()
 

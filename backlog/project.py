@@ -72,6 +72,7 @@ class Project(object):
         useOriginalImageSizeAtWiki: Optional[bool] = None,
         textFormattingRule: Optional[TextFormattingRule] = None,
         useDevAttributes: Optional[bool] = None,
+        chartEnabled: Optional[bool] = None,
     ) -> AddProjectResponse:
         """Add project
         https://developer.nulab.com/docs/backlog/api/2/add-project/#form-parameters
@@ -80,8 +81,10 @@ class Project(object):
         :type name: str
         :param key: Project Key (Uppercase letters (A-Z), numbers (0-9) and underscore (_) can be used.)
         :type key: str
-        :param chatEnabled: Enable chart
+        :param chatEnabled: Deprecated alias of chartEnabled, kept for backward compatibility
         :type chatEnabled: bool
+        :param chartEnabled: Enable chart
+        :type chartEnabled: bool
         :param useResolvedForChart: Consider Resolved and statuses after as Closed
         :type useResolvedForChart: bool
         :param subtaskingEnabled: Enable subtasking
@@ -109,10 +112,14 @@ class Project(object):
         """
         _path = "projects"
         _method = "POST"
+        if chartEnabled is not None and chatEnabled is not None and chartEnabled != chatEnabled:
+            raise ValueError("chartEnabled and its deprecated alias chatEnabled have conflicting values")
+        if chartEnabled is None:
+            chartEnabled = chatEnabled
         request_param = {
             "name": name,
             "key": key,
-            "chartEnabled": chatEnabled,
+            "chartEnabled": chartEnabled,
             "useResolvedForChart": useResolvedForChart,
             "subtaskingEnabled": subtaskingEnabled,
             "projectLeaderCanEditProjectLeader": projectLeaderCanEditProjectLeader,
@@ -241,7 +248,7 @@ class Project(object):
         _uri = "projects/{project_id_or_key}/users".format(project_id_or_key=projectIdOrKey)
         _method = "GET"
         _query_param = {
-            "excludeGroupMembers": "ture" if excludeGroupMembers else "false"
+            "excludeGroupMembers": "true" if excludeGroupMembers else "false"
         }
 
         resp = self.api.invoke_method(_method, _uri, query_param=_query_param)
@@ -361,7 +368,7 @@ class Project(object):
         )
         _method = "POST"
 
-        resp = self.api.invoke_method(_method, _uri)
+        resp = self.api.invoke_method(_method, _uri, request_param={"name": name})
 
         return resp.json()
 
@@ -380,7 +387,7 @@ class Project(object):
         )
         _method = "PATCH"
 
-        resp = self.api.invoke_method(_method, _uri)
+        resp = self.api.invoke_method(_method, _uri, request_param={"name": name})
 
         return resp.json()
 

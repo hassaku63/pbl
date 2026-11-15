@@ -148,13 +148,13 @@ class BacklogAPI(BaseAPI):
 
     def delete(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri
-        resp = requests.delete(_url, params=query_param, headers=headers, **kwargs)
-        return self._raise_for_status(resp, lambda code: code == 200)
+        resp = requests.delete(_url, params=query_param, data=request_param, headers=headers, **kwargs)
+        return self._raise_for_status(resp, lambda code: code // 100 == 2)
 
     def patch(self, method, uri, query_param, request_param, headers, **kwargs):
         _url = self.base_url + uri
         resp = requests.patch(_url, params=query_param, data=request_param, headers=headers, **kwargs)
-        return self._raise_for_status(resp, lambda code: code == 200)
+        return self._raise_for_status(resp, lambda code: code // 100 == 2)
 
 
 class BacklogObject(object):

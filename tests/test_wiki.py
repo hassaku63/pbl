@@ -468,7 +468,8 @@ class TestWiki(unittest.TestCase):
                 httpretty.GET,
                 API_ENDPOINT.format(space=self.space, uri=_uri),
                 body=tmp.file.read(),
-                content_type="application/octet-stream"
+                content_type="application/octet-stream",
+                adding_headers={"Content-Disposition": "attachment;filename*=UTF-8''{}".format(_name)}
             )
 
             # test
