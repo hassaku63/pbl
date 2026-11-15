@@ -27,6 +27,10 @@ class TestSpaceRead(unittest.TestCase):
     def test_rate_limit(self):
         self.assertIn("rateLimit", self.api.get_rate_limit())
 
+    def test_priorities_and_resolutions(self):
+        self.assertTrue(self.api.priority.list())
+        self.assertTrue(self.api.resolution.list())
+
 
 @requires_project
 class TestProjectRead(unittest.TestCase):
@@ -43,6 +47,10 @@ class TestProjectRead(unittest.TestCase):
 
     def test_issue_types(self):
         self.assertTrue(self.api.project.list_issue_types(PROJECT_KEY))
+
+    def test_statuses_and_versions(self):
+        self.assertTrue(self.api.project.list_statuses(PROJECT_KEY))
+        self.assertIsInstance(self.api.project.list_versions(PROJECT_KEY), list)
 
     def test_categories(self):
         self.assertIsInstance(self.api.category.list(PROJECT_KEY), list)

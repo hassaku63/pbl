@@ -12,6 +12,8 @@ from backlog.git import Git
 from backlog.user import User
 from backlog.category import Category
 from backlog.custom_field import CustomField
+from backlog.priority import Priority
+from backlog.resolution import Resolution
 
 BACKLOG_BASE_URL = "https://{space}.{domain}"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -222,6 +224,8 @@ class BacklogAPI(BaseAPI):
         self.user = User(self)
         self.category = Category(self)
         self.custom_field = CustomField(self)
+        self.priority = Priority(self)
+        self.resolution = Resolution(self)
 
     def get_rate_limit(self):
         """

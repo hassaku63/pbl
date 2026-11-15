@@ -257,6 +257,32 @@ class Project(object):
 
         return resp.json()
 
+    def list_statuses(self, projectIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of statuses in the project (for statusId when adding or updating issues)
+        """
+        _uri = "projects/{project_id_or_key}/statuses".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def list_versions(self, projectIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-version-milestone-list/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of versions/milestones in the project (for versionId[] / milestoneId[] of issues)
+        """
+        _uri = "projects/{project_id_or_key}/versions".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
     def list_issue_types(self, projectIdOrKey):
         """
         https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-type-list/

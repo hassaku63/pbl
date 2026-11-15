@@ -14,7 +14,7 @@ class TestIssueRoundTrip(unittest.TestCase):
         api = client()
         project = api.project.get(PROJECT_KEY)
         issue_type = api.project.list_issue_types(PROJECT_KEY)[0]
-        priority = api.invoke_method("GET", "priorities").json()[-1]
+        priority = api.priority.list()[-1]
 
         issue = api.issue.create(
             projectId=project["id"],
