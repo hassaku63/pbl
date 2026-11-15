@@ -40,6 +40,10 @@ def main():
     print(api.project.list_statuses("SampleProject"))  # statusId
     print(api.project.list_versions("SampleProject"))  # versionId[] / milestoneId[]
 
+    # Your own user, and the issues you watch
+    me = api.user.get_myself()
+    print(api.watching.list(me["id"], resourceAlreadyRead=False))  # unread watched issues
+
     """
     Project API
     """

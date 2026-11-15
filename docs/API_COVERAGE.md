@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **67 of 152 endpoints (44%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **75 of 152 endpoints (49%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -26,8 +26,8 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Space](#space) | 1 / 8 |
 | [Stars](#stars) | 0 / 2 |
 | [Teams](#teams) | 0 / 3 |
-| [Users](#users) | 2 / 14 |
-| [Watching](#watching) | 0 / 5 |
+| [Users](#users) | 5 / 14 |
+| [Watching](#watching) | 5 / 5 |
 | [Wiki](#wiki) | 9 / 16 |
 
 ## Activities
@@ -217,9 +217,9 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | — |
 | GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | — |
 | GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | — |
-| GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | — |
-| GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | 2026-11-15 | — |
-| GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | 2026-11-15 | — |
+| GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | `Watching.list()` |
+| GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | 2026-11-15 | `Watching.count()` |
+| GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | 2026-11-15 | `User.get_myself()` |
 | GET | `users/myself/recentlyViewedIssues` | [Get List of Recently Viewed Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/) | 2026-11-15 | — |
 | POST | `users/myself/recentlyViewedIssues` | [Add Recently Viewed Issue](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/) | 2026-11-15 | — |
 | GET | `users/myself/recentlyViewedProjects` | [Get List of Recently Viewed Projects](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/) | 2026-11-15 | — |
@@ -230,11 +230,11 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| POST | `watchings` | [Add Watching](https://developer.nulab.com/docs/backlog/api/2/add-watching/) | 2026-11-15 | — |
-| DELETE | `watchings/:watchingId` | [Delete Watching](https://developer.nulab.com/docs/backlog/api/2/delete-watching/) | 2026-11-15 | — |
-| GET | `watchings/:watchingId` | [Get Watching](https://developer.nulab.com/docs/backlog/api/2/get-watching/) | 2026-11-15 | — |
-| PATCH | `watchings/:watchingId` | [Update Watching](https://developer.nulab.com/docs/backlog/api/2/update-watching/) | 2026-11-15 | — |
-| POST | `watchings/:watchingId/markAsRead` | [Mark Watching as Read](https://developer.nulab.com/docs/backlog/api/2/mark-watching-as-read/) | 2026-11-15 | — |
+| POST | `watchings` | [Add Watching](https://developer.nulab.com/docs/backlog/api/2/add-watching/) | 2026-11-15 | `Watching.add()` |
+| DELETE | `watchings/:watchingId` | [Delete Watching](https://developer.nulab.com/docs/backlog/api/2/delete-watching/) | 2026-11-15 | `Watching.delete()` |
+| GET | `watchings/:watchingId` | [Get Watching](https://developer.nulab.com/docs/backlog/api/2/get-watching/) | 2026-11-15 | `Watching.get()` |
+| PATCH | `watchings/:watchingId` | [Update Watching](https://developer.nulab.com/docs/backlog/api/2/update-watching/) | 2026-11-15 | `Watching.update()` |
+| POST | `watchings/:watchingId/markAsRead` | [Mark Watching as Read](https://developer.nulab.com/docs/backlog/api/2/mark-watching-as-read/) | 2026-11-15 | `Watching.mark_as_read()` |
 
 ## Wiki
 
