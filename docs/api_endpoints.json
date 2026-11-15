@@ -1,918 +1,1071 @@
 {
-  "source": "https://developer.nulab.com/docs/backlog/",
-  "checked": "2026-11-15",
+  "_comment": "Backlog API endpoints from the official API reference. Maintained by hand (or by an AI agent reading the pages); see .claude/skills/api-change/SKILL.md. last_accessed is the date the page was last read.",
+  "index": "https://developer.nulab.com/docs/backlog/",
+  "index_last_accessed": "2026-11-15",
   "endpoints": [
     {
       "method": "GET",
       "path": "/api/v2/activities/:activityId",
       "title": "Get Activity",
-      "slug": "get-activity"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-activity/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents",
       "title": "Get document list",
-      "slug": "get-document-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-document-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/documents",
       "title": "Add document",
-      "slug": "add-document"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-document/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/documents/:documentId",
       "title": "Delete document",
-      "slug": "delete-document"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-document/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents/:documentId",
       "title": "Get document",
-      "slug": "get-document"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-document/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents/:documentId/attachments/:attachmentId",
       "title": "Get document Attachments",
-      "slug": "get-document-attachments"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-document-attachments/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents/:documentId/comments",
       "title": "Get document comment",
-      "slug": "get-document-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-document-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/documents/:documentId/tags",
       "title": "Remove document tag",
-      "slug": "remove-document-tag"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-document-tag/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/documents/:documentId/tags",
       "title": "Add document tag",
-      "slug": "add-document-tag"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-document-tag/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents/count",
       "title": "Count document",
-      "slug": "count-document"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-document/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/documents/tree",
       "title": "Get document tree",
-      "slug": "get-document-tree"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-document-tree/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues",
       "title": "Get Issue List",
-      "slug": "get-issue-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-issue-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/issues",
       "title": "Add Issue",
-      "slug": "add-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/issues/:issueIdOrKey",
       "title": "Delete Issue",
-      "slug": "delete-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey",
       "title": "Get Issue",
-      "slug": "get-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/issues/:issueIdOrKey",
       "title": "Update Issue",
-      "slug": "update-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/attachments",
       "title": "Get List of Issue Attachments",
-      "slug": "get-list-of-issue-attachments"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-issue-attachments/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/issues/:issueIdOrKey/attachments/:attachmentId",
       "title": "Delete Issue Attachment",
-      "slug": "delete-issue-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-issue-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/attachments/:attachmentId",
       "title": "Get Issue Attachment",
-      "slug": "get-issue-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/comments",
       "title": "Get Comment List",
-      "slug": "get-comment-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-comment-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/issues/:issueIdOrKey/comments",
       "title": "Add Comment",
-      "slug": "add-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
       "title": "Delete Comment",
-      "slug": "delete-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
       "title": "Get Comment",
-      "slug": "get-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
       "title": "Update comment",
-      "slug": "update-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId/notifications",
       "title": "Get List of Comment Notifications",
-      "slug": "get-list-of-comment-notifications"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-comment-notifications/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId/notifications",
       "title": "Add Comment Notification",
-      "slug": "add-comment-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-comment-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/comments/count",
       "title": "Count Comment",
-      "slug": "count-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/participants",
       "title": "Get Issue Participant List",
-      "slug": "get-issue-participant-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/relatedIssues",
       "title": "Get List of Related Issues",
-      "slug": "get-list-of-related-issues"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/issues/:issueIdOrKey/relatedIssues",
       "title": "Add Related Issue",
-      "slug": "add-related-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-related-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/issues/:issueIdOrKey/relatedIssues/:relatedIssueId",
       "title": "Remove Related Issue",
-      "slug": "remove-related-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/:issueIdOrKey/sharedFiles",
       "title": "Get List of Linked Shared Files",
-      "slug": "get-list-of-linked-shared-files"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-linked-shared-files/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/issues/:issueIdOrKey/sharedFiles",
       "title": "Link Shared Files to Issue",
-      "slug": "link-shared-files-to-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/issues/:issueIdOrKey/sharedFiles/:id",
       "title": "Remove Link to Shared File from Issue",
-      "slug": "remove-link-to-shared-file-from-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/issues/count",
       "title": "Count Issue",
-      "slug": "count-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/notifications",
       "title": "Get Notification",
-      "slug": "get-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/notifications/:id/markAsRead",
       "title": "Read Notification",
-      "slug": "read-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/read-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/notifications/count",
       "title": "Count Notification",
-      "slug": "count-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/notifications/markAsRead",
       "title": "Reset Unread Notification Count",
-      "slug": "reset-unread-notification-count"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/reset-unread-notification-count/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/priorities",
       "title": "Get Priority List",
-      "slug": "get-priority-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-priority-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects",
       "title": "Get Project List",
-      "slug": "get-project-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects",
       "title": "Add Project",
-      "slug": "add-project"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-project/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey",
       "title": "Delete Project",
-      "slug": "delete-project"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-project/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey",
       "title": "Get Project",
-      "slug": "get-project"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey",
       "title": "Update Project",
-      "slug": "update-project"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-project/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/activities",
       "title": "Get Project Recent Updates",
-      "slug": "get-project-recent-updates"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/administrators",
       "title": "Delete Project Administrator",
-      "slug": "delete-project-administrator"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-project-administrator/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/administrators",
       "title": "Get List of Project Administrators",
-      "slug": "get-list-of-project-administrators"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/administrators",
       "title": "Add Project Administrator",
-      "slug": "add-project-administrator"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-project-administrator/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/categories",
       "title": "Get Category List",
-      "slug": "get-category-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-category-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/categories",
       "title": "Add Category",
-      "slug": "add-category"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-category/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/categories/:id",
       "title": "Delete Category",
-      "slug": "delete-category"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-category/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/categories/:id",
       "title": "Update Category",
-      "slug": "update-category"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-category/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/customFields",
       "title": "Get Custom Field List",
-      "slug": "get-custom-field-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-custom-field-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/customFields",
       "title": "Add Custom Field",
-      "slug": "add-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/customFields/:id",
       "title": "Delete Custom Field",
-      "slug": "delete-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/customFields/:id",
       "title": "Update Custom Field",
-      "slug": "update-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items",
       "title": "Add List Item for List Type Custom Field",
-      "slug": "add-list-item-for-list-type-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-list-item-for-list-type-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items/:itemId",
       "title": "Delete List Item for List Type Custom Field",
-      "slug": "delete-list-item-for-list-type-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-list-item-for-list-type-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items/:itemId",
       "title": "Update List Item for List Type Custom Field",
-      "slug": "update-list-item-for-list-type-custom-field"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-list-item-for-list-type-custom-field/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/diskUsage",
       "title": "Get Project Disk Usage",
-      "slug": "get-project-disk-usage"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-disk-usage/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/files/:sharedFileId",
       "title": "Get File",
-      "slug": "get-file"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-file/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/files/metadata/:path",
       "title": "Get List of Shared Files",
-      "slug": "get-list-of-shared-files"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories",
       "title": "Get List of Git Repositories",
-      "slug": "get-list-of-git-repositories"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-git-repositories/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName",
       "title": "Get Git Repository",
-      "slug": "get-git-repository"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-git-repository/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests",
       "title": "Get Pull Request List",
-      "slug": "get-pull-request-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-pull-request-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests",
       "title": "Add Pull Request",
-      "slug": "add-pull-request"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-pull-request/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number",
       "title": "Get Pull Request",
-      "slug": "get-pull-request"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-pull-request/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number",
       "title": "Update Pull Request",
-      "slug": "update-pull-request"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-pull-request/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments",
       "title": "Get List of Pull Request Attachment",
-      "slug": "get-list-of-pull-request-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-pull-request-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId",
       "title": "Delete Pull Request Attachments",
-      "slug": "delete-pull-request-attachments"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-pull-request-attachments/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId",
       "title": "Download Pull Request Attachment",
-      "slug": "download-pull-request-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/download-pull-request-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments",
       "title": "Get Pull Request Comment",
-      "slug": "get-pull-request-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-pull-request-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments",
       "title": "Add Pull Request Comment",
-      "slug": "add-pull-request-comment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-pull-request-comment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId",
       "title": "Update Pull Request Comment Information",
-      "slug": "update-pull-request-comment-information"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-pull-request-comment-information/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count",
       "title": "Get Number of Pull Request Comments",
-      "slug": "get-number-of-pull-request-comments"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-request-comments/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count",
       "title": "Get Number of Pull Requests",
-      "slug": "get-number-of-pull-requests"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-requests/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/image",
       "title": "Get Project Icon",
-      "slug": "get-project-icon"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-icon/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/issueTypes",
       "title": "Get Issue Type List",
-      "slug": "get-issue-type-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/issueTypes",
       "title": "Add Issue Type",
-      "slug": "add-issue-type"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-issue-type/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/issueTypes/:id",
       "title": "Delete Issue Type",
-      "slug": "delete-issue-type"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/issueTypes/:id",
       "title": "Update Issue Type",
-      "slug": "update-issue-type"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-issue-type/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/statuses",
       "title": "Get Status List of Project",
-      "slug": "get-status-list-of-project"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/statuses",
       "title": "Add Status",
-      "slug": "add-status"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-status/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/statuses/:id",
       "title": "Delete Status",
-      "slug": "delete-status"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-status/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/statuses/:id",
       "title": "Update Status",
-      "slug": "update-status"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-status/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/statuses/updateDisplayOrder",
       "title": "Update Order of Status",
-      "slug": "update-order-of-status"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/teams",
       "title": "Delete Project Team",
-      "slug": "delete-project-team"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-project-team/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/teams",
       "title": "Get Project Team List",
-      "slug": "get-project-team-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/teams",
       "title": "Add Project Team",
-      "slug": "add-project-team"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-project-team/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/users",
       "title": "Delete Project User",
-      "slug": "delete-project-user"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-project-user/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/users",
       "title": "Get Project User List",
-      "slug": "get-project-user-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/users",
       "title": "Add Project User",
-      "slug": "add-project-user"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-project-user/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/versions",
       "title": "Get Version/Milestone List",
-      "slug": "get-version-milestone-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-version-milestone-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/versions",
       "title": "Add Version/Milestone",
-      "slug": "add-version-milestone"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/versions/:id",
       "title": "Delete Version",
-      "slug": "delete-version"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-version/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/versions/:id",
       "title": "Update Version/Milestone",
-      "slug": "update-version-milestone"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/webhooks",
       "title": "Get List of Webhooks",
-      "slug": "get-list-of-webhooks"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/projects/:projectIdOrKey/webhooks",
       "title": "Add Webhook",
-      "slug": "add-webhook"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-webhook/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
       "title": "Delete Webhook",
-      "slug": "delete-webhook"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-webhook/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
       "title": "Get Webhook",
-      "slug": "get-webhook"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-webhook/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
       "title": "Update Webhook",
-      "slug": "update-webhook"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-webhook/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/rateLimit",
       "title": "Get Rate Limit",
-      "slug": "get-rate-limit"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-rate-limit/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/resolutions",
       "title": "Get Resolution List",
-      "slug": "get-resolution-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-resolution-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space",
       "title": "Get Space",
-      "slug": "get-space"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-space/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space/activities",
       "title": "Get Recent Updates",
-      "slug": "get-recent-updates"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/space/attachment",
       "title": "Post Attachment File",
-      "slug": "post-attachment-file"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space/diskUsage",
       "title": "Get Space Disk Usage",
-      "slug": "get-space-disk-usage"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-space-disk-usage/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space/image",
       "title": "Get Space Logo",
-      "slug": "get-space-logo"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-space-logo/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space/licence",
       "title": "Get Licence",
-      "slug": "get-licence"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-licence/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/space/notification",
       "title": "Get Space Notification",
-      "slug": "get-space-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-space-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PUT",
       "path": "/api/v2/space/notification",
       "title": "Update Space Notification",
-      "slug": "update-space-notification"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-space-notification/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/stars",
       "title": "Add Star",
-      "slug": "add-star"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-star/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/stars/:starId",
       "title": "Remove Star",
-      "slug": "remove-star"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-star/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/teams",
       "title": "Get List of Teams",
-      "slug": "get-list-of-teams"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-teams/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/teams/:teamId",
       "title": "Get Team",
-      "slug": "get-team"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-team/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/teams/:teamId/icon",
       "title": "Get Team Icon",
-      "slug": "get-team-icon"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-team-icon/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users",
       "title": "Get User List",
-      "slug": "get-user-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-user-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId",
       "title": "Get User",
-      "slug": "get-user"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-user/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/activities",
       "title": "Get User Recent Updates",
-      "slug": "get-user-recent-updates"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/icon",
       "title": "Get User Icon",
-      "slug": "get-user-icon"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-user-icon/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/stars",
       "title": "Get Received Star List",
-      "slug": "get-received-star-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/stars/count",
       "title": "Count User Received Stars",
-      "slug": "count-user-received-stars"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/watchings",
       "title": "Get Watching List",
-      "slug": "get-watching-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-watching-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/:userId/watchings/count",
       "title": "Count Watching",
-      "slug": "count-watching"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-watching/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/myself",
       "title": "Get Own User",
-      "slug": "get-own-user"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-own-user/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/myself/recentlyViewedIssues",
       "title": "Get List of Recently Viewed Issues",
-      "slug": "get-list-of-recently-viewed-issues"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/users/myself/recentlyViewedIssues",
       "title": "Add Recently Viewed Issue",
-      "slug": "add-recently-viewed-issue"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/myself/recentlyViewedProjects",
       "title": "Get List of Recently Viewed Projects",
-      "slug": "get-list-of-recently-viewed-projects"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/users/myself/recentlyViewedWikis",
       "title": "Get List of Recently Viewed Wikis",
-      "slug": "get-list-of-recently-viewed-wikis"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-wikis/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/users/myself/recentlyViewedWikis",
       "title": "Add Recently Viewed Wiki",
-      "slug": "add-recently-viewed-wiki"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-wiki/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/watchings",
       "title": "Add Watching",
-      "slug": "add-watching"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-watching/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/watchings/:watchingId",
       "title": "Delete Watching",
-      "slug": "delete-watching"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-watching/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/watchings/:watchingId",
       "title": "Get Watching",
-      "slug": "get-watching"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-watching/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/watchings/:watchingId",
       "title": "Update Watching",
-      "slug": "update-watching"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-watching/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/watchings/:watchingId/markAsRead",
       "title": "Mark Watching as Read",
-      "slug": "mark-watching-as-read"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/mark-watching-as-read/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis",
       "title": "Get Wiki Page List",
-      "slug": "get-wiki-page-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-list/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/wikis",
       "title": "Add Wiki Page",
-      "slug": "add-wiki-page"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/add-wiki-page/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/wikis/:wikiId",
       "title": "Delete Wiki Page",
-      "slug": "delete-wiki-page"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/delete-wiki-page/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId",
       "title": "Get Wiki Page",
-      "slug": "get-wiki-page"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "PATCH",
       "path": "/api/v2/wikis/:wikiId",
       "title": "Update Wiki Page",
-      "slug": "update-wiki-page"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/update-wiki-page/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId/attachments",
       "title": "Get List of Wiki attachments",
-      "slug": "get-list-of-wiki-attachments"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-wiki-attachments/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/wikis/:wikiId/attachments",
       "title": "Attach File to Wiki",
-      "slug": "attach-file-to-wiki"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/attach-file-to-wiki/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/wikis/:wikiId/attachments/:attachmentId",
       "title": "Remove Wiki Attachment",
-      "slug": "remove-wiki-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-wiki-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId/attachments/:attachmentId",
       "title": "Get Wiki Page Attachment",
-      "slug": "get-wiki-page-attachment"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-attachment/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId/history",
       "title": "Get Wiki Page History",
-      "slug": "get-wiki-page-history"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-history/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId/sharedFiles",
       "title": "Get List of Shared Files on Wiki",
-      "slug": "get-list-of-shared-files-on-wiki"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files-on-wiki/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "POST",
       "path": "/api/v2/wikis/:wikiId/sharedFiles",
       "title": "Link Shared Files to Wiki",
-      "slug": "link-shared-files-to-wiki"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-wiki/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "DELETE",
       "path": "/api/v2/wikis/:wikiId/sharedFiles/:id",
       "title": "Remove Link to Shared File from Wiki",
-      "slug": "remove-link-to-shared-file-from-wiki"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-wiki/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/:wikiId/stars",
       "title": "Get Wiki Page Star",
-      "slug": "get-wiki-page-star"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/count",
       "title": "Count Wiki Page",
-      "slug": "count-wiki-page"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/",
+      "last_accessed": "2026-11-15"
     },
     {
       "method": "GET",
       "path": "/api/v2/wikis/tags",
       "title": "Get Wiki Page Tag List",
-      "slug": "get-wiki-page-tag-list"
+      "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/",
+      "last_accessed": "2026-11-15"
     }
   ]
 }

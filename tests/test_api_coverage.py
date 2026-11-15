@@ -77,5 +77,30 @@ class TestCoverageDocument(unittest.TestCase):
             os.unlink(f.name)
 
 
+class TestEndpointList(unittest.TestCase):
+    def _load(self, data):
+        import json
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+            json.dump(data, f)
+        try:
+            with mock.patch.object(api_coverage, "ENDPOINTS_JSON", f.name):
+                return api_coverage._load_snapshot()
+        finally:
+            os.unlink(f.name)
+
+    def test_valid(self):
+        entry = {"method": "GET", "path": "/api/v2/space", "title": "Get Space",
+                 "url": "https://developer.nulab.com/docs/backlog/api/2/get-space/", "last_accessed": "2026-11-15"}
+        self.assertEqual([entry], self._load({"index": "x", "index_last_accessed": "2026-11-15", "endpoints": [entry]})["endpoints"])
+
+    def test_invalid(self):
+        bad = {"method": "FETCH", "path": "space", "title": "t", "url": "https://example.com/", "last_accessed": "Nov 15"}
+        with self.assertRaises(SystemExit) as cm:
+            self._load({"index": "x", "index_last_accessed": "2026-11-15", "endpoints": [bad, {"method": "GET"}]})
+        message = str(cm.exception)
+        for expected in ["invalid method", "must start with /api/v2/", "developer.nulab.com", "YYYY-MM-DD", "missing"]:
+            self.assertIn(expected, message)
+
+
 if __name__ == "__main__":
     unittest.main()

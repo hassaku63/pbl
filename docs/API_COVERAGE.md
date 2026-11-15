@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list is a snapshot of the official API reference taken on 2026-11-15 (`docs/api_endpoints.json`, refresh it with `python scripts/api_coverage.py refresh`). **53 of 152 endpoints (35%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **53 of 152 endpoints (35%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -32,227 +32,227 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 ## Activities
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `activities/:activityId` | [Get Activity](https://developer.nulab.com/docs/backlog/api/2/get-activity/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `activities/:activityId` | [Get Activity](https://developer.nulab.com/docs/backlog/api/2/get-activity/) | 2026-11-15 | — |
 
 ## Documents
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `documents` | [Get document list](https://developer.nulab.com/docs/backlog/api/2/get-document-list/) | — |
-| POST | `documents` | [Add document](https://developer.nulab.com/docs/backlog/api/2/add-document/) | — |
-| DELETE | `documents/:documentId` | [Delete document](https://developer.nulab.com/docs/backlog/api/2/delete-document/) | — |
-| GET | `documents/:documentId` | [Get document](https://developer.nulab.com/docs/backlog/api/2/get-document/) | — |
-| GET | `documents/:documentId/attachments/:attachmentId` | [Get document Attachments](https://developer.nulab.com/docs/backlog/api/2/get-document-attachments/) | — |
-| GET | `documents/:documentId/comments` | [Get document comment](https://developer.nulab.com/docs/backlog/api/2/get-document-comment/) | — |
-| DELETE | `documents/:documentId/tags` | [Remove document tag](https://developer.nulab.com/docs/backlog/api/2/remove-document-tag/) | — |
-| POST | `documents/:documentId/tags` | [Add document tag](https://developer.nulab.com/docs/backlog/api/2/add-document-tag/) | — |
-| GET | `documents/count` | [Count document](https://developer.nulab.com/docs/backlog/api/2/count-document/) | — |
-| GET | `documents/tree` | [Get document tree](https://developer.nulab.com/docs/backlog/api/2/get-document-tree/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `documents` | [Get document list](https://developer.nulab.com/docs/backlog/api/2/get-document-list/) | 2026-11-15 | — |
+| POST | `documents` | [Add document](https://developer.nulab.com/docs/backlog/api/2/add-document/) | 2026-11-15 | — |
+| DELETE | `documents/:documentId` | [Delete document](https://developer.nulab.com/docs/backlog/api/2/delete-document/) | 2026-11-15 | — |
+| GET | `documents/:documentId` | [Get document](https://developer.nulab.com/docs/backlog/api/2/get-document/) | 2026-11-15 | — |
+| GET | `documents/:documentId/attachments/:attachmentId` | [Get document Attachments](https://developer.nulab.com/docs/backlog/api/2/get-document-attachments/) | 2026-11-15 | — |
+| GET | `documents/:documentId/comments` | [Get document comment](https://developer.nulab.com/docs/backlog/api/2/get-document-comment/) | 2026-11-15 | — |
+| DELETE | `documents/:documentId/tags` | [Remove document tag](https://developer.nulab.com/docs/backlog/api/2/remove-document-tag/) | 2026-11-15 | — |
+| POST | `documents/:documentId/tags` | [Add document tag](https://developer.nulab.com/docs/backlog/api/2/add-document-tag/) | 2026-11-15 | — |
+| GET | `documents/count` | [Count document](https://developer.nulab.com/docs/backlog/api/2/count-document/) | 2026-11-15 | — |
+| GET | `documents/tree` | [Get document tree](https://developer.nulab.com/docs/backlog/api/2/get-document-tree/) | 2026-11-15 | — |
 
 ## Git
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `projects/:projectIdOrKey/git/repositories` | [Get List of Git Repositories](https://developer.nulab.com/docs/backlog/api/2/get-list-of-git-repositories/) | `Git.list_git_repositories()` |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName` | [Get Git Repository](https://developer.nulab.com/docs/backlog/api/2/get-git-repository/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Get Pull Request List](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-list/) | `Git.list_pull_requests()` |
-| POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Add Pull Request](https://developer.nulab.com/docs/backlog/api/2/add-pull-request/) | `Git.add_pull_request()` |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Get Pull Request](https://developer.nulab.com/docs/backlog/api/2/get-pull-request/) | — |
-| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Update Pull Request](https://developer.nulab.com/docs/backlog/api/2/update-pull-request/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments` | [Get List of Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/get-list-of-pull-request-attachment/) | — |
-| DELETE | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Delete Pull Request Attachments](https://developer.nulab.com/docs/backlog/api/2/delete-pull-request-attachments/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Download Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/download-pull-request-attachment/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Get Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-comment/) | — |
-| POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Add Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/add-pull-request-comment/) | `Git.add_pull_request_comment()` |
-| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId` | [Update Pull Request Comment Information](https://developer.nulab.com/docs/backlog/api/2/update-pull-request-comment-information/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count` | [Get Number of Pull Request Comments](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-request-comments/) | — |
-| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count` | [Get Number of Pull Requests](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-requests/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `projects/:projectIdOrKey/git/repositories` | [Get List of Git Repositories](https://developer.nulab.com/docs/backlog/api/2/get-list-of-git-repositories/) | 2026-11-15 | `Git.list_git_repositories()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName` | [Get Git Repository](https://developer.nulab.com/docs/backlog/api/2/get-git-repository/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Get Pull Request List](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-list/) | 2026-11-15 | `Git.list_pull_requests()` |
+| POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests` | [Add Pull Request](https://developer.nulab.com/docs/backlog/api/2/add-pull-request/) | 2026-11-15 | `Git.add_pull_request()` |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Get Pull Request](https://developer.nulab.com/docs/backlog/api/2/get-pull-request/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number` | [Update Pull Request](https://developer.nulab.com/docs/backlog/api/2/update-pull-request/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments` | [Get List of Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/get-list-of-pull-request-attachment/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Delete Pull Request Attachments](https://developer.nulab.com/docs/backlog/api/2/delete-pull-request-attachments/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId` | [Download Pull Request Attachment](https://developer.nulab.com/docs/backlog/api/2/download-pull-request-attachment/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Get Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/get-pull-request-comment/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments` | [Add Pull Request Comment](https://developer.nulab.com/docs/backlog/api/2/add-pull-request-comment/) | 2026-11-15 | `Git.add_pull_request_comment()` |
+| PATCH | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId` | [Update Pull Request Comment Information](https://developer.nulab.com/docs/backlog/api/2/update-pull-request-comment-information/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count` | [Get Number of Pull Request Comments](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-request-comments/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count` | [Get Number of Pull Requests](https://developer.nulab.com/docs/backlog/api/2/get-number-of-pull-requests/) | 2026-11-15 | — |
 
 ## Issues
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `issues` | [Get Issue List](https://developer.nulab.com/docs/backlog/api/2/get-issue-list/) | `Issue.list()` |
-| POST | `issues` | [Add Issue](https://developer.nulab.com/docs/backlog/api/2/add-issue/) | `Issue.create()` |
-| DELETE | `issues/:issueIdOrKey` | [Delete Issue](https://developer.nulab.com/docs/backlog/api/2/delete-issue/) | `Issue.delete()` |
-| GET | `issues/:issueIdOrKey` | [Get Issue](https://developer.nulab.com/docs/backlog/api/2/get-issue/) | `Issue.get()` |
-| PATCH | `issues/:issueIdOrKey` | [Update Issue](https://developer.nulab.com/docs/backlog/api/2/update-issue/) | `Issue.update()` |
-| GET | `issues/:issueIdOrKey/attachments` | [Get List of Issue Attachments](https://developer.nulab.com/docs/backlog/api/2/get-list-of-issue-attachments/) | `Issue.list_issue_attachments()` |
-| DELETE | `issues/:issueIdOrKey/attachments/:attachmentId` | [Delete Issue Attachment](https://developer.nulab.com/docs/backlog/api/2/delete-issue-attachment/) | `Issue.delete_issue_attachment()` |
-| GET | `issues/:issueIdOrKey/attachments/:attachmentId` | [Get Issue Attachment](https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/) | `Issue.get_issue_attachment()` |
-| GET | `issues/:issueIdOrKey/comments` | [Get Comment List](https://developer.nulab.com/docs/backlog/api/2/get-comment-list/) | `Issue.get_comments()` |
-| POST | `issues/:issueIdOrKey/comments` | [Add Comment](https://developer.nulab.com/docs/backlog/api/2/add-comment/) | `Issue.add_comment()` |
-| DELETE | `issues/:issueIdOrKey/comments/:commentId` | [Delete Comment](https://developer.nulab.com/docs/backlog/api/2/delete-comment/) | `Issue.delete_comment()` |
-| GET | `issues/:issueIdOrKey/comments/:commentId` | [Get Comment](https://developer.nulab.com/docs/backlog/api/2/get-comment/) | `Issue.get_comment()` |
-| PATCH | `issues/:issueIdOrKey/comments/:commentId` | [Update comment](https://developer.nulab.com/docs/backlog/api/2/update-comment/) | `Issue.update_comment()` |
-| GET | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Get List of Comment Notifications](https://developer.nulab.com/docs/backlog/api/2/get-list-of-comment-notifications/) | `Issue.get_comment_notifications()` |
-| POST | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Add Comment Notification](https://developer.nulab.com/docs/backlog/api/2/add-comment-notification/) | `Issue.add_comment_notification()` |
-| GET | `issues/:issueIdOrKey/comments/count` | [Count Comment](https://developer.nulab.com/docs/backlog/api/2/count-comment/) | `Issue.count_comments()` |
-| GET | `issues/:issueIdOrKey/participants` | [Get Issue Participant List](https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/) | — |
-| GET | `issues/:issueIdOrKey/relatedIssues` | [Get List of Related Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/) | — |
-| POST | `issues/:issueIdOrKey/relatedIssues` | [Add Related Issue](https://developer.nulab.com/docs/backlog/api/2/add-related-issue/) | — |
-| DELETE | `issues/:issueIdOrKey/relatedIssues/:relatedIssueId` | [Remove Related Issue](https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/) | — |
-| GET | `issues/:issueIdOrKey/sharedFiles` | [Get List of Linked Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-linked-shared-files/) | `Issue.list_issue_shared_files()` |
-| POST | `issues/:issueIdOrKey/sharedFiles` | [Link Shared Files to Issue](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-issue/) | `Issue.link_issue_shared_files()` |
-| DELETE | `issues/:issueIdOrKey/sharedFiles/:id` | [Remove Link to Shared File from Issue](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-issue/) | `Issue.unlink_issue_shared_file()` |
-| GET | `issues/count` | [Count Issue](https://developer.nulab.com/docs/backlog/api/2/count-issue/) | `Issue.count()` |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `issues` | [Get Issue List](https://developer.nulab.com/docs/backlog/api/2/get-issue-list/) | 2026-11-15 | `Issue.list()` |
+| POST | `issues` | [Add Issue](https://developer.nulab.com/docs/backlog/api/2/add-issue/) | 2026-11-15 | `Issue.create()` |
+| DELETE | `issues/:issueIdOrKey` | [Delete Issue](https://developer.nulab.com/docs/backlog/api/2/delete-issue/) | 2026-11-15 | `Issue.delete()` |
+| GET | `issues/:issueIdOrKey` | [Get Issue](https://developer.nulab.com/docs/backlog/api/2/get-issue/) | 2026-11-15 | `Issue.get()` |
+| PATCH | `issues/:issueIdOrKey` | [Update Issue](https://developer.nulab.com/docs/backlog/api/2/update-issue/) | 2026-11-15 | `Issue.update()` |
+| GET | `issues/:issueIdOrKey/attachments` | [Get List of Issue Attachments](https://developer.nulab.com/docs/backlog/api/2/get-list-of-issue-attachments/) | 2026-11-15 | `Issue.list_issue_attachments()` |
+| DELETE | `issues/:issueIdOrKey/attachments/:attachmentId` | [Delete Issue Attachment](https://developer.nulab.com/docs/backlog/api/2/delete-issue-attachment/) | 2026-11-15 | `Issue.delete_issue_attachment()` |
+| GET | `issues/:issueIdOrKey/attachments/:attachmentId` | [Get Issue Attachment](https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/) | 2026-11-15 | `Issue.get_issue_attachment()` |
+| GET | `issues/:issueIdOrKey/comments` | [Get Comment List](https://developer.nulab.com/docs/backlog/api/2/get-comment-list/) | 2026-11-15 | `Issue.get_comments()` |
+| POST | `issues/:issueIdOrKey/comments` | [Add Comment](https://developer.nulab.com/docs/backlog/api/2/add-comment/) | 2026-11-15 | `Issue.add_comment()` |
+| DELETE | `issues/:issueIdOrKey/comments/:commentId` | [Delete Comment](https://developer.nulab.com/docs/backlog/api/2/delete-comment/) | 2026-11-15 | `Issue.delete_comment()` |
+| GET | `issues/:issueIdOrKey/comments/:commentId` | [Get Comment](https://developer.nulab.com/docs/backlog/api/2/get-comment/) | 2026-11-15 | `Issue.get_comment()` |
+| PATCH | `issues/:issueIdOrKey/comments/:commentId` | [Update comment](https://developer.nulab.com/docs/backlog/api/2/update-comment/) | 2026-11-15 | `Issue.update_comment()` |
+| GET | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Get List of Comment Notifications](https://developer.nulab.com/docs/backlog/api/2/get-list-of-comment-notifications/) | 2026-11-15 | `Issue.get_comment_notifications()` |
+| POST | `issues/:issueIdOrKey/comments/:commentId/notifications` | [Add Comment Notification](https://developer.nulab.com/docs/backlog/api/2/add-comment-notification/) | 2026-11-15 | `Issue.add_comment_notification()` |
+| GET | `issues/:issueIdOrKey/comments/count` | [Count Comment](https://developer.nulab.com/docs/backlog/api/2/count-comment/) | 2026-11-15 | `Issue.count_comments()` |
+| GET | `issues/:issueIdOrKey/participants` | [Get Issue Participant List](https://developer.nulab.com/docs/backlog/api/2/get-issue-participant-list/) | 2026-11-15 | — |
+| GET | `issues/:issueIdOrKey/relatedIssues` | [Get List of Related Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-related-issues/) | 2026-11-15 | — |
+| POST | `issues/:issueIdOrKey/relatedIssues` | [Add Related Issue](https://developer.nulab.com/docs/backlog/api/2/add-related-issue/) | 2026-11-15 | — |
+| DELETE | `issues/:issueIdOrKey/relatedIssues/:relatedIssueId` | [Remove Related Issue](https://developer.nulab.com/docs/backlog/api/2/remove-related-issue/) | 2026-11-15 | — |
+| GET | `issues/:issueIdOrKey/sharedFiles` | [Get List of Linked Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-linked-shared-files/) | 2026-11-15 | `Issue.list_issue_shared_files()` |
+| POST | `issues/:issueIdOrKey/sharedFiles` | [Link Shared Files to Issue](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-issue/) | 2026-11-15 | `Issue.link_issue_shared_files()` |
+| DELETE | `issues/:issueIdOrKey/sharedFiles/:id` | [Remove Link to Shared File from Issue](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-issue/) | 2026-11-15 | `Issue.unlink_issue_shared_file()` |
+| GET | `issues/count` | [Count Issue](https://developer.nulab.com/docs/backlog/api/2/count-issue/) | 2026-11-15 | `Issue.count()` |
 
 ## Notifications
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `notifications` | [Get Notification](https://developer.nulab.com/docs/backlog/api/2/get-notification/) | — |
-| POST | `notifications/:id/markAsRead` | [Read Notification](https://developer.nulab.com/docs/backlog/api/2/read-notification/) | — |
-| GET | `notifications/count` | [Count Notification](https://developer.nulab.com/docs/backlog/api/2/count-notification/) | — |
-| POST | `notifications/markAsRead` | [Reset Unread Notification Count](https://developer.nulab.com/docs/backlog/api/2/reset-unread-notification-count/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `notifications` | [Get Notification](https://developer.nulab.com/docs/backlog/api/2/get-notification/) | 2026-11-15 | — |
+| POST | `notifications/:id/markAsRead` | [Read Notification](https://developer.nulab.com/docs/backlog/api/2/read-notification/) | 2026-11-15 | — |
+| GET | `notifications/count` | [Count Notification](https://developer.nulab.com/docs/backlog/api/2/count-notification/) | 2026-11-15 | — |
+| POST | `notifications/markAsRead` | [Reset Unread Notification Count](https://developer.nulab.com/docs/backlog/api/2/reset-unread-notification-count/) | 2026-11-15 | — |
 
 ## Priorities
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `priorities` | [Get Priority List](https://developer.nulab.com/docs/backlog/api/2/get-priority-list/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `priorities` | [Get Priority List](https://developer.nulab.com/docs/backlog/api/2/get-priority-list/) | 2026-11-15 | — |
 
 ## Projects
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `projects` | [Get Project List](https://developer.nulab.com/docs/backlog/api/2/get-project-list/) | `Project.list()` |
-| POST | `projects` | [Add Project](https://developer.nulab.com/docs/backlog/api/2/add-project/) | `Project.create()` |
-| DELETE | `projects/:projectIdOrKey` | [Delete Project](https://developer.nulab.com/docs/backlog/api/2/delete-project/) | — |
-| GET | `projects/:projectIdOrKey` | [Get Project](https://developer.nulab.com/docs/backlog/api/2/get-project/) | `Project.get()` |
-| PATCH | `projects/:projectIdOrKey` | [Update Project](https://developer.nulab.com/docs/backlog/api/2/update-project/) | `Project.update()` |
-| GET | `projects/:projectIdOrKey/activities` | [Get Project Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/) | — |
-| DELETE | `projects/:projectIdOrKey/administrators` | [Delete Project Administrator](https://developer.nulab.com/docs/backlog/api/2/delete-project-administrator/) | — |
-| GET | `projects/:projectIdOrKey/administrators` | [Get List of Project Administrators](https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/) | — |
-| POST | `projects/:projectIdOrKey/administrators` | [Add Project Administrator](https://developer.nulab.com/docs/backlog/api/2/add-project-administrator/) | — |
-| GET | `projects/:projectIdOrKey/categories` | [Get Category List](https://developer.nulab.com/docs/backlog/api/2/get-category-list/) | `Category.list()`, `Project.list_categories()` |
-| POST | `projects/:projectIdOrKey/categories` | [Add Category](https://developer.nulab.com/docs/backlog/api/2/add-category/) | `Category.add()`, `Project.add_category()` |
-| DELETE | `projects/:projectIdOrKey/categories/:id` | [Delete Category](https://developer.nulab.com/docs/backlog/api/2/delete-category/) | `Category.delete()`, `Project.delete_category()` |
-| PATCH | `projects/:projectIdOrKey/categories/:id` | [Update Category](https://developer.nulab.com/docs/backlog/api/2/update-category/) | `Category.update()`, `Project.update_category()` |
-| GET | `projects/:projectIdOrKey/customFields` | [Get Custom Field List](https://developer.nulab.com/docs/backlog/api/2/get-custom-field-list/) | `CustomField.list()` |
-| POST | `projects/:projectIdOrKey/customFields` | [Add Custom Field](https://developer.nulab.com/docs/backlog/api/2/add-custom-field/) | `CustomField.add()` |
-| DELETE | `projects/:projectIdOrKey/customFields/:id` | [Delete Custom Field](https://developer.nulab.com/docs/backlog/api/2/delete-custom-field/) | `CustomField.delete()` |
-| PATCH | `projects/:projectIdOrKey/customFields/:id` | [Update Custom Field](https://developer.nulab.com/docs/backlog/api/2/update-custom-field/) | — |
-| POST | `projects/:projectIdOrKey/customFields/:id/items` | [Add List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/add-list-item-for-list-type-custom-field/) | — |
-| DELETE | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Delete List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/delete-list-item-for-list-type-custom-field/) | — |
-| PATCH | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Update List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/update-list-item-for-list-type-custom-field/) | — |
-| GET | `projects/:projectIdOrKey/diskUsage` | [Get Project Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-project-disk-usage/) | — |
-| GET | `projects/:projectIdOrKey/files/:sharedFileId` | [Get File](https://developer.nulab.com/docs/backlog/api/2/get-file/) | — |
-| GET | `projects/:projectIdOrKey/files/metadata/:path` | [Get List of Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/) | — |
-| GET | `projects/:projectIdOrKey/image` | [Get Project Icon](https://developer.nulab.com/docs/backlog/api/2/get-project-icon/) | — |
-| GET | `projects/:projectIdOrKey/issueTypes` | [Get Issue Type List](https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/) | `Project.list_issue_types()` |
-| POST | `projects/:projectIdOrKey/issueTypes` | [Add Issue Type](https://developer.nulab.com/docs/backlog/api/2/add-issue-type/) | `Project.add_issue_type()` |
-| DELETE | `projects/:projectIdOrKey/issueTypes/:id` | [Delete Issue Type](https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/) | `Project.delete_issue_type()` |
-| PATCH | `projects/:projectIdOrKey/issueTypes/:id` | [Update Issue Type](https://developer.nulab.com/docs/backlog/api/2/update-issue-type/) | `Project.update_issue_type()` |
-| GET | `projects/:projectIdOrKey/statuses` | [Get Status List of Project](https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/) | — |
-| POST | `projects/:projectIdOrKey/statuses` | [Add Status](https://developer.nulab.com/docs/backlog/api/2/add-status/) | — |
-| DELETE | `projects/:projectIdOrKey/statuses/:id` | [Delete Status](https://developer.nulab.com/docs/backlog/api/2/delete-status/) | — |
-| PATCH | `projects/:projectIdOrKey/statuses/:id` | [Update Status](https://developer.nulab.com/docs/backlog/api/2/update-status/) | — |
-| PATCH | `projects/:projectIdOrKey/statuses/updateDisplayOrder` | [Update Order of Status](https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/) | — |
-| DELETE | `projects/:projectIdOrKey/teams` | [Delete Project Team](https://developer.nulab.com/docs/backlog/api/2/delete-project-team/) | — |
-| GET | `projects/:projectIdOrKey/teams` | [Get Project Team List](https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/) | — |
-| POST | `projects/:projectIdOrKey/teams` | [Add Project Team](https://developer.nulab.com/docs/backlog/api/2/add-project-team/) | — |
-| DELETE | `projects/:projectIdOrKey/users` | [Delete Project User](https://developer.nulab.com/docs/backlog/api/2/delete-project-user/) | — |
-| GET | `projects/:projectIdOrKey/users` | [Get Project User List](https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/) | `Project.list_users()` |
-| POST | `projects/:projectIdOrKey/users` | [Add Project User](https://developer.nulab.com/docs/backlog/api/2/add-project-user/) | — |
-| GET | `projects/:projectIdOrKey/versions` | [Get Version/Milestone List](https://developer.nulab.com/docs/backlog/api/2/get-version-milestone-list/) | — |
-| POST | `projects/:projectIdOrKey/versions` | [Add Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/) | — |
-| DELETE | `projects/:projectIdOrKey/versions/:id` | [Delete Version](https://developer.nulab.com/docs/backlog/api/2/delete-version/) | — |
-| PATCH | `projects/:projectIdOrKey/versions/:id` | [Update Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/) | — |
-| GET | `projects/:projectIdOrKey/webhooks` | [Get List of Webhooks](https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/) | — |
-| POST | `projects/:projectIdOrKey/webhooks` | [Add Webhook](https://developer.nulab.com/docs/backlog/api/2/add-webhook/) | — |
-| DELETE | `projects/:projectIdOrKey/webhooks/:webhookId` | [Delete Webhook](https://developer.nulab.com/docs/backlog/api/2/delete-webhook/) | — |
-| GET | `projects/:projectIdOrKey/webhooks/:webhookId` | [Get Webhook](https://developer.nulab.com/docs/backlog/api/2/get-webhook/) | — |
-| PATCH | `projects/:projectIdOrKey/webhooks/:webhookId` | [Update Webhook](https://developer.nulab.com/docs/backlog/api/2/update-webhook/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `projects` | [Get Project List](https://developer.nulab.com/docs/backlog/api/2/get-project-list/) | 2026-11-15 | `Project.list()` |
+| POST | `projects` | [Add Project](https://developer.nulab.com/docs/backlog/api/2/add-project/) | 2026-11-15 | `Project.create()` |
+| DELETE | `projects/:projectIdOrKey` | [Delete Project](https://developer.nulab.com/docs/backlog/api/2/delete-project/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey` | [Get Project](https://developer.nulab.com/docs/backlog/api/2/get-project/) | 2026-11-15 | `Project.get()` |
+| PATCH | `projects/:projectIdOrKey` | [Update Project](https://developer.nulab.com/docs/backlog/api/2/update-project/) | 2026-11-15 | `Project.update()` |
+| GET | `projects/:projectIdOrKey/activities` | [Get Project Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/administrators` | [Delete Project Administrator](https://developer.nulab.com/docs/backlog/api/2/delete-project-administrator/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/administrators` | [Get List of Project Administrators](https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/administrators` | [Add Project Administrator](https://developer.nulab.com/docs/backlog/api/2/add-project-administrator/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/categories` | [Get Category List](https://developer.nulab.com/docs/backlog/api/2/get-category-list/) | 2026-11-15 | `Category.list()`, `Project.list_categories()` |
+| POST | `projects/:projectIdOrKey/categories` | [Add Category](https://developer.nulab.com/docs/backlog/api/2/add-category/) | 2026-11-15 | `Category.add()`, `Project.add_category()` |
+| DELETE | `projects/:projectIdOrKey/categories/:id` | [Delete Category](https://developer.nulab.com/docs/backlog/api/2/delete-category/) | 2026-11-15 | `Category.delete()`, `Project.delete_category()` |
+| PATCH | `projects/:projectIdOrKey/categories/:id` | [Update Category](https://developer.nulab.com/docs/backlog/api/2/update-category/) | 2026-11-15 | `Category.update()`, `Project.update_category()` |
+| GET | `projects/:projectIdOrKey/customFields` | [Get Custom Field List](https://developer.nulab.com/docs/backlog/api/2/get-custom-field-list/) | 2026-11-15 | `CustomField.list()` |
+| POST | `projects/:projectIdOrKey/customFields` | [Add Custom Field](https://developer.nulab.com/docs/backlog/api/2/add-custom-field/) | 2026-11-15 | `CustomField.add()` |
+| DELETE | `projects/:projectIdOrKey/customFields/:id` | [Delete Custom Field](https://developer.nulab.com/docs/backlog/api/2/delete-custom-field/) | 2026-11-15 | `CustomField.delete()` |
+| PATCH | `projects/:projectIdOrKey/customFields/:id` | [Update Custom Field](https://developer.nulab.com/docs/backlog/api/2/update-custom-field/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/customFields/:id/items` | [Add List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/add-list-item-for-list-type-custom-field/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Delete List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/delete-list-item-for-list-type-custom-field/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Update List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/update-list-item-for-list-type-custom-field/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/diskUsage` | [Get Project Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-project-disk-usage/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/files/:sharedFileId` | [Get File](https://developer.nulab.com/docs/backlog/api/2/get-file/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/files/metadata/:path` | [Get List of Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/image` | [Get Project Icon](https://developer.nulab.com/docs/backlog/api/2/get-project-icon/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/issueTypes` | [Get Issue Type List](https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/) | 2026-11-15 | `Project.list_issue_types()` |
+| POST | `projects/:projectIdOrKey/issueTypes` | [Add Issue Type](https://developer.nulab.com/docs/backlog/api/2/add-issue-type/) | 2026-11-15 | `Project.add_issue_type()` |
+| DELETE | `projects/:projectIdOrKey/issueTypes/:id` | [Delete Issue Type](https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/) | 2026-11-15 | `Project.delete_issue_type()` |
+| PATCH | `projects/:projectIdOrKey/issueTypes/:id` | [Update Issue Type](https://developer.nulab.com/docs/backlog/api/2/update-issue-type/) | 2026-11-15 | `Project.update_issue_type()` |
+| GET | `projects/:projectIdOrKey/statuses` | [Get Status List of Project](https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/statuses` | [Add Status](https://developer.nulab.com/docs/backlog/api/2/add-status/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/statuses/:id` | [Delete Status](https://developer.nulab.com/docs/backlog/api/2/delete-status/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/statuses/:id` | [Update Status](https://developer.nulab.com/docs/backlog/api/2/update-status/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/statuses/updateDisplayOrder` | [Update Order of Status](https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/teams` | [Delete Project Team](https://developer.nulab.com/docs/backlog/api/2/delete-project-team/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/teams` | [Get Project Team List](https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/teams` | [Add Project Team](https://developer.nulab.com/docs/backlog/api/2/add-project-team/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/users` | [Delete Project User](https://developer.nulab.com/docs/backlog/api/2/delete-project-user/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/users` | [Get Project User List](https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/) | 2026-11-15 | `Project.list_users()` |
+| POST | `projects/:projectIdOrKey/users` | [Add Project User](https://developer.nulab.com/docs/backlog/api/2/add-project-user/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/versions` | [Get Version/Milestone List](https://developer.nulab.com/docs/backlog/api/2/get-version-milestone-list/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/versions` | [Add Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/versions/:id` | [Delete Version](https://developer.nulab.com/docs/backlog/api/2/delete-version/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/versions/:id` | [Update Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/webhooks` | [Get List of Webhooks](https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/webhooks` | [Add Webhook](https://developer.nulab.com/docs/backlog/api/2/add-webhook/) | 2026-11-15 | — |
+| DELETE | `projects/:projectIdOrKey/webhooks/:webhookId` | [Delete Webhook](https://developer.nulab.com/docs/backlog/api/2/delete-webhook/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/webhooks/:webhookId` | [Get Webhook](https://developer.nulab.com/docs/backlog/api/2/get-webhook/) | 2026-11-15 | — |
+| PATCH | `projects/:projectIdOrKey/webhooks/:webhookId` | [Update Webhook](https://developer.nulab.com/docs/backlog/api/2/update-webhook/) | 2026-11-15 | — |
 
 ## Rate limit
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `rateLimit` | [Get Rate Limit](https://developer.nulab.com/docs/backlog/api/2/get-rate-limit/) | `BacklogAPI.get_rate_limit()` |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `rateLimit` | [Get Rate Limit](https://developer.nulab.com/docs/backlog/api/2/get-rate-limit/) | 2026-11-15 | `BacklogAPI.get_rate_limit()` |
 
 ## Resolutions
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `resolutions` | [Get Resolution List](https://developer.nulab.com/docs/backlog/api/2/get-resolution-list/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `resolutions` | [Get Resolution List](https://developer.nulab.com/docs/backlog/api/2/get-resolution-list/) | 2026-11-15 | — |
 
 ## Space
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `space` | [Get Space](https://developer.nulab.com/docs/backlog/api/2/get-space/) | — |
-| GET | `space/activities` | [Get Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/) | — |
-| POST | `space/attachment` | [Post Attachment File](https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/) | `Attachment.upload()` |
-| GET | `space/diskUsage` | [Get Space Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-space-disk-usage/) | — |
-| GET | `space/image` | [Get Space Logo](https://developer.nulab.com/docs/backlog/api/2/get-space-logo/) | — |
-| GET | `space/licence` | [Get Licence](https://developer.nulab.com/docs/backlog/api/2/get-licence/) | — |
-| GET | `space/notification` | [Get Space Notification](https://developer.nulab.com/docs/backlog/api/2/get-space-notification/) | — |
-| PUT | `space/notification` | [Update Space Notification](https://developer.nulab.com/docs/backlog/api/2/update-space-notification/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `space` | [Get Space](https://developer.nulab.com/docs/backlog/api/2/get-space/) | 2026-11-15 | — |
+| GET | `space/activities` | [Get Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/) | 2026-11-15 | — |
+| POST | `space/attachment` | [Post Attachment File](https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/) | 2026-11-15 | `Attachment.upload()` |
+| GET | `space/diskUsage` | [Get Space Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-space-disk-usage/) | 2026-11-15 | — |
+| GET | `space/image` | [Get Space Logo](https://developer.nulab.com/docs/backlog/api/2/get-space-logo/) | 2026-11-15 | — |
+| GET | `space/licence` | [Get Licence](https://developer.nulab.com/docs/backlog/api/2/get-licence/) | 2026-11-15 | — |
+| GET | `space/notification` | [Get Space Notification](https://developer.nulab.com/docs/backlog/api/2/get-space-notification/) | 2026-11-15 | — |
+| PUT | `space/notification` | [Update Space Notification](https://developer.nulab.com/docs/backlog/api/2/update-space-notification/) | 2026-11-15 | — |
 
 ## Stars
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| POST | `stars` | [Add Star](https://developer.nulab.com/docs/backlog/api/2/add-star/) | — |
-| DELETE | `stars/:starId` | [Remove Star](https://developer.nulab.com/docs/backlog/api/2/remove-star/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| POST | `stars` | [Add Star](https://developer.nulab.com/docs/backlog/api/2/add-star/) | 2026-11-15 | — |
+| DELETE | `stars/:starId` | [Remove Star](https://developer.nulab.com/docs/backlog/api/2/remove-star/) | 2026-11-15 | — |
 
 ## Teams
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `teams` | [Get List of Teams](https://developer.nulab.com/docs/backlog/api/2/get-list-of-teams/) | — |
-| GET | `teams/:teamId` | [Get Team](https://developer.nulab.com/docs/backlog/api/2/get-team/) | — |
-| GET | `teams/:teamId/icon` | [Get Team Icon](https://developer.nulab.com/docs/backlog/api/2/get-team-icon/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `teams` | [Get List of Teams](https://developer.nulab.com/docs/backlog/api/2/get-list-of-teams/) | 2026-11-15 | — |
+| GET | `teams/:teamId` | [Get Team](https://developer.nulab.com/docs/backlog/api/2/get-team/) | 2026-11-15 | — |
+| GET | `teams/:teamId/icon` | [Get Team Icon](https://developer.nulab.com/docs/backlog/api/2/get-team-icon/) | 2026-11-15 | — |
 
 ## Users
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `users` | [Get User List](https://developer.nulab.com/docs/backlog/api/2/get-user-list/) | `User.list()` |
-| GET | `users/:userId` | [Get User](https://developer.nulab.com/docs/backlog/api/2/get-user/) | `User.get()` |
-| GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | — |
-| GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | — |
-| GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | — |
-| GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | — |
-| GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | — |
-| GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | — |
-| GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | — |
-| GET | `users/myself/recentlyViewedIssues` | [Get List of Recently Viewed Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/) | — |
-| POST | `users/myself/recentlyViewedIssues` | [Add Recently Viewed Issue](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/) | — |
-| GET | `users/myself/recentlyViewedProjects` | [Get List of Recently Viewed Projects](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/) | — |
-| GET | `users/myself/recentlyViewedWikis` | [Get List of Recently Viewed Wikis](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-wikis/) | — |
-| POST | `users/myself/recentlyViewedWikis` | [Add Recently Viewed Wiki](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-wiki/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `users` | [Get User List](https://developer.nulab.com/docs/backlog/api/2/get-user-list/) | 2026-11-15 | `User.list()` |
+| GET | `users/:userId` | [Get User](https://developer.nulab.com/docs/backlog/api/2/get-user/) | 2026-11-15 | `User.get()` |
+| GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | 2026-11-15 | — |
+| GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | — |
+| GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | — |
+| GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | — |
+| GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | — |
+| GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | 2026-11-15 | — |
+| GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | 2026-11-15 | — |
+| GET | `users/myself/recentlyViewedIssues` | [Get List of Recently Viewed Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/) | 2026-11-15 | — |
+| POST | `users/myself/recentlyViewedIssues` | [Add Recently Viewed Issue](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/) | 2026-11-15 | — |
+| GET | `users/myself/recentlyViewedProjects` | [Get List of Recently Viewed Projects](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/) | 2026-11-15 | — |
+| GET | `users/myself/recentlyViewedWikis` | [Get List of Recently Viewed Wikis](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-wikis/) | 2026-11-15 | — |
+| POST | `users/myself/recentlyViewedWikis` | [Add Recently Viewed Wiki](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-wiki/) | 2026-11-15 | — |
 
 ## Watching
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| POST | `watchings` | [Add Watching](https://developer.nulab.com/docs/backlog/api/2/add-watching/) | — |
-| DELETE | `watchings/:watchingId` | [Delete Watching](https://developer.nulab.com/docs/backlog/api/2/delete-watching/) | — |
-| GET | `watchings/:watchingId` | [Get Watching](https://developer.nulab.com/docs/backlog/api/2/get-watching/) | — |
-| PATCH | `watchings/:watchingId` | [Update Watching](https://developer.nulab.com/docs/backlog/api/2/update-watching/) | — |
-| POST | `watchings/:watchingId/markAsRead` | [Mark Watching as Read](https://developer.nulab.com/docs/backlog/api/2/mark-watching-as-read/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| POST | `watchings` | [Add Watching](https://developer.nulab.com/docs/backlog/api/2/add-watching/) | 2026-11-15 | — |
+| DELETE | `watchings/:watchingId` | [Delete Watching](https://developer.nulab.com/docs/backlog/api/2/delete-watching/) | 2026-11-15 | — |
+| GET | `watchings/:watchingId` | [Get Watching](https://developer.nulab.com/docs/backlog/api/2/get-watching/) | 2026-11-15 | — |
+| PATCH | `watchings/:watchingId` | [Update Watching](https://developer.nulab.com/docs/backlog/api/2/update-watching/) | 2026-11-15 | — |
+| POST | `watchings/:watchingId/markAsRead` | [Mark Watching as Read](https://developer.nulab.com/docs/backlog/api/2/mark-watching-as-read/) | 2026-11-15 | — |
 
 ## Wiki
 
-| Method | Path | API | python-backlog |
-|---|---|---|---|
-| GET | `wikis` | [Get Wiki Page List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-list/) | `Wiki.list()` |
-| POST | `wikis` | [Add Wiki Page](https://developer.nulab.com/docs/backlog/api/2/add-wiki-page/) | `Wiki.create()` |
-| DELETE | `wikis/:wikiId` | [Delete Wiki Page](https://developer.nulab.com/docs/backlog/api/2/delete-wiki-page/) | `Wiki.delete()` |
-| GET | `wikis/:wikiId` | [Get Wiki Page](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page/) | `Wiki.get()` |
-| PATCH | `wikis/:wikiId` | [Update Wiki Page](https://developer.nulab.com/docs/backlog/api/2/update-wiki-page/) | `Wiki.update()` |
-| GET | `wikis/:wikiId/attachments` | [Get List of Wiki attachments](https://developer.nulab.com/docs/backlog/api/2/get-list-of-wiki-attachments/) | `Wiki.list_attachments()` |
-| POST | `wikis/:wikiId/attachments` | [Attach File to Wiki](https://developer.nulab.com/docs/backlog/api/2/attach-file-to-wiki/) | `Wiki.add_attachment()` |
-| DELETE | `wikis/:wikiId/attachments/:attachmentId` | [Remove Wiki Attachment](https://developer.nulab.com/docs/backlog/api/2/remove-wiki-attachment/) | `Wiki.delete_attachment()` |
-| GET | `wikis/:wikiId/attachments/:attachmentId` | [Get Wiki Page Attachment](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-attachment/) | `Wiki.get_attachment()` |
-| GET | `wikis/:wikiId/history` | [Get Wiki Page History](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-history/) | — |
-| GET | `wikis/:wikiId/sharedFiles` | [Get List of Shared Files on Wiki](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files-on-wiki/) | — |
-| POST | `wikis/:wikiId/sharedFiles` | [Link Shared Files to Wiki](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-wiki/) | — |
-| DELETE | `wikis/:wikiId/sharedFiles/:id` | [Remove Link to Shared File from Wiki](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-wiki/) | — |
-| GET | `wikis/:wikiId/stars` | [Get Wiki Page Star](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/) | — |
-| GET | `wikis/count` | [Count Wiki Page](https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/) | — |
-| GET | `wikis/tags` | [Get Wiki Page Tag List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/) | — |
+| Method | Path | API | Last accessed | python-backlog |
+|---|---|---|---|---|
+| GET | `wikis` | [Get Wiki Page List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-list/) | 2026-11-15 | `Wiki.list()` |
+| POST | `wikis` | [Add Wiki Page](https://developer.nulab.com/docs/backlog/api/2/add-wiki-page/) | 2026-11-15 | `Wiki.create()` |
+| DELETE | `wikis/:wikiId` | [Delete Wiki Page](https://developer.nulab.com/docs/backlog/api/2/delete-wiki-page/) | 2026-11-15 | `Wiki.delete()` |
+| GET | `wikis/:wikiId` | [Get Wiki Page](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page/) | 2026-11-15 | `Wiki.get()` |
+| PATCH | `wikis/:wikiId` | [Update Wiki Page](https://developer.nulab.com/docs/backlog/api/2/update-wiki-page/) | 2026-11-15 | `Wiki.update()` |
+| GET | `wikis/:wikiId/attachments` | [Get List of Wiki attachments](https://developer.nulab.com/docs/backlog/api/2/get-list-of-wiki-attachments/) | 2026-11-15 | `Wiki.list_attachments()` |
+| POST | `wikis/:wikiId/attachments` | [Attach File to Wiki](https://developer.nulab.com/docs/backlog/api/2/attach-file-to-wiki/) | 2026-11-15 | `Wiki.add_attachment()` |
+| DELETE | `wikis/:wikiId/attachments/:attachmentId` | [Remove Wiki Attachment](https://developer.nulab.com/docs/backlog/api/2/remove-wiki-attachment/) | 2026-11-15 | `Wiki.delete_attachment()` |
+| GET | `wikis/:wikiId/attachments/:attachmentId` | [Get Wiki Page Attachment](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-attachment/) | 2026-11-15 | `Wiki.get_attachment()` |
+| GET | `wikis/:wikiId/history` | [Get Wiki Page History](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-history/) | 2026-11-15 | — |
+| GET | `wikis/:wikiId/sharedFiles` | [Get List of Shared Files on Wiki](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files-on-wiki/) | 2026-11-15 | — |
+| POST | `wikis/:wikiId/sharedFiles` | [Link Shared Files to Wiki](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-wiki/) | 2026-11-15 | — |
+| DELETE | `wikis/:wikiId/sharedFiles/:id` | [Remove Link to Shared File from Wiki](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-wiki/) | 2026-11-15 | — |
+| GET | `wikis/:wikiId/stars` | [Get Wiki Page Star](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/) | 2026-11-15 | — |
+| GET | `wikis/count` | [Count Wiki Page](https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/) | 2026-11-15 | — |
+| GET | `wikis/tags` | [Get Wiki Page Tag List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/) | 2026-11-15 | — |

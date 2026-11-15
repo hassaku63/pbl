@@ -20,7 +20,7 @@ Follow `.claude/skills/api-change/SKILL.md`. In short:
 
 - `docs/API_COVERAGE.md` is generated. After changing `backlog/*.py`, run `python scripts/api_coverage.py generate` and commit the result; the "API coverage doc" CI job checks it.
 - Decide whether README.md needs an update, and say so in the pull request.
-- `python scripts/api_coverage.py refresh` re-downloads the endpoint list from the official API reference.
+- The list of endpoints, `docs/api_endpoints.json`, is maintained by reading the official API reference: each entry has the page URL and the date it was last accessed. Nothing downloads or parses the documentation site automatically.
 
 ## End-to-end tests
 

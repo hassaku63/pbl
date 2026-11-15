@@ -9,13 +9,15 @@ Use this checklist whenever a change touches the API surface in `backlog/*.py`.
 
 ## 1. Check the official reference
 
-- Read the endpoint's page on https://developer.nulab.com/docs/backlog/ for the method, path, parameters (including `xxx[]` array parameters) and the role that may call it.
-- The API reference pages are updated even when the changelog is not, so trust the endpoint page over the changelog.
-- If the endpoint list itself may have changed, refresh the snapshot. This needs network access to developer.nulab.com:
+The endpoint list in `docs/api_endpoints.json` is maintained by reading the documentation, not by scraping it. Each entry records the page `url` and the date it was `last_accessed`.
 
-  ```bash
-  python scripts/api_coverage.py refresh
-  ```
+- Open the endpoint's page (its `url`, or find it from the index at https://developer.nulab.com/docs/backlog/). Check the method, path, parameters (including `xxx[]` array parameters) and the role that may call it.
+- The API reference pages are updated even when the changelog is not. Trust the endpoint page over the changelog.
+- Update `docs/api_endpoints.json`:
+  - set `last_accessed` (YYYY-MM-DD) on every entry whose page you read;
+  - add an entry for an endpoint that is not listed yet. Copy the method, path and title from its page.
+- When you have reviewed the whole index for added or removed endpoints, also update `index_last_accessed`. Remove entries only when the page is gone from the reference.
+- The pages show no last-updated date. The HTTP `Last-Modified` header reflects the deployment of the whole site, so do not record it.
 
 ## 2. Implement
 
