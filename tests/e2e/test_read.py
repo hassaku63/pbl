@@ -24,6 +24,12 @@ class TestSpaceRead(unittest.TestCase):
     def test_projects(self):
         self.assertIsInstance(self.api.project.list(), list)
 
+    def test_myself_and_watchings(self):
+        me = self.api.user.get_myself()
+        self.assertIn("id", me)
+        self.assertIsInstance(self.api.watching.list(me["id"], count=1), list)
+        self.assertIn("count", self.api.watching.count(me["id"]))
+
     def test_rate_limit(self):
         self.assertIn("rateLimit", self.api.get_rate_limit())
 

@@ -22,6 +22,16 @@ class User(object):
 
         return resp.json()
 
+    def get_myself(self):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-own-user/
+
+        :return: the user that owns the API key or access token
+        """
+        resp = self.api.invoke_method("GET", "users/myself")
+
+        return resp.json()
+
     def get(self, userId):
         """
         https://developer.nulab.com/ja/docs/backlog/api/2/get-user/
