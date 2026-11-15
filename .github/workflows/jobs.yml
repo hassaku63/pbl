@@ -33,7 +33,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e '.[dev]'
       - name: Run lint
-        run: flake8
+        run: ruff check
       - name: Run unittests & coverage
         run: |
           coverage run -m unittest -v
