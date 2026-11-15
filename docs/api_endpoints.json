@@ -1,0 +1,918 @@
+{
+  "source": "https://developer.nulab.com/docs/backlog/",
+  "checked": "2026-11-15",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/api/v2/activities/:activityId",
+      "title": "Get Activity",
+      "slug": "get-activity"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents",
+      "title": "Get document list",
+      "slug": "get-document-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/documents",
+      "title": "Add document",
+      "slug": "add-document"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/documents/:documentId",
+      "title": "Delete document",
+      "slug": "delete-document"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents/:documentId",
+      "title": "Get document",
+      "slug": "get-document"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents/:documentId/attachments/:attachmentId",
+      "title": "Get document Attachments",
+      "slug": "get-document-attachments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents/:documentId/comments",
+      "title": "Get document comment",
+      "slug": "get-document-comment"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/documents/:documentId/tags",
+      "title": "Remove document tag",
+      "slug": "remove-document-tag"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/documents/:documentId/tags",
+      "title": "Add document tag",
+      "slug": "add-document-tag"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents/count",
+      "title": "Count document",
+      "slug": "count-document"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/documents/tree",
+      "title": "Get document tree",
+      "slug": "get-document-tree"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues",
+      "title": "Get Issue List",
+      "slug": "get-issue-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/issues",
+      "title": "Add Issue",
+      "slug": "add-issue"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/issues/:issueIdOrKey",
+      "title": "Delete Issue",
+      "slug": "delete-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey",
+      "title": "Get Issue",
+      "slug": "get-issue"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/issues/:issueIdOrKey",
+      "title": "Update Issue",
+      "slug": "update-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/attachments",
+      "title": "Get List of Issue Attachments",
+      "slug": "get-list-of-issue-attachments"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/issues/:issueIdOrKey/attachments/:attachmentId",
+      "title": "Delete Issue Attachment",
+      "slug": "delete-issue-attachment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/attachments/:attachmentId",
+      "title": "Get Issue Attachment",
+      "slug": "get-issue-attachment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/comments",
+      "title": "Get Comment List",
+      "slug": "get-comment-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/issues/:issueIdOrKey/comments",
+      "title": "Add Comment",
+      "slug": "add-comment"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
+      "title": "Delete Comment",
+      "slug": "delete-comment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
+      "title": "Get Comment",
+      "slug": "get-comment"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId",
+      "title": "Update comment",
+      "slug": "update-comment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId/notifications",
+      "title": "Get List of Comment Notifications",
+      "slug": "get-list-of-comment-notifications"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/:commentId/notifications",
+      "title": "Add Comment Notification",
+      "slug": "add-comment-notification"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/comments/count",
+      "title": "Count Comment",
+      "slug": "count-comment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/participants",
+      "title": "Get Issue Participant List",
+      "slug": "get-issue-participant-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/relatedIssues",
+      "title": "Get List of Related Issues",
+      "slug": "get-list-of-related-issues"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/issues/:issueIdOrKey/relatedIssues",
+      "title": "Add Related Issue",
+      "slug": "add-related-issue"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/issues/:issueIdOrKey/relatedIssues/:relatedIssueId",
+      "title": "Remove Related Issue",
+      "slug": "remove-related-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/:issueIdOrKey/sharedFiles",
+      "title": "Get List of Linked Shared Files",
+      "slug": "get-list-of-linked-shared-files"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/issues/:issueIdOrKey/sharedFiles",
+      "title": "Link Shared Files to Issue",
+      "slug": "link-shared-files-to-issue"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/issues/:issueIdOrKey/sharedFiles/:id",
+      "title": "Remove Link to Shared File from Issue",
+      "slug": "remove-link-to-shared-file-from-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/issues/count",
+      "title": "Count Issue",
+      "slug": "count-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/notifications",
+      "title": "Get Notification",
+      "slug": "get-notification"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/notifications/:id/markAsRead",
+      "title": "Read Notification",
+      "slug": "read-notification"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/notifications/count",
+      "title": "Count Notification",
+      "slug": "count-notification"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/notifications/markAsRead",
+      "title": "Reset Unread Notification Count",
+      "slug": "reset-unread-notification-count"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/priorities",
+      "title": "Get Priority List",
+      "slug": "get-priority-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects",
+      "title": "Get Project List",
+      "slug": "get-project-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects",
+      "title": "Add Project",
+      "slug": "add-project"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey",
+      "title": "Delete Project",
+      "slug": "delete-project"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey",
+      "title": "Get Project",
+      "slug": "get-project"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey",
+      "title": "Update Project",
+      "slug": "update-project"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/activities",
+      "title": "Get Project Recent Updates",
+      "slug": "get-project-recent-updates"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/administrators",
+      "title": "Delete Project Administrator",
+      "slug": "delete-project-administrator"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/administrators",
+      "title": "Get List of Project Administrators",
+      "slug": "get-list-of-project-administrators"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/administrators",
+      "title": "Add Project Administrator",
+      "slug": "add-project-administrator"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/categories",
+      "title": "Get Category List",
+      "slug": "get-category-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/categories",
+      "title": "Add Category",
+      "slug": "add-category"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/categories/:id",
+      "title": "Delete Category",
+      "slug": "delete-category"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/categories/:id",
+      "title": "Update Category",
+      "slug": "update-category"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields",
+      "title": "Get Custom Field List",
+      "slug": "get-custom-field-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields",
+      "title": "Add Custom Field",
+      "slug": "add-custom-field"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields/:id",
+      "title": "Delete Custom Field",
+      "slug": "delete-custom-field"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields/:id",
+      "title": "Update Custom Field",
+      "slug": "update-custom-field"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items",
+      "title": "Add List Item for List Type Custom Field",
+      "slug": "add-list-item-for-list-type-custom-field"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items/:itemId",
+      "title": "Delete List Item for List Type Custom Field",
+      "slug": "delete-list-item-for-list-type-custom-field"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/customFields/:id/items/:itemId",
+      "title": "Update List Item for List Type Custom Field",
+      "slug": "update-list-item-for-list-type-custom-field"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/diskUsage",
+      "title": "Get Project Disk Usage",
+      "slug": "get-project-disk-usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/files/:sharedFileId",
+      "title": "Get File",
+      "slug": "get-file"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/files/metadata/:path",
+      "title": "Get List of Shared Files",
+      "slug": "get-list-of-shared-files"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories",
+      "title": "Get List of Git Repositories",
+      "slug": "get-list-of-git-repositories"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName",
+      "title": "Get Git Repository",
+      "slug": "get-git-repository"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests",
+      "title": "Get Pull Request List",
+      "slug": "get-pull-request-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests",
+      "title": "Add Pull Request",
+      "slug": "add-pull-request"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number",
+      "title": "Get Pull Request",
+      "slug": "get-pull-request"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number",
+      "title": "Update Pull Request",
+      "slug": "update-pull-request"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments",
+      "title": "Get List of Pull Request Attachment",
+      "slug": "get-list-of-pull-request-attachment"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId",
+      "title": "Delete Pull Request Attachments",
+      "slug": "delete-pull-request-attachments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/attachments/:attachmentId",
+      "title": "Download Pull Request Attachment",
+      "slug": "download-pull-request-attachment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments",
+      "title": "Get Pull Request Comment",
+      "slug": "get-pull-request-comment"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments",
+      "title": "Add Pull Request Comment",
+      "slug": "add-pull-request-comment"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/:commentId",
+      "title": "Update Pull Request Comment Information",
+      "slug": "update-pull-request-comment-information"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/:number/comments/count",
+      "title": "Get Number of Pull Request Comments",
+      "slug": "get-number-of-pull-request-comments"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/git/repositories/:repoIdOrName/pullRequests/count",
+      "title": "Get Number of Pull Requests",
+      "slug": "get-number-of-pull-requests"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/image",
+      "title": "Get Project Icon",
+      "slug": "get-project-icon"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/issueTypes",
+      "title": "Get Issue Type List",
+      "slug": "get-issue-type-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/issueTypes",
+      "title": "Add Issue Type",
+      "slug": "add-issue-type"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/issueTypes/:id",
+      "title": "Delete Issue Type",
+      "slug": "delete-issue-type"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/issueTypes/:id",
+      "title": "Update Issue Type",
+      "slug": "update-issue-type"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/statuses",
+      "title": "Get Status List of Project",
+      "slug": "get-status-list-of-project"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/statuses",
+      "title": "Add Status",
+      "slug": "add-status"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/statuses/:id",
+      "title": "Delete Status",
+      "slug": "delete-status"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/statuses/:id",
+      "title": "Update Status",
+      "slug": "update-status"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/statuses/updateDisplayOrder",
+      "title": "Update Order of Status",
+      "slug": "update-order-of-status"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/teams",
+      "title": "Delete Project Team",
+      "slug": "delete-project-team"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/teams",
+      "title": "Get Project Team List",
+      "slug": "get-project-team-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/teams",
+      "title": "Add Project Team",
+      "slug": "add-project-team"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/users",
+      "title": "Delete Project User",
+      "slug": "delete-project-user"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/users",
+      "title": "Get Project User List",
+      "slug": "get-project-user-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/users",
+      "title": "Add Project User",
+      "slug": "add-project-user"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/versions",
+      "title": "Get Version/Milestone List",
+      "slug": "get-version-milestone-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/versions",
+      "title": "Add Version/Milestone",
+      "slug": "add-version-milestone"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/versions/:id",
+      "title": "Delete Version",
+      "slug": "delete-version"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/versions/:id",
+      "title": "Update Version/Milestone",
+      "slug": "update-version-milestone"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/webhooks",
+      "title": "Get List of Webhooks",
+      "slug": "get-list-of-webhooks"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/webhooks",
+      "title": "Add Webhook",
+      "slug": "add-webhook"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
+      "title": "Delete Webhook",
+      "slug": "delete-webhook"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
+      "title": "Get Webhook",
+      "slug": "get-webhook"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/projects/:projectIdOrKey/webhooks/:webhookId",
+      "title": "Update Webhook",
+      "slug": "update-webhook"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/rateLimit",
+      "title": "Get Rate Limit",
+      "slug": "get-rate-limit"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/resolutions",
+      "title": "Get Resolution List",
+      "slug": "get-resolution-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space",
+      "title": "Get Space",
+      "slug": "get-space"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space/activities",
+      "title": "Get Recent Updates",
+      "slug": "get-recent-updates"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/space/attachment",
+      "title": "Post Attachment File",
+      "slug": "post-attachment-file"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space/diskUsage",
+      "title": "Get Space Disk Usage",
+      "slug": "get-space-disk-usage"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space/image",
+      "title": "Get Space Logo",
+      "slug": "get-space-logo"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space/licence",
+      "title": "Get Licence",
+      "slug": "get-licence"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/space/notification",
+      "title": "Get Space Notification",
+      "slug": "get-space-notification"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v2/space/notification",
+      "title": "Update Space Notification",
+      "slug": "update-space-notification"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/stars",
+      "title": "Add Star",
+      "slug": "add-star"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/stars/:starId",
+      "title": "Remove Star",
+      "slug": "remove-star"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/teams",
+      "title": "Get List of Teams",
+      "slug": "get-list-of-teams"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/teams/:teamId",
+      "title": "Get Team",
+      "slug": "get-team"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/teams/:teamId/icon",
+      "title": "Get Team Icon",
+      "slug": "get-team-icon"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users",
+      "title": "Get User List",
+      "slug": "get-user-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId",
+      "title": "Get User",
+      "slug": "get-user"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/activities",
+      "title": "Get User Recent Updates",
+      "slug": "get-user-recent-updates"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/icon",
+      "title": "Get User Icon",
+      "slug": "get-user-icon"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/stars",
+      "title": "Get Received Star List",
+      "slug": "get-received-star-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/stars/count",
+      "title": "Count User Received Stars",
+      "slug": "count-user-received-stars"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/watchings",
+      "title": "Get Watching List",
+      "slug": "get-watching-list"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/:userId/watchings/count",
+      "title": "Count Watching",
+      "slug": "count-watching"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/myself",
+      "title": "Get Own User",
+      "slug": "get-own-user"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/myself/recentlyViewedIssues",
+      "title": "Get List of Recently Viewed Issues",
+      "slug": "get-list-of-recently-viewed-issues"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/users/myself/recentlyViewedIssues",
+      "title": "Add Recently Viewed Issue",
+      "slug": "add-recently-viewed-issue"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/myself/recentlyViewedProjects",
+      "title": "Get List of Recently Viewed Projects",
+      "slug": "get-list-of-recently-viewed-projects"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/users/myself/recentlyViewedWikis",
+      "title": "Get List of Recently Viewed Wikis",
+      "slug": "get-list-of-recently-viewed-wikis"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/users/myself/recentlyViewedWikis",
+      "title": "Add Recently Viewed Wiki",
+      "slug": "add-recently-viewed-wiki"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/watchings",
+      "title": "Add Watching",
+      "slug": "add-watching"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/watchings/:watchingId",
+      "title": "Delete Watching",
+      "slug": "delete-watching"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/watchings/:watchingId",
+      "title": "Get Watching",
+      "slug": "get-watching"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/watchings/:watchingId",
+      "title": "Update Watching",
+      "slug": "update-watching"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/watchings/:watchingId/markAsRead",
+      "title": "Mark Watching as Read",
+      "slug": "mark-watching-as-read"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis",
+      "title": "Get Wiki Page List",
+      "slug": "get-wiki-page-list"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/wikis",
+      "title": "Add Wiki Page",
+      "slug": "add-wiki-page"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/wikis/:wikiId",
+      "title": "Delete Wiki Page",
+      "slug": "delete-wiki-page"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId",
+      "title": "Get Wiki Page",
+      "slug": "get-wiki-page"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/wikis/:wikiId",
+      "title": "Update Wiki Page",
+      "slug": "update-wiki-page"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId/attachments",
+      "title": "Get List of Wiki attachments",
+      "slug": "get-list-of-wiki-attachments"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/wikis/:wikiId/attachments",
+      "title": "Attach File to Wiki",
+      "slug": "attach-file-to-wiki"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/wikis/:wikiId/attachments/:attachmentId",
+      "title": "Remove Wiki Attachment",
+      "slug": "remove-wiki-attachment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId/attachments/:attachmentId",
+      "title": "Get Wiki Page Attachment",
+      "slug": "get-wiki-page-attachment"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId/history",
+      "title": "Get Wiki Page History",
+      "slug": "get-wiki-page-history"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId/sharedFiles",
+      "title": "Get List of Shared Files on Wiki",
+      "slug": "get-list-of-shared-files-on-wiki"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/wikis/:wikiId/sharedFiles",
+      "title": "Link Shared Files to Wiki",
+      "slug": "link-shared-files-to-wiki"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/wikis/:wikiId/sharedFiles/:id",
+      "title": "Remove Link to Shared File from Wiki",
+      "slug": "remove-link-to-shared-file-from-wiki"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/:wikiId/stars",
+      "title": "Get Wiki Page Star",
+      "slug": "get-wiki-page-star"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/count",
+      "title": "Count Wiki Page",
+      "slug": "count-wiki-page"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/wikis/tags",
+      "title": "Get Wiki Page Tag List",
+      "slug": "get-wiki-page-tag-list"
+    }
+  ]
+}
