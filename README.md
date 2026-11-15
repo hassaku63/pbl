@@ -44,6 +44,10 @@ def main():
     me = api.user.get_myself()
     print(api.watching.list(me["id"], resourceAlreadyRead=False))  # unread watched issues
 
+    # Your notifications
+    print(api.notification.count(resourceAlreadyRead=False))  # number of unread notifications
+    print(api.notification.list(count=10))
+
     """
     Project API
     """

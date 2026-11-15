@@ -30,6 +30,10 @@ class TestSpaceRead(unittest.TestCase):
         self.assertIsInstance(self.api.watching.list(me["id"], count=1), list)
         self.assertIn("count", self.api.watching.count(me["id"]))
 
+    def test_notifications(self):
+        self.assertIsInstance(self.api.notification.list(count=1), list)
+        self.assertIn("count", self.api.notification.count(resourceAlreadyRead=False))
+
     def test_rate_limit(self):
         self.assertIn("rateLimit", self.api.get_rate_limit())
 
