@@ -1,6 +1,6 @@
 import unittest
 import json
-import responses
+from tests import fake_http
 from backlog.base import BacklogAPI
 
 
@@ -14,7 +14,7 @@ class TestCategory(unittest.TestCase):
         self.api_key = "api_key"
         self.project = "test-project"
 
-    @responses.activate
+    @fake_http.activate
     def test_list(self):
         expects = [
             {
@@ -44,8 +44,8 @@ class TestCategory(unittest.TestCase):
             },
         ]
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -54,7 +54,7 @@ class TestCategory(unittest.TestCase):
         resp = self.api.custom_field.list(self.project)
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_text_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-text-field"
@@ -68,8 +68,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -82,7 +82,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_sentence_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-sentence-field"
@@ -96,8 +96,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -110,7 +110,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_number_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-number-field"
@@ -124,8 +124,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -138,7 +138,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_date_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-date-field"
@@ -152,8 +152,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -166,7 +166,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_single_list_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-single-list-field"
@@ -180,8 +180,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -194,7 +194,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_multiple_list_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-multiple-list-field"
@@ -208,8 +208,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -222,7 +222,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_checkbox_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-checkbox-field"
@@ -236,8 +236,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -249,7 +249,7 @@ class TestCategory(unittest.TestCase):
         )
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_add_radio_custom_field(self):
         project_key = "test-project"
         custom_field_name = "test-radio-field"
@@ -270,8 +270,8 @@ class TestCategory(unittest.TestCase):
             "applicableIssueTypes": [1],
         }
         path = f"projects/{self.project}/customFields"
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, path=path),
             body=json.dumps(expects),
             content_type="application/json"
@@ -285,7 +285,7 @@ class TestCategory(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    # @responses.activate
+    # @fake_http.activate
     # def test_update(self):
     #     category_id = 100
     #     category = "updated-category"
@@ -296,8 +296,8 @@ class TestCategory(unittest.TestCase):
     #         "displayOrder": 1
     #     }
     #     path = f"projects/{self.project}/categories/{category_id}"
-    #     responses.add(
-    #         responses.PATCH,
+    #     fake_http.add(
+    #         fake_http.PATCH,
     #         API_ENDPOINT.format(space=self.space, path=path),
     #         body=json.dumps(expects),
     #         content_type="application/json"
@@ -306,7 +306,7 @@ class TestCategory(unittest.TestCase):
     #     resp = self.api.category.update(self.project, category_id, category)
     #     self.assertEqual(expects, resp)
 
-    # @responses.activate
+    # @fake_http.activate
     # def test_delete(self):
     #     category_id = 100
     #     category = "deleted-category"
@@ -317,8 +317,8 @@ class TestCategory(unittest.TestCase):
     #         "displayOrder": 1
     #     }
     #     path = f"projects/{self.project}/categories/{category_id}"
-    #     responses.add(
-    #         responses.DELETE,
+    #     fake_http.add(
+    #         fake_http.DELETE,
     #         API_ENDPOINT.format(space=self.space, path=path),
     #         body=json.dumps(expects),
     #         content_type="application/json"

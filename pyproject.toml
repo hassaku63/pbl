@@ -12,9 +12,7 @@ license-files = ["LICENSE"]
 authors = [{ name = "hassaku63", email = "hassaku63@gmail.com" }]
 keywords = ["nulab", "backlog"]
 requires-python = ">=3.10"
-dependencies = [
-    "requests>=2.33.0,<3",
-]
+dependencies = []
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
@@ -33,7 +31,6 @@ classifiers = [
 dev = [
     "flake8>=7",
     "coverage>=7.6",
-    "responses>=0.25",
 ]
 
 [project.urls]

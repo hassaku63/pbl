@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import unittest
-import responses
+from tests import fake_http
 import json
 from backlog.base import BacklogAPI
 
@@ -14,7 +14,7 @@ class TestProject(unittest.TestCase):
         self.space = "space"
         self.api_key = "api_key"
 
-    @responses.activate
+    @fake_http.activate
     def test_list(self):
         _uri = "projects"
         _archived = False
@@ -32,8 +32,8 @@ class TestProject(unittest.TestCase):
             }
         ]
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -43,7 +43,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_create(self):
         _uri = "projects"
         project_key = "test-project"
@@ -68,8 +68,8 @@ class TestProject(unittest.TestCase):
             "useDevAttributes": True,
         }
 
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=201
@@ -79,7 +79,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects, resp)
 
-    @responses.activate
+    @fake_http.activate
     def test_get(self):
         # Set parameter and expects
         _project_id = 1
@@ -95,8 +95,8 @@ class TestProject(unittest.TestCase):
             "archived": False
         }
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -107,7 +107,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(resp["id"], _project_id)
 
-    @responses.activate
+    @fake_http.activate
     def test_update(self):
         project_key = "test-project"
         project_updated_name = "updated"
@@ -130,8 +130,8 @@ class TestProject(unittest.TestCase):
             "useDevAttributes": True,
         }
         _uri = "projects/{project_id_or_key}".format(project_id_or_key=project_key)
-        responses.add(
-            responses.PATCH,
+        fake_http.add(
+            fake_http.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects),
             status=200
@@ -154,7 +154,7 @@ class TestProject(unittest.TestCase):
     def test_add_user(self):
         pass
 
-    @responses.activate
+    @fake_http.activate
     def test_list_users(self):
         # Project id given
         _projectIdOrKey = str(1000)
@@ -170,8 +170,8 @@ class TestProject(unittest.TestCase):
             },
         ]
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(
                 space=self.space,
                 uri="projects/{projectIdOrKey}/users".format(projectIdOrKey=_projectIdOrKey)),
@@ -185,8 +185,8 @@ class TestProject(unittest.TestCase):
         # Project key given
         _projectIdOrKey = "sample"
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(
                 space=self.space,
                 uri="projects/{projectIdOrKey}/users".format(projectIdOrKey=_projectIdOrKey)),
@@ -200,7 +200,7 @@ class TestProject(unittest.TestCase):
     def test_delete_user(self):
         pass
 
-    @responses.activate
+    @fake_http.activate
     def test_list_types(self):
         _project_id = 1
         _uri = "projects/{project_id_or_key}/issueTypes".format(
@@ -216,8 +216,8 @@ class TestProject(unittest.TestCase):
             }
         ]
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -227,7 +227,7 @@ class TestProject(unittest.TestCase):
         self.assertEqual(list, type(resp))
         self.assertEqual(expects[0]["name"], resp[0]["name"])
 
-    @responses.activate
+    @fake_http.activate
     def test_add_issue_type(self):
         _project_id = 1
         _name = "バグ"
@@ -243,8 +243,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -258,7 +258,7 @@ class TestProject(unittest.TestCase):
         self.assertEqual(expects["projectId"], resp["projectId"])
         self.assertEqual(expects["name"], resp["name"])
 
-    @responses.activate
+    @fake_http.activate
     def test_update_issue_type(self):
         _project_id = 1
         _id = 1
@@ -276,8 +276,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.PATCH,
+        fake_http.add(
+            fake_http.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -293,7 +293,7 @@ class TestProject(unittest.TestCase):
         self.assertEqual(expects["name"], resp["name"])
         self.assertEqual(expects["color"], resp["color"])
 
-    @responses.activate
+    @fake_http.activate
     def test_delete_issue_type(self):
         _project_id = 1
         _id = 1
@@ -310,8 +310,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.DELETE,
+        fake_http.add(
+            fake_http.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -325,7 +325,7 @@ class TestProject(unittest.TestCase):
         self.assertEqual(expects["projectId"], resp["projectId"])
         self.assertEqual(expects["name"], resp["name"])
 
-    @responses.activate
+    @fake_http.activate
     def test_list_categories(self):
         _project_id = 1
         _uri = "projects/{project_id_or_key}/categories".format(
@@ -339,8 +339,8 @@ class TestProject(unittest.TestCase):
             }
         ]
 
-        responses.add(
-            responses.GET,
+        fake_http.add(
+            fake_http.GET,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -351,7 +351,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects[0]["id"], resp[0]["id"])
 
-    @responses.activate
+    @fake_http.activate
     def test_add_category(self):
         _project_id = 1
         _name = "開発"
@@ -364,8 +364,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.POST,
+        fake_http.add(
+            fake_http.POST,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -377,7 +377,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects["name"], resp["name"])
 
-    @responses.activate
+    @fake_http.activate
     def test_update_category(self):
         _project_id = 1
         _id = 1
@@ -392,8 +392,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.PATCH,
+        fake_http.add(
+            fake_http.PATCH,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -406,7 +406,7 @@ class TestProject(unittest.TestCase):
 
         self.assertEqual(expects["name"], resp["name"])
 
-    @responses.activate
+    @fake_http.activate
     def test_delete_category(self):
         _project_id = 1
         _id = 1
@@ -420,8 +420,8 @@ class TestProject(unittest.TestCase):
             "displayOrder": 0
         }
 
-        responses.add(
-            responses.DELETE,
+        fake_http.add(
+            fake_http.DELETE,
             API_ENDPOINT.format(space=self.space, uri=_uri),
             body=json.dumps(expects)
         )
@@ -432,6 +432,24 @@ class TestProject(unittest.TestCase):
         )
 
         self.assertEqual(expects["id"], resp["id"])
+
+    @fake_http.activate
+    def test_category_methods_are_deprecated(self):
+        _base = "projects/1/categories"
+        fake_http.add(fake_http.GET, API_ENDPOINT.format(space=self.space, uri=_base), body="[]")
+        fake_http.add(fake_http.POST, API_ENDPOINT.format(space=self.space, uri=_base), body="{}")
+        fake_http.add(fake_http.PATCH, API_ENDPOINT.format(space=self.space, uri=_base + "/2"), body="{}")
+        fake_http.add(fake_http.DELETE, API_ENDPOINT.format(space=self.space, uri=_base + "/2"), body="{}")
+
+        calls = [
+            lambda: self.api.project.list_categories(1),
+            lambda: self.api.project.add_category(1, "dev"),
+            lambda: self.api.project.update_category(1, 2, "dev"),
+            lambda: self.api.project.delete_category(1, 2),
+        ]
+        for call in calls:
+            with self.assertWarns(DeprecationWarning):
+                call()
 
 
 if __name__ == "__main__":
