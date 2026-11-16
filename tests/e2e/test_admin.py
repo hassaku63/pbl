@@ -3,7 +3,8 @@
 Tier A: space administrator operations. These never run in CI: run them locally with
 scripts/e2e_local.py, which asks for confirmation and writes a report without response data.
 
-User round trip (User.add/update/delete, which are no longer in the official API documentation):
+User round trip (User.add/update/delete, deprecated since 0.18.0 because they are no longer in the official
+API documentation and are reported not to work on the new plans; this test records whether they still work):
 runs only when BACKLOG_E2E_USER_EMAIL is set. Backlog may send a registration mail to that
 address, so use an address you own. The user is created with the viewer role and deleted again.
 """

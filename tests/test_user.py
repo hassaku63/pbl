@@ -90,15 +90,18 @@ class TestUser(unittest.TestCase):
             status=201
         )
 
-        resp = self.api.user.add(
-            userId=_user_id,
-            password=_password,
-            name=_name,
-            mailAddress=_mail_address,
-            roleType=_role_type
-        )
+        with self.assertWarns(DeprecationWarning) as cm:
+            resp = self.api.user.add(
+                userId=_user_id,
+                password=_password,
+                name=_name,
+                mailAddress=_mail_address,
+                roleType=_role_type
+            )
 
         self.assertEqual(expects, resp)
+        self.assertIn("User.add() is deprecated", str(cm.warning))
+        self.assertEqual(__file__, cm.filename)  # points at the caller, not at backlog/user.py
 
     @fake_http.activate
     def test_update(self):
@@ -125,15 +128,17 @@ class TestUser(unittest.TestCase):
             status=200
         )
 
-        resp = self.api.user.update(
-            userId=_user_id,
-            password=_password,
-            name=_name,
-            mailAddress=_mail_address,
-            roleType=_role_type
-        )
+        with self.assertWarns(DeprecationWarning) as cm:
+            resp = self.api.user.update(
+                userId=_user_id,
+                password=_password,
+                name=_name,
+                mailAddress=_mail_address,
+                roleType=_role_type
+            )
 
         self.assertEqual(expects, resp)
+        self.assertIn("User.update() is deprecated", str(cm.warning))
 
     @fake_http.activate
     def test_delete(self):
@@ -156,9 +161,11 @@ class TestUser(unittest.TestCase):
             status=200
         )
 
-        resp = self.api.user.delete(id=_id)
+        with self.assertWarns(DeprecationWarning) as cm:
+            resp = self.api.user.delete(id=_id)
 
         self.assertEqual(expects, resp)
+        self.assertIn("User.delete() is deprecated", str(cm.warning))
 
     @fake_http.activate
     def test_get_own(self):

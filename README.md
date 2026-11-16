@@ -168,6 +168,11 @@ api.set_access_token(token["access_token"])
 
 HTTPS certificates are verified against the system trust store (it also honors `SSL_CERT_FILE` and `SSL_CERT_DIR`). If `certifi` is installed, or `REQUESTS_CA_BUNDLE` or `CURL_CA_BUNDLE` is set, those CA certificates are trusted as well.
 
+## Deprecations
+
+- `User.add()`, `User.update()` and `User.delete()` are deprecated since 0.18.0 and emit a `DeprecationWarning`. Their endpoints were removed from the official API reference and are reported not to work in spaces on the new plans, where users are invited and managed in the Backlog web UI. They may still work in spaces on the old plans and will be removed in a future release. To remove a user from a project, use `Project.delete_user()`.
+- `Project.list_categories()`, `add_category()`, `update_category()` and `delete_category()` are deprecated since 0.9.0. Use `BacklogAPI.category` instead.
+
 ## Upgrading to 0.9
 
 0.9.0 removed the dependency on `requests`:
