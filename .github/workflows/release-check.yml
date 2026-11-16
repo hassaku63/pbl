@@ -132,7 +132,7 @@ jobs:
                 release)
                   echo "🚀 **This pull request bumps the package version from \`$BASE_VERSION\` to \`$HEAD_VERSION\`.** Merging it publishes \`$HEAD_VERSION\` to PyPI and creates the \`v$HEAD_VERSION\` tag and GitHub Release."
                   echo
-                  echo "📋 CHANGELOG.md must have a \`## [$HEAD_VERSION] - YYYY-MM-DD\` section with the changes moved from \`[Unreleased]\`, and updated compare links. The \"Changelog\" CI job checks it."
+                  echo "📋 CHANGELOG.md must have a \`## [$HEAD_VERSION] - YYYY-MM-DD\` section that covers every pull request merged since the previous release (see \`.claude/skills/release/SKILL.md\`; \`python scripts/changelog_check.py pulls\` lists them). The \"Changelog\" CI job checks it."
                   ;;
                 invalid)
                   echo "❌ **This pull request changes \`VERSION\` in a way that cannot be released:** $PROBLEM"
@@ -146,7 +146,7 @@ jobs:
               fi
               if [ "$CHANGELOG_REMINDER" = "true" ]; then
                 echo
-                echo "📋 This pull request changes \`backlog/\` but not \`CHANGELOG.md\`. If package users will notice the change, add an entry to the \`[Unreleased]\` section."
+                echo "📋 This pull request changes \`backlog/\` but not \`CHANGELOG.md\`. That is fine: the release pull request collects the changelog entries. Describe the user-visible change clearly in this pull request (or add an \`[Unreleased]\` entry)."
               fi
               echo
               echo "<sub>This comment is updated automatically and will be marked as outdated when the pull request is closed.</sub>"
