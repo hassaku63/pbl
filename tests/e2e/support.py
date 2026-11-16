@@ -54,6 +54,14 @@ def resource_name(label):
     return "{}{}-{}".format(PREFIX, RUN_ID, label)
 
 
+def is_previous_run(name):
+    """
+    Whether a resource name was created by another (earlier) run, for resources without a creation time.
+    Runs never overlap in CI (the workflow uses a concurrency group).
+    """
+    return isinstance(name, str) and name.startswith(PREFIX) and not name.startswith("{}{}-".format(PREFIX, RUN_ID))
+
+
 def is_leftover(name, created, now=None):
     """
     Whether a resource with this name and creation time ("2026-11-15T00:00:00Z") is an old e2e leftover.
