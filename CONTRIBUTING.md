@@ -44,7 +44,7 @@ There are three tiers:
 
 ### Setting up the space and the GitHub environment
 
-`.github/workflows/e2e.yml` runs tiers R and W weekly (R only) and on demand (Actions → E2E → Run workflow, with the `write` input for tier W). A failed scheduled run opens an issue labeled `e2e-failure` that contains only test names.
+`.github/workflows/e2e.yml` runs tiers R and W weekly (R only) and on demand (Actions → E2E → Run workflow, with the `write` input for tier W). A failed scheduled run opens an issue labeled `e2e-failure` that contains only test names. Until the secrets below are configured, scheduled runs are skipped with a notice (no failure, no issue); manual runs fail.
 
 1. **Backlog space.** Use a space where no one else's data can appear in the tests, e.g. your own free-plan space, and create a project dedicated to the tests (Wiki enabled). The tests read the whole space (users, projects, activities) but only write to that project.
 2. **API key.** Choose one of these:

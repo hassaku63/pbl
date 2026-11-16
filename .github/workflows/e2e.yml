@@ -10,6 +10,8 @@ name: E2E
 # Setup steps (choice of API key, deployment branch policy): CONTRIBUTING.md, "End-to-end tests".
 #
 # When a scheduled run fails, an issue labeled "e2e-failure" is opened (or commented on, if one is already open).
+# Until the secrets are configured, scheduled runs are skipped with a notice (no failure, no issue);
+# manual runs fail so that a missing setup is visible.
 
 on:
   schedule:
@@ -41,21 +43,42 @@ jobs:
     outputs:
       summary: ${{ steps.run.outputs.summary }}
     steps:
+      - name: Check configuration
+        id: config
+        env:
+          BACKLOG_E2E_SPACE: ${{ secrets.BACKLOG_E2E_SPACE }}
+          BACKLOG_E2E_API_KEY: ${{ secrets.BACKLOG_E2E_API_KEY }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ -n "$BACKLOG_E2E_SPACE" ] && [ -n "$BACKLOG_E2E_API_KEY" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT" = "schedule" ]; then
+            echo "::notice::E2E tests skipped: BACKLOG_E2E_SPACE / BACKLOG_E2E_API_KEY are not configured in the backlog-e2e environment (see CONTRIBUTING.md)"
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::BACKLOG_E2E_SPACE / BACKLOG_E2E_API_KEY are not configured in the backlog-e2e environment (see CONTRIBUTING.md)"
+            exit 1
+          fi
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: steps.config.outputs.configured == 'true'
         with:
           persist-credentials: false
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        if: steps.config.outputs.configured == 'true'
         with:
           python-version: "3.x"
       - name: Install
+        if: steps.config.outputs.configured == 'true'
         run: pip install -e .
       - name: Mask personal data of the API key's user
+        if: steps.config.outputs.configured == 'true'
         env:
           BACKLOG_E2E_SPACE: ${{ secrets.BACKLOG_E2E_SPACE }}
           BACKLOG_E2E_API_KEY: ${{ secrets.BACKLOG_E2E_API_KEY }}
           BACKLOG_E2E_DOMAIN: ${{ vars.BACKLOG_E2E_DOMAIN }}
         run: python -m tests.e2e.mask
       - name: Run E2E tests
+        if: steps.config.outputs.configured == 'true'
         id: run
         env:
           BACKLOG_E2E_SPACE: ${{ secrets.BACKLOG_E2E_SPACE }}
@@ -66,10 +89,6 @@ jobs:
           TESTS: ${{ inputs.tests }}
         run: |
           set -uo pipefail
-          if [ -z "$BACKLOG_E2E_SPACE" ] || [ -z "$BACKLOG_E2E_API_KEY" ]; then
-            echo "::error::BACKLOG_E2E_SPACE / BACKLOG_E2E_API_KEY are not configured in the backlog-e2e environment"
-            exit 1
-          fi
           if [ -n "${TESTS:-}" ]; then
             if ! printf '%s' "$TESTS" | grep -Eq '^[A-Za-z0-9_. ]+$'; then
               echo "::error::Invalid tests input"
