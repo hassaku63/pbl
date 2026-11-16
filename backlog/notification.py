@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from backlog._params import bool_params
+from backlog.pagination import id_range, iterate_by_id
 
 
 class Notification(object):
@@ -28,6 +29,15 @@ class Notification(object):
         resp = self.api.invoke_method("GET", "notifications", query_param=_query_param)
 
         return resp.json()
+
+    def iter(self, senderId=None, minId=None, maxId=None, order="desc", count=100):
+        """
+        Iterate over all notifications, newest first by default (minId/maxId paging).
+
+        :param senderId: (int) Optional. only notifications from this user
+        :return: iterator of notifications
+        """
+        return iterate_by_id(self.list, senderId=senderId, order=order, count=count, **id_range(minId, maxId))
 
     def count(self, resourceAlreadyRead=None, alreadyRead=None):
         """

@@ -2,6 +2,8 @@
 
 from email.message import Message
 
+from backlog.pagination import id_range, iterate_by_id
+
 
 def _filename_from_response(resp):
     """
@@ -226,6 +228,15 @@ class Wiki(object):
         resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
 
         return resp.json()
+
+    def iter_history(self, wikiId, minId=None, maxId=None, order="desc", count=100):
+        """
+        Iterate over all versions of a wiki page, newest first by default (minId/maxId paging).
+
+        :param wikiId: (int) wiki page ID
+        :return: iterator of page versions
+        """
+        return iterate_by_id(self.list_history, wikiId, order=order, count=count, **id_range(minId, maxId))
 
     def list_stars(self, wikiId):
         """

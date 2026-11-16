@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from backlog.pagination import id_range, iterate_by_id
+
 _TARGETS = ("issueId", "commentId", "wikiId", "pullRequestId", "pullRequestCommentId")
 
 
@@ -59,6 +61,15 @@ class Star(object):
         resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
 
         return resp.json()
+
+    def iter_received(self, userId, minId=None, maxId=None, order="desc", count=100):
+        """
+        Iterate over all stars the user received, newest first by default (minId/maxId paging).
+
+        :param userId: (int) user ID
+        :return: iterator of stars
+        """
+        return iterate_by_id(self.list_received, userId, order=order, count=count, **id_range(minId, maxId))
 
     def count_received(self, userId, since=None, until=None):
         """

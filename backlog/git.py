@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from backlog.pagination import iterate_by_offset
 from backlog.wiki import _filename_from_response
 
 
@@ -91,6 +92,15 @@ class Git(object):
         resp = self.api.invoke_method(_method, _uri, query_param=kwargs)
 
         return resp.json()
+
+    def iter_pull_requests(self, projectIdOrKey, repoIdOrName, count=100, **kwargs):
+        """
+        Iterate over all pull requests of a repository that match the filters (offset/count paging).
+
+        :param kwargs: filters as for list_pull_requests()
+        :return: iterator of pull requests
+        """
+        return iterate_by_offset(self.list_pull_requests, projectIdOrKey, repoIdOrName, count=count, **kwargs)
 
     def get_git_repository(self, projectIdOrKey, repoIdOrName):
         """
