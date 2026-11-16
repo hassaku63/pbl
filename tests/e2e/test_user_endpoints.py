@@ -10,6 +10,7 @@ and compare the error with the error for a path that does not exist at all.
 import json
 import unittest
 
+from tests.e2e import assertions as check
 from tests.e2e.support import client, requires_space
 
 UNKNOWN_PATH = "python-backlog-e2e-no-such-api"
@@ -36,8 +37,11 @@ class TestUserEndpointsExist(unittest.TestCase):
     def _assert_exists(self, method, uri):
         unknown = self._signature(method, UNKNOWN_PATH)
         probe = self._signature(method, uri)
-        print("\n  {} {}: {}  (unknown path: {})".format(method, uri, probe, unknown))
-        self.assertNotEqual(unknown, probe, "{} {} responds like a nonexistent API".format(method, uri))
+        # Only status codes and Backlog error codes are reported, never response bodies.
+        check.is_true(
+            unknown != probe,
+            "{} {} responds like a nonexistent API (status {}, error code {})".format(method, uri, probe[0], probe[1]),
+        )
 
     def test_method_can_tell_existing_endpoints_apart(self):
         # A documented endpoint must not look like an unknown path; otherwise the probes below prove nothing.

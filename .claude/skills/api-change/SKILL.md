@@ -24,7 +24,7 @@ The endpoint list in `docs/api_endpoints.json` is maintained by reading the docu
 - Call `self.api.invoke_method(<"GET"|"POST"|"PATCH"|"DELETE">, <uri>, ...)` with a literal HTTP method. `scripts/api_coverage.py` finds endpoints by statically reading these calls.
 - Build the URI with a string literal, `"...".format(...)` or an f-string. A small helper that returns such a template also works, like `Issue._comment_uri`.
 - Keep existing method names and signatures backward compatible. Use deprecation warnings rather than removals.
-- Add tests that assert the method, path, query string and body that are sent (see `tests/fake_http.py`). Where it is useful, add a happy-path case to `tests/e2e/`.
+- Add tests that assert the method, path, query string and body that are sent (see `tests/fake_http.py`). Where it is useful, add a happy-path case to `tests/e2e/`, following the `e2e-test` skill and `tests/e2e/README.md`.
 
 ## 3. Update the coverage document (required; CI enforces it)
 
