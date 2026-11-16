@@ -4,6 +4,20 @@ import re
 import time
 from backlog import _http
 from backlog._http import Response  # noqa: F401  (re-exported for type references)
+from backlog.errors import (  # noqa: F401  (re-exported: these were defined here before 0.19.0)
+    BacklogAPIError,
+    BacklogBadRequestError,
+    BacklogConnectionError,
+    BacklogError,
+    BacklogErrorCode,
+    BacklogForbiddenError,
+    BacklogNotFoundError,
+    BacklogRateLimitError,
+    BacklogServerError,
+    BacklogUnauthorizedError,
+    _int_header,
+    error_for_response,
+)
 from backlog.wiki import Wiki, _filename_from_response
 from backlog.attachment import Attachment
 from backlog.project import Project
@@ -46,43 +60,6 @@ def build_base_url(space, domain=DEFAULT_DOMAIN):
     if domain not in BACKLOG_DOMAINS:
         raise ValueError("Invalid domain: {!r}. Must be one of: {}".format(domain, ", ".join(BACKLOG_DOMAINS)))
     return BACKLOG_BASE_URL.format(space=space, domain=domain)
-
-
-class BacklogError(Exception):
-    pass
-
-
-class BacklogConnectionError(BacklogError):
-    """
-    Raised when the request could not be sent or no response was received
-    (DNS failure, refused connection, TLS error, timeout, ...).
-    """
-    pass
-
-
-class BacklogRateLimitError(BacklogError):
-    """
-    Raised when the API returns 429 Too Many Requests (and retries, if enabled, are exhausted).
-
-    :ivar limit: X-RateLimit-Limit (requests per minute), or None
-    :ivar remaining: X-RateLimit-Remaining, or None
-    :ivar reset: X-RateLimit-Reset (UTC epoch seconds when the window resets), or None
-    :ivar response: the :class:`backlog._http.Response`
-    """
-
-    def __init__(self, message, response):
-        super().__init__(message)
-        self.response = response
-        self.limit = _int_header(response, "X-RateLimit-Limit")
-        self.remaining = _int_header(response, "X-RateLimit-Remaining")
-        self.reset = _int_header(response, "X-RateLimit-Reset")
-
-
-def _int_header(response, name):
-    try:
-        return int(response.headers.get(name))
-    except (TypeError, ValueError):
-        return None
 
 
 # Keyword arguments accepted by invoke_method() in addition to its named parameters.
@@ -290,10 +267,7 @@ class BacklogAPI(BaseAPI):
     def _raise_for_status(resp):
         if resp.status_code // 100 == 2:
             return resp
-        message = "Http response {status}: {message}".format(status=resp.status_code, message=resp.text)
-        if resp.status_code == 429:
-            raise BacklogRateLimitError(message, resp)
-        raise BacklogError(message)
+        raise error_for_response(resp)
 
     def _rate_limit_wait(self, resp, attempt):
         """

@@ -160,9 +160,29 @@ api.set_access_token(token["access_token"])
 
 ## Errors
 
-- `backlog.base.BacklogError` is raised when the API returns a non-2xx response.
-- `backlog.base.BacklogConnectionError` (a subclass of `BacklogError`) is raised when the request could not be sent or no response was received, for example on a timeout.
-- `backlog.base.BacklogRateLimitError` (a subclass of `BacklogError`) is raised on 429 Too Many Requests. Its `limit`, `remaining` and `reset` attributes hold the `X-RateLimit-*` headers.
+All exceptions are subclasses of `backlog.base.BacklogError` (they are defined in `backlog.errors`):
+
+| Exception | Raised when |
+|---|---|
+| `BacklogConnectionError` | the request could not be sent or no response was received, for example on a timeout |
+| `BacklogAPIError` | the API returned a non-2xx status (base class of the following) |
+| `BacklogBadRequestError` | 400, e.g. invalid or missing parameters |
+| `BacklogUnauthorizedError` | 401, the API key or access token is invalid or expired |
+| `BacklogForbiddenError` | 403, the user may not perform the operation |
+| `BacklogNotFoundError` | 404, the resource does not exist or is not visible to the user |
+| `BacklogRateLimitError` | 429 Too Many Requests; `limit`, `remaining` and `reset` hold the `X-RateLimit-*` headers |
+| `BacklogServerError` | 5xx |
+
+`BacklogAPIError` has `status_code`, `response`, `errors` (the `errors` array of the [error response](https://developer.nulab.com/docs/backlog/error-response/)), `code` (the first error code as a `BacklogErrorCode`) and `error_message`:
+
+```python
+from backlog.base import BacklogErrorCode, BacklogNotFoundError
+
+try:
+    api.issue.get("SAMPLE-1")
+except BacklogNotFoundError as e:
+    print(e.status_code, e.code is BacklogErrorCode.NO_RESOURCE_ERROR, e.error_message)
+```
 
 ## TLS certificates
 

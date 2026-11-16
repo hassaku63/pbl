@@ -25,7 +25,8 @@ Typical flow::
 import urllib.parse
 
 from backlog import _http
-from backlog.base import DEFAULT_DOMAIN, DEFAULT_TIMEOUT, BacklogConnectionError, BacklogError, build_base_url
+from backlog.base import DEFAULT_DOMAIN, DEFAULT_TIMEOUT, build_base_url
+from backlog.errors import BacklogConnectionError, error_for_response
 
 AUTHORIZATION_PATH = "/OAuth2AccessRequest.action"
 TOKEN_PATH = "/api/v2/oauth2/token"
@@ -79,5 +80,5 @@ def _token_request(space, domain, timeout, data):
     except OSError as e:
         raise BacklogConnectionError("Failed to send POST request to {}: {}".format(url, e)) from e
     if resp.status_code // 100 != 2:
-        raise BacklogError("Http response {}: {}".format(resp.status_code, resp.text))
+        raise error_for_response(resp)
     return resp.json()
