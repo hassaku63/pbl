@@ -30,6 +30,9 @@ def main():
     # Requests time out after 30 seconds by default (configurable with `timeout=`).
     api = BacklogAPI("your-space", "your-api-key")
 
+    # The space
+    print(api.get_space()["name"], api.get_space_licence()["licenceTypeId"])
+
     # Categories
     # https://developer.nulab.com/docs/backlog/api/2/get-category-list/
     print(api.category.list("SampleProject"))

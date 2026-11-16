@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **122 of 152 endpoints (80%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **126 of 152 endpoints (83%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -23,7 +23,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Projects](#projects) | 28 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
-| [Space](#space) | 2 / 8 |
+| [Space](#space) | 6 / 8 |
 | [Stars](#stars) | 2 / 2 |
 | [Teams](#teams) | 0 / 3 |
 | [Users](#users) | 13 / 14 |
@@ -183,13 +183,13 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| GET | `space` | [Get Space](https://developer.nulab.com/docs/backlog/api/2/get-space/) | 2026-11-15 | — |
+| GET | `space` | [Get Space](https://developer.nulab.com/docs/backlog/api/2/get-space/) | 2026-11-15 | `BacklogAPI.get_space()` |
 | GET | `space/activities` | [Get Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/) | 2026-11-15 | `Activity.list()` |
 | POST | `space/attachment` | [Post Attachment File](https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/) | 2026-11-15 | `Attachment.upload()` |
 | GET | `space/diskUsage` | [Get Space Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-space-disk-usage/) | 2026-11-15 | — |
-| GET | `space/image` | [Get Space Logo](https://developer.nulab.com/docs/backlog/api/2/get-space-logo/) | 2026-11-15 | — |
-| GET | `space/licence` | [Get Licence](https://developer.nulab.com/docs/backlog/api/2/get-licence/) | 2026-11-15 | — |
-| GET | `space/notification` | [Get Space Notification](https://developer.nulab.com/docs/backlog/api/2/get-space-notification/) | 2026-11-15 | — |
+| GET | `space/image` | [Get Space Logo](https://developer.nulab.com/docs/backlog/api/2/get-space-logo/) | 2026-11-15 | `BacklogAPI.get_space_image()` |
+| GET | `space/licence` | [Get Licence](https://developer.nulab.com/docs/backlog/api/2/get-licence/) | 2026-11-15 | `BacklogAPI.get_space_licence()` |
+| GET | `space/notification` | [Get Space Notification](https://developer.nulab.com/docs/backlog/api/2/get-space-notification/) | 2026-11-15 | `BacklogAPI.get_space_notification()` |
 | PUT | `space/notification` | [Update Space Notification](https://developer.nulab.com/docs/backlog/api/2/update-space-notification/) | 2026-11-15 | — |
 
 ## Stars

@@ -8,7 +8,7 @@ import unittest
 
 from backlog.base import BacklogError
 from tests.e2e import assertions as check
-from tests.e2e.support import PROJECT_KEY, client, requires_project, requires_space
+from tests.e2e.support import PROJECT_KEY, SPACE, client, requires_project, requires_space
 
 
 @requires_space
@@ -55,6 +55,12 @@ class TestSpaceRead(unittest.TestCase):
     def test_notifications(self):
         check.is_list(self.api.notification.list(count=1), what="notification.list()")
         check.is_count(self.api.notification.count(resourceAlreadyRead=False), what="notification.count()")
+
+    def test_space(self):
+        check.field_equals(self.api.get_space(), "spaceKey", SPACE, what="get_space()")
+        check.field_type(self.api.get_space_licence(), "active", bool, what="get_space_licence()")
+        check.has_keys(self.api.get_space_notification(), "content", what="get_space_notification()")
+        check.field_type(self.api.get_space_image(), "data", bytes, what="get_space_image()")
 
     def test_rate_limit(self):
         check.has_keys(self.api.get_rate_limit(), "rateLimit", what="get_rate_limit()")

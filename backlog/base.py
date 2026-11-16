@@ -4,7 +4,7 @@ import re
 import time
 from backlog import _http
 from backlog._http import Response  # noqa: F401  (re-exported for type references)
-from backlog.wiki import Wiki
+from backlog.wiki import Wiki, _filename_from_response
 from backlog.attachment import Attachment
 from backlog.project import Project
 from backlog.issue import Issue
@@ -245,6 +245,42 @@ class BacklogAPI(BaseAPI):
         """
         resp = self.invoke_method("GET", "rateLimit")
         return resp.json()
+
+    def get_space(self):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-space/
+
+        :return: information about the space
+        """
+        resp = self.invoke_method("GET", "space")
+        return resp.json()
+
+    def get_space_licence(self):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-licence/
+
+        :return: the licence (plan and limits) of the space
+        """
+        resp = self.invoke_method("GET", "space/licence")
+        return resp.json()
+
+    def get_space_notification(self):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-space-notification/
+
+        :return: the space notification ({"content": str, "updated": str})
+        """
+        resp = self.invoke_method("GET", "space/notification")
+        return resp.json()
+
+    def get_space_image(self):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-space-logo/
+
+        :return: dict with "name" (file name) and "data" (the logo image as bytes)
+        """
+        resp = self.invoke_method("GET", "space/image")
+        return {"name": _filename_from_response(resp), "data": resp.content}
 
     @staticmethod
     def _raise_for_status(resp):
