@@ -261,6 +261,66 @@ class Project(object):
 
         return resp.json()
 
+    def add_user(self, projectIdOrKey, userId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/add-project-user/
+
+        Requires administrator or project administrator rights.
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param userId: (int) numeric user ID ("id", not the login name "userId")
+        :return: the added user
+        """
+        _uri = "projects/{project_id_or_key}/users".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("POST", _uri, request_param={"userId": userId})
+
+        return resp.json()
+
+    def delete_user(self, projectIdOrKey, userId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/delete-project-user/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param userId: (int) numeric user ID
+        :return: the removed user
+        """
+        _uri = "projects/{project_id_or_key}/users".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("DELETE", _uri, request_param={"userId": userId})
+
+        return resp.json()
+
+    def add_team(self, projectIdOrKey, teamId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/add-project-team/
+
+        Requires administrator or project administrator rights.
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param teamId: (int) team ID (see Team.list())
+        :return: the added team
+        """
+        _uri = "projects/{project_id_or_key}/teams".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("POST", _uri, request_param={"teamId": teamId})
+
+        return resp.json()
+
+    def delete_team(self, projectIdOrKey, teamId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/delete-project-team/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param teamId: (int) team ID
+        :return: the removed team
+        """
+        _uri = "projects/{project_id_or_key}/teams".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("DELETE", _uri, request_param={"teamId": teamId})
+
+        return resp.json()
+
     def list_statuses(self, projectIdOrKey):
         """
         https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/

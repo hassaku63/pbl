@@ -289,3 +289,44 @@ class TestCustomFieldRoundTrip(unittest.TestCase):
                           "custom_field.delete_list_item() did not delete the item")
         finally:
             api.custom_field.delete(PROJECT_KEY, field["id"])
+
+
+@requires_write
+class TestProjectMembersRoundTrip(unittest.TestCase):
+    """
+    Adds a user or team that is in the space but not in the test project, and removes it again.
+    Skipped when there is none (e.g. a space with a single member).
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.api = client()
+
+    def test_teams(self):
+        teams = self.api.team.list(count=100)
+        check.is_list(teams, what="team.list()", item_keys=("id",))
+        in_project = {team["id"] for team in self.api.project.list_teams(PROJECT_KEY)}
+        candidates = [team for team in teams if team["id"] not in in_project]
+        if not candidates:
+            self.skipTest("No team outside the test project")
+        team_id = candidates[0]["id"]
+
+        self.api.project.add_team(PROJECT_KEY, team_id)
+        try:
+            check.contains_id(self.api.project.list_teams(PROJECT_KEY), team_id, what="project.list_teams()")
+        finally:
+            self.api.project.delete_team(PROJECT_KEY, team_id)
+
+    def test_users(self):
+        in_project = {user["id"] for user in self.api.project.list_users(PROJECT_KEY)}
+        candidates = [user for user in self.api.user.list() if user["id"] not in in_project]
+        if not candidates:
+            self.skipTest("No user outside the test project")
+        user_id = candidates[0]["id"]
+
+        added = self.api.project.add_user(PROJECT_KEY, user_id)
+        try:
+            check.field_equals(added, "id", user_id, what="project.add_user()")
+            check.contains_id(self.api.project.list_users(PROJECT_KEY), user_id, what="project.list_users()")
+        finally:
+            self.api.project.delete_user(PROJECT_KEY, user_id)
