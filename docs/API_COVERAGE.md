@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **126 of 152 endpoints (83%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **131 of 152 endpoints (86%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -20,13 +20,13 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
-| [Projects](#projects) | 28 / 48 |
+| [Projects](#projects) | 31 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
 | [Space](#space) | 6 / 8 |
 | [Stars](#stars) | 2 / 2 |
-| [Teams](#teams) | 0 / 3 |
-| [Users](#users) | 13 / 14 |
+| [Teams](#teams) | 1 / 3 |
+| [Users](#users) | 14 / 14 |
 | [Watching](#watching) | 5 / 5 |
 | [Wiki](#wiki) | 16 / 16 |
 
@@ -125,7 +125,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | PATCH | `projects/:projectIdOrKey` | [Update Project](https://developer.nulab.com/docs/backlog/api/2/update-project/) | 2026-11-15 | `Project.update()` |
 | GET | `projects/:projectIdOrKey/activities` | [Get Project Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/) | 2026-11-15 | `Activity.list_project()` |
 | DELETE | `projects/:projectIdOrKey/administrators` | [Delete Project Administrator](https://developer.nulab.com/docs/backlog/api/2/delete-project-administrator/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/administrators` | [Get List of Project Administrators](https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/administrators` | [Get List of Project Administrators](https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/) | 2026-11-15 | `Project.list_administrators()` |
 | POST | `projects/:projectIdOrKey/administrators` | [Add Project Administrator](https://developer.nulab.com/docs/backlog/api/2/add-project-administrator/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/categories` | [Get Category List](https://developer.nulab.com/docs/backlog/api/2/get-category-list/) | 2026-11-15 | `Category.list()`, `Project.list_categories()` |
 | POST | `projects/:projectIdOrKey/categories` | [Add Category](https://developer.nulab.com/docs/backlog/api/2/add-category/) | 2026-11-15 | `Category.add()`, `Project.add_category()` |
@@ -141,7 +141,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `projects/:projectIdOrKey/diskUsage` | [Get Project Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-project-disk-usage/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/files/:sharedFileId` | [Get File](https://developer.nulab.com/docs/backlog/api/2/get-file/) | 2026-11-15 | `Project.get_shared_file()` |
 | GET | `projects/:projectIdOrKey/files/metadata/:path` | [Get List of Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/) | 2026-11-15 | `Project.list_shared_files()` |
-| GET | `projects/:projectIdOrKey/image` | [Get Project Icon](https://developer.nulab.com/docs/backlog/api/2/get-project-icon/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/image` | [Get Project Icon](https://developer.nulab.com/docs/backlog/api/2/get-project-icon/) | 2026-11-15 | `Project.get_image()` |
 | GET | `projects/:projectIdOrKey/issueTypes` | [Get Issue Type List](https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/) | 2026-11-15 | `Project.list_issue_types()` |
 | POST | `projects/:projectIdOrKey/issueTypes` | [Add Issue Type](https://developer.nulab.com/docs/backlog/api/2/add-issue-type/) | 2026-11-15 | `Project.add_issue_type()` |
 | DELETE | `projects/:projectIdOrKey/issueTypes/:id` | [Delete Issue Type](https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/) | 2026-11-15 | `Project.delete_issue_type()` |
@@ -152,7 +152,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | PATCH | `projects/:projectIdOrKey/statuses/:id` | [Update Status](https://developer.nulab.com/docs/backlog/api/2/update-status/) | 2026-11-15 | `Project.update_status()` |
 | PATCH | `projects/:projectIdOrKey/statuses/updateDisplayOrder` | [Update Order of Status](https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/) | 2026-11-15 | `Project.update_status_order()` |
 | DELETE | `projects/:projectIdOrKey/teams` | [Delete Project Team](https://developer.nulab.com/docs/backlog/api/2/delete-project-team/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/teams` | [Get Project Team List](https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/teams` | [Get Project Team List](https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/) | 2026-11-15 | `Project.list_teams()` |
 | POST | `projects/:projectIdOrKey/teams` | [Add Project Team](https://developer.nulab.com/docs/backlog/api/2/add-project-team/) | 2026-11-15 | — |
 | DELETE | `projects/:projectIdOrKey/users` | [Delete Project User](https://developer.nulab.com/docs/backlog/api/2/delete-project-user/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/users` | [Get Project User List](https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/) | 2026-11-15 | `Project.list_users()` |
@@ -205,7 +205,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 |---|---|---|---|---|
 | GET | `teams` | [Get List of Teams](https://developer.nulab.com/docs/backlog/api/2/get-list-of-teams/) | 2026-11-15 | — |
 | GET | `teams/:teamId` | [Get Team](https://developer.nulab.com/docs/backlog/api/2/get-team/) | 2026-11-15 | — |
-| GET | `teams/:teamId/icon` | [Get Team Icon](https://developer.nulab.com/docs/backlog/api/2/get-team-icon/) | 2026-11-15 | — |
+| GET | `teams/:teamId/icon` | [Get Team Icon](https://developer.nulab.com/docs/backlog/api/2/get-team-icon/) | 2026-11-15 | `Team.get_icon()` |
 
 ## Users
 
@@ -214,7 +214,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `users` | [Get User List](https://developer.nulab.com/docs/backlog/api/2/get-user-list/) | 2026-11-15 | `User.list()` |
 | GET | `users/:userId` | [Get User](https://developer.nulab.com/docs/backlog/api/2/get-user/) | 2026-11-15 | `User.get()` |
 | GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | 2026-11-15 | `Activity.list_user()` |
-| GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | — |
+| GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | `User.get_icon()` |
 | GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | `Star.list_received()` |
 | GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | `Star.count_received()` |
 | GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | `Watching.list()` |

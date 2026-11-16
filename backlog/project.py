@@ -407,6 +407,45 @@ class Project(object):
 
         return resp.json()
 
+    def get_image(self, projectIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-project-icon/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :return: dict with "name" (file name) and "data" (the project icon as bytes)
+        """
+        _uri = "projects/{project_id_or_key}/image".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return {"name": _filename_from_response(resp), "data": resp.content}
+
+    def list_administrators(self, projectIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of the project administrators (users)
+        """
+        _uri = "projects/{project_id_or_key}/administrators".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def list_teams(self, projectIdOrKey):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of the teams that belong to the project
+        """
+        _uri = "projects/{project_id_or_key}/teams".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
     def list_shared_files(self, projectIdOrKey, path="", order=None, offset=None, count=None):
         """
         https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/
