@@ -5,7 +5,7 @@ BACKLOG_E2E_WRITE=1, names every resource with resource_name() and deletes what 
 finally. Assertions follow tests/e2e/README.md.
 
 The API key's user needs to be an administrator of the test project (not of the space) for
-documents, categories, versions and statuses.
+documents, categories, versions, statuses and webhooks.
 """
 
 import os
@@ -240,3 +240,23 @@ class TestVersionAndStatusRoundTrip(unittest.TestCase):
             check.contains_id(self.api.project.list_statuses(PROJECT_KEY), status["id"], what="project.list_statuses()")
         finally:
             self.api.project.delete_status(PROJECT_KEY, status["id"], substituteStatusId=substitute)
+
+
+@requires_write
+class TestWebhookRoundTrip(unittest.TestCase):
+    # The hook URL uses the reserved .invalid domain, so Backlog can never deliver an event anywhere.
+    HOOK_URL = "https://pbl-e2e.invalid/hook"
+
+    def test_webhook(self):
+        api = client()
+        name = resource_name("webhook")
+        webhook = api.webhook.add(PROJECT_KEY, name, self.HOOK_URL, description="e2e", activityTypeIds=[1])
+        try:
+            check.field_equals(webhook, "name", name, what="webhook.add()")
+            check.field_type(webhook, "id", int, what="webhook.add()")
+            check.field_equals(api.webhook.get(PROJECT_KEY, webhook["id"]), "hookUrl", self.HOOK_URL, what="webhook.get()")
+            updated = api.webhook.update(PROJECT_KEY, webhook["id"], description="updated")
+            check.field_equals(updated, "description", "updated", what="webhook.update()")
+            check.contains_id(api.webhook.list(PROJECT_KEY), webhook["id"], what="webhook.list()")
+        finally:
+            api.webhook.delete(PROJECT_KEY, webhook["id"])
