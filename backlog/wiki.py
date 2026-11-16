@@ -23,7 +23,7 @@ class Wiki(object):
     def __init__(self, api):
         """
 
-        :param api:
+        :param api: the BacklogAPI client
         """
         self.api = api
 
@@ -66,13 +66,13 @@ class Wiki(object):
 
     def create(self, projectId, name, content, mailNotify=False):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-wiki-page/
+        https://developer.nulab.com/docs/backlog/api/2/add-wiki-page/
 
         :param projectId: (int) Required. project id
         :param name: (str) Required. wiki page name
         :param content: (str) Required. page content
         :param mailNotify: (bool) Optional. mail notification flag
-        :return: Compliant with Backlog API specification
+        :return: the created wiki page
         """
         _uri = "wikis"
         _method = "POST"
@@ -89,10 +89,10 @@ class Wiki(object):
 
     def get(self, wikiId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page/
+        https://developer.nulab.com/docs/backlog/api/2/get-wiki-page/
 
         :param wikiId: (int) Required wiki id
-        :return: Compliant with Backlog API specification
+        :return: the wiki page
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "GET"
@@ -102,13 +102,13 @@ class Wiki(object):
 
     def update(self, wikiId, name, content, mailNotify=False):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-wiki-page/
+        https://developer.nulab.com/docs/backlog/api/2/update-wiki-page/
 
         :param wikiId: (int) Required. wiki id
         :param name: (str) Required. wiki name
         :param content: (str) Required. content string
         :param mailNotify: (bool) Optional. mail notification falg.
-        :return: Compliant with Backlog API specification
+        :return: the updated wiki page
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "PATCH"
@@ -124,11 +124,11 @@ class Wiki(object):
 
     def delete(self, wikiId, mailNotify=False):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-wiki-page/
+        https://developer.nulab.com/docs/backlog/api/2/delete-wiki-page/
 
         :param wikiId: (int) Required. wiki id
         :param mailNotify: (bool) Optional. mail notification flag
-        :return: Compliant with Backlog API specification
+        :return: the deleted wiki page
         """
         _uri = "wikis/{wiki_id}".format(wiki_id=wikiId)
         _method = "DELETE"
@@ -143,10 +143,10 @@ class Wiki(object):
 
     def list_attachments(self, wikiId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-wiki-attachments/
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-wiki-attachments/
 
         :param wikiId: (int) Required. wiki id
-        :return: Compliant with Backlog API specification
+        :return: list of the attachments of the page
         """
         _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
         _method = "GET"
@@ -161,7 +161,7 @@ class Wiki(object):
 
         :param wikiId: (int) Required. wiki id
         :param attachmentId: (int or list of int) Required. attachment ID(s) returned by Attachment.upload()
-        :return: Compliant with Backlog API specification
+        :return: list of the attached files
         """
         _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
         _method = "POST"
@@ -175,7 +175,7 @@ class Wiki(object):
 
     def get_attachment(self, wikiId, attachmentId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-wiki-page-attachment
+        https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-attachment/
 
         :param wikiId: (int) Required. wiki id
         :param attachmentId: (int) Required. attachment id
@@ -195,11 +195,11 @@ class Wiki(object):
 
     def delete_attachment(self, wikiId, attachmentId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/remove-wiki-attachment/
+        https://developer.nulab.com/docs/backlog/api/2/remove-wiki-attachment/
 
         :param wikiId: (int) Required. wiki id
         :param attachmentId: (int) Required. attachment id
-        :return: Compliant with Backlog API specification
+        :return: the removed attachment
         """
         _uri = "wikis/{wiki_id}/attachments/{attachment_id}".format(
             wiki_id=wikiId,

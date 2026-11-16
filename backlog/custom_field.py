@@ -73,7 +73,7 @@ AddSingleListCustomFieldResponse = NewType("AddSingleListCustomFieldResponse", L
 AddMultipleListCustomFieldResponse = NewType("AddMultipleListCustomFieldResponse", ListCustomFieldResponse)
 AddCheckboxCustomFieldResponse = NewType("AddCheckboxCustomFieldResponse", ListCustomFieldResponse)
 AddRadioCustomFieldResponse = NewType("AddRadioCustomFieldResponse", ListCustomFieldResponse)
-AddCustomFiledResponse = Union[
+AddCustomFieldResponse = Union[
     AddTextCustomFieldResponse, AddSentenceCustomFieldResponse,
     AddNumberCustomFieldResponse, AddDateCustomFieldResponse,
     AddSingleListCustomFieldResponse, AddMultipleListCustomFieldResponse,
@@ -88,12 +88,17 @@ DeleteSingleListCustomFieldResponse = NewType("DeleteSingleListCustomFieldRespon
 DeleteMultipleListCustomFieldResponse = NewType("DeleteMultipleListCustomFieldResponse", ListCustomFieldResponse)
 DeleteCheckboxCustomFieldResponse = NewType("DeleteCheckboxCustomFieldResponse", ListCustomFieldResponse)
 DeleteRadioCustomFieldResponse = NewType("DeleteRadioCustomFieldResponse", ListCustomFieldResponse)
-DeleteCustomFiledResponse = Union[
+DeleteCustomFieldResponse = Union[
     DeleteTextCustomFieldResponse, DeleteSentenceCustomFieldResponse,
     DeleteNumberCustomFieldResponse, DeleteDateCustomFieldResponse,
     DeleteSingleListCustomFieldResponse, DeleteMultipleListCustomFieldResponse,
     DeleteCheckboxCustomFieldResponse, DeleteRadioCustomFieldResponse,
 ]
+
+
+# Misspelled names kept for backward compatibility (before 0.19.0).
+AddCustomFiledResponse = AddCustomFieldResponse
+DeleteCustomFiledResponse = DeleteCustomFieldResponse
 
 
 class CustomField(object):
@@ -138,9 +143,9 @@ class CustomField(object):
         description: Optional[str] = None,
         required: Optional[bool] = None,
         **kwargs,
-    ) -> AddCustomFiledResponse:
+    ) -> AddCustomFieldResponse:
         """Add custom field
-        https://developer.nulab.com/docs/backlog/api/2/add-custom-field/#
+        https://developer.nulab.com/docs/backlog/api/2/add-custom-field/
         """
         _url = f"projects/{projectIdOrKey}/customFields"
         _method = "POST"
@@ -435,9 +440,9 @@ class CustomField(object):
 
         return resp.json()
 
-    def delete(self, projectIdOrKey: str, id: int) -> DeleteCustomFiledResponse:
+    def delete(self, projectIdOrKey: str, id: int) -> DeleteCustomFieldResponse:
         """Delete custom field
-        https://developer.nulab.com/docs/backlog/api/2/delete-custom-field/#delete-custom-field
+        https://developer.nulab.com/docs/backlog/api/2/delete-custom-field/
         """
         _url = f"projects/{projectIdOrKey}/customFields/{id}"
         _method = "DELETE"
