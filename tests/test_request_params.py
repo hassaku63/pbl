@@ -105,7 +105,7 @@ class TestRequestParams(unittest.TestCase):
         for _kwargs in [{"chartEnabled": True}, {"chatEnabled": True}]:
             with self.subTest(**_kwargs):
                 self.api.project.create(name="n", key="K", **_kwargs)
-                self.assertEqual("True", _form(fake_http.last_request())["chartEnabled"])
+                self.assertEqual("true", _form(fake_http.last_request())["chartEnabled"])
 
         with self.assertRaises(ValueError):
             self.api.project.create(name="n", key="K", chartEnabled=True, chatEnabled=False)

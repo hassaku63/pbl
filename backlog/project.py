@@ -45,18 +45,17 @@ class Project(object):
 
     def list(self, archived=False, all_=False):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-project-list/
 
-        :param archived: (book) Optional. default = False
-        :param all_: (bool) Optional. Admin only. not implemented.
-        :return:
+        :param archived: (bool or None) Optional. False (default): projects that are not archived;
+            True: archived projects; None: all projects
+        :param all_: (bool) Optional. Administrators only: True to list all projects of the space,
+            not only the ones they joined. Default False
+        :return: list of projects
         """
         _uri = "projects"
         _method = "GET"
-        query_param = {
-            "archived": "true" if archived else "false",
-            "all": "true" if all_ else "false"
-        }
+        query_param = bool_params({"archived": archived, "all": bool(all_)})
 
         resp = self.api.invoke_method(_method, _uri, query_param=query_param)
 
@@ -79,6 +78,8 @@ class Project(object):
         textFormattingRule: Optional[TextFormattingRule] = None,
         useDevAttributes: Optional[bool] = None,
         chartEnabled: Optional[bool] = None,
+        grandchildIssueEnabled: Optional[bool] = None,
+        useDocument: Optional[bool] = None,
     ) -> AddProjectResponse:
         """Add project
         https://developer.nulab.com/docs/backlog/api/2/add-project/#form-parameters
@@ -113,6 +114,10 @@ class Project(object):
         :type textFormattingRule: TextFormattingRule
         :param useDevAttributes: Enable priorities, versions and milestones
         :type useDevAttributes: bool
+        :param grandchildIssueEnabled: Enable 3rd level subtasks
+        :type grandchildIssueEnabled: bool
+        :param useDocument: Enable documents
+        :type useDocument: bool
         :return: response add project
         :rtype: AddProjectResponse
         """
@@ -136,11 +141,11 @@ class Project(object):
             "useGit": useGit,
             "useOriginalImageSizeAtWiki": useOriginalImageSizeAtWiki,
             "textFormattingRule": textFormattingRule,
-            "useDevAttributes": useDevAttributes
+            "useDevAttributes": useDevAttributes,
+            "grandchildIssueEnabled": grandchildIssueEnabled,
+            "useDocument": useDocument,
         }
-        for k, v in request_param.copy().items():
-            if v is None:
-                del request_param[k]
+        request_param = bool_params({k: v for k, v in request_param.items() if v is not None})
 
         resp = self.api.invoke_method(_method, _path, request_param=request_param)
 
@@ -179,6 +184,8 @@ class Project(object):
         textFormattingRule: TextFormattingRule = None,
         archived: bool = None,
         useDevAttributes: bool = None,
+        grandchildIssueEnabled: bool = None,
+        useDocument: bool = None,
     ) -> UpdateProjectResponse:
         """Update project
         https://developer.nulab.com/docs/backlog/api/2/update-project/#form-parameters
@@ -213,6 +220,10 @@ class Project(object):
         :type archived: bool, optional
         :param useDevAttributes: Enable priorities, versions and milestones, defaults to None
         :type useDevAttributes: bool, optional
+        :param grandchildIssueEnabled: Enable 3rd level subtasks, defaults to None
+        :type grandchildIssueEnabled: bool, optional
+        :param useDocument: Enable documents, defaults to None
+        :type useDocument: bool, optional
         """
         _path = f"projects/{projectIdOrKey}"
         _method = "PATCH"
@@ -231,11 +242,11 @@ class Project(object):
             "useOriginalImageSizeAtWiki": useOriginalImageSizeAtWiki,
             "textFormattingRule": textFormattingRule,
             "archived": archived,
-            "useDevAttributes": useDevAttributes
+            "useDevAttributes": useDevAttributes,
+            "grandchildIssueEnabled": grandchildIssueEnabled,
+            "useDocument": useDocument,
         }
-        for k, v in request_param.copy().items():
-            if v is None:
-                del request_param[k]
+        request_param = bool_params({k: v for k, v in request_param.items() if v is not None})
         if not request_param:
             raise ValueError("No parameter to update")
 
@@ -556,14 +567,17 @@ class Project(object):
 
         return resp.json()
 
-    def add_issue_type(self, projectIdOrKey, name, color):
+    def add_issue_type(self, projectIdOrKey, name, color, templateSummary=None, templateDescription=None):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-issue-type/
+        https://developer.nulab.com/docs/backlog/api/2/add-issue-type/
 
-        :param projectIdOrKey:
-        :param name:
-        :param color:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :param name: (str) issue type name
+        :param color: (str) background color, one of "#e30000", "#990000", "#934981", "#814fbc", "#2779ca",
+            "#007e9a", "#7ea800", "#ff9200", "#ff3265", "#666665"
+        :param templateSummary: (str) Optional. summary template for new issues of this type
+        :param templateDescription: (str) Optional. description template for new issues of this type
+        :return: the added issue type
         """
         _uri = "projects/{project_id_or_key}/issueTypes".format(
             project_id_or_key=projectIdOrKey
@@ -571,22 +585,26 @@ class Project(object):
         _method = "POST"
         _request_param = {
             "name": name,
-            "color": color
+            "color": color,
+            "templateSummary": templateSummary,
+            "templateDescription": templateDescription,
         }
 
         resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
 
         return resp.json()
 
-    def update_issue_type(self, projectIdOrKey, id, name, color):
+    def update_issue_type(self, projectIdOrKey, id, name=None, color=None, templateSummary=None, templateDescription=None):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-issue-type/
+        https://developer.nulab.com/docs/backlog/api/2/update-issue-type/
 
-        :param projectIdOrKey:
-        :param id: int Issue type ID
-        :param name:
-        :param color:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) issue type ID
+        :param name: (str) Optional. issue type name
+        :param color: (str) Optional. background color (see add_issue_type())
+        :param templateSummary: (str) Optional. summary template
+        :param templateDescription: (str) Optional. description template
+        :return: the updated issue type
         """
         _uri = "projects/{project_id_or_key}/issueTypes/{id}".format(
             project_id_or_key=projectIdOrKey,
@@ -595,7 +613,9 @@ class Project(object):
         _method = "PATCH"
         _request_param = {
             "name": name,
-            "color": color
+            "color": color,
+            "templateSummary": templateSummary,
+            "templateDescription": templateDescription,
         }
 
         resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
