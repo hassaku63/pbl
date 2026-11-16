@@ -105,3 +105,5 @@ venv.bak/
 
 # env
 .env*
+# Local E2E reports (scripts/e2e_local.py)
+e2e-report*.md

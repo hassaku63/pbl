@@ -5,6 +5,7 @@ Offline tests for the end-to-end test support code, and enforcement of tests/e2e
 
 import datetime
 import glob
+import importlib.util
 import os
 import re
 import subprocess
@@ -84,6 +85,66 @@ class TestTierAGuard(unittest.TestCase):
                                 capture_output=True, text=True)
         self.assertNotEqual(0, result.returncode)
         self.assertIn("must not be set in CI", result.stderr)
+
+
+def _load_e2e_local():
+    spec = importlib.util.spec_from_file_location("e2e_local", os.path.join(ROOT, "scripts", "e2e_local.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class TestLocalRunner(unittest.TestCase):
+    """
+    scripts/e2e_local.py: refuses to run in CI, and its report contains no response data.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.runner = _load_e2e_local()
+
+    def test_refuses_to_run_in_ci(self):
+        env = dict(os.environ, GITHUB_ACTIONS="true", BACKLOG_E2E_SPACE="s", BACKLOG_E2E_API_KEY="k")
+        result = subprocess.run([sys.executable, os.path.join("scripts", "e2e_local.py"), "--yes"], cwd=ROOT, env=env,
+                                capture_output=True, text=True)
+        self.assertEqual(2, result.returncode)
+        self.assertIn("never run in CI", result.stderr)
+        self.assertTrue(self.runner.in_ci({"CI": "true"}))
+        self.assertFalse(self.runner.in_ci({}))
+
+    def test_normalize_path(self):
+        n = self.runner.normalize_path
+        self.assertEqual("users/:id", n("users/12345"))
+        self.assertEqual("issues/:issueKey/comments/:id", n("issues/TEST-12/comments/3"))
+        self.assertEqual("projects/:projectKey/versions", n("projects/MYPROJ/versions", project_key="MYPROJ"))
+        self.assertEqual("users/myself", n("users/myself?x=1"))
+
+    def test_report_has_outcomes_and_endpoints_but_no_values(self):
+        calls = []
+
+        class Sample(unittest.TestCase):
+            def test_pass(self):
+                calls.append(("GET", "users/:id"))
+
+            def test_fail(self):
+                calls.append(("POST", "users"))
+                check.field_equals({"mailAddress": SECRET}, "mailAddress", "other", what="user.add()")
+
+            def test_error(self):
+                raise ValueError(SECRET)
+
+        self.runner.RecordingResult.calls = calls
+        suite = unittest.TestLoader().loadTestsFromTestCase(Sample)
+        with open(os.devnull, "w") as devnull:
+            result = unittest.TextTestRunner(stream=devnull, resultclass=self.runner.RecordingResult).run(suite)
+        report = self.runner.render_report(result.records, datetime.datetime(2026, 11, 16), ["A"])
+
+        self.assertNotIn(SECRET, report)
+        self.assertIn("1 error, 1 failed, 1 passed", report)
+        self.assertIn("`GET users/:id`", report)
+        self.assertIn("`POST users`", report)
+        self.assertIn("field 'mailAddress' does not have the expected value", report)
+        self.assertIn("| error | ValueError |", report)
 
 
 class TestGuidelinesAreFollowed(unittest.TestCase):

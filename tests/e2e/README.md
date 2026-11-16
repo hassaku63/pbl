@@ -50,6 +50,15 @@ In CI, `mask.py` registers the API key user's name, mail address and IDs with `:
 
 `support.py` refuses to load when `BACKLOG_E2E_ADMIN=1` is set in CI. Tier A results are shared as a report that contains no response data.
 
+Run tier A with `scripts/e2e_local.py`. It refuses to run in CI, lists what will be created and deleted, asks for confirmation, and writes `e2e-report.md` (ignored by git). The report has the result of each test and the endpoints it called, as the HTTP method plus the path with IDs replaced (`PATCH users/:id`). It records failure messages only for assertions from `assertions.py` and error types only for other exceptions. Paste the report into an issue or pull request, not the console output: the console shows the space name.
+
+```bash
+BACKLOG_E2E_SPACE=your-space BACKLOG_E2E_API_KEY=admin-key BACKLOG_E2E_USER_EMAIL=you+e2e@example.com \
+    python scripts/e2e_local.py            # tier A only; --all adds tier R (and W with BACKLOG_E2E_WRITE=1)
+```
+
+When you add a tier A test, describe what it creates and its side effects in the plan that `scripts/e2e_local.py` prints.
+
 ## 6. Rate limits
 
 Use `client()` from `support.py`. It waits at least `BACKLOG_E2E_INTERVAL` seconds (default 1) between requests and retries on 429. Keep the number of requests per test small: the free plan has the lowest limits.
