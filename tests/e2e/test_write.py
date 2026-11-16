@@ -99,6 +99,8 @@ class TestWikiRoundTrip(unittest.TestCase):
             check.has_keys(wiki, "id", "created", what="wiki.create()")
             updated = api.wiki.update(wiki["id"], name, "updated by the e2e test", mailNotify=False)
             check.field_equals(updated, "content", "updated by the e2e test", what="wiki.update()")
+            check.is_list(api.wiki.list_history(wiki["id"]), what="wiki.list_history()", min_length=1, item_keys=("version",))
+            check.is_list(api.wiki.list(PROJECT_KEY, keyword=name), what="wiki.list(keyword)", min_length=1)
 
             data = b"python-backlog e2e attachment\n"
             with tempfile.TemporaryDirectory() as d:

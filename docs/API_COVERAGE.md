@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **104 of 152 endpoints (68%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **111 of 152 endpoints (73%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -28,7 +28,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Teams](#teams) | 0 / 3 |
 | [Users](#users) | 6 / 14 |
 | [Watching](#watching) | 5 / 5 |
-| [Wiki](#wiki) | 9 / 16 |
+| [Wiki](#wiki) | 16 / 16 |
 
 ## Activities
 
@@ -249,10 +249,10 @@ Methods that call endpoints which are not in the official API reference (they ma
 | POST | `wikis/:wikiId/attachments` | [Attach File to Wiki](https://developer.nulab.com/docs/backlog/api/2/attach-file-to-wiki/) | 2026-11-15 | `Wiki.add_attachment()` |
 | DELETE | `wikis/:wikiId/attachments/:attachmentId` | [Remove Wiki Attachment](https://developer.nulab.com/docs/backlog/api/2/remove-wiki-attachment/) | 2026-11-15 | `Wiki.delete_attachment()` |
 | GET | `wikis/:wikiId/attachments/:attachmentId` | [Get Wiki Page Attachment](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-attachment/) | 2026-11-15 | `Wiki.get_attachment()` |
-| GET | `wikis/:wikiId/history` | [Get Wiki Page History](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-history/) | 2026-11-15 | — |
-| GET | `wikis/:wikiId/sharedFiles` | [Get List of Shared Files on Wiki](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files-on-wiki/) | 2026-11-15 | — |
-| POST | `wikis/:wikiId/sharedFiles` | [Link Shared Files to Wiki](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-wiki/) | 2026-11-15 | — |
-| DELETE | `wikis/:wikiId/sharedFiles/:id` | [Remove Link to Shared File from Wiki](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-wiki/) | 2026-11-15 | — |
-| GET | `wikis/:wikiId/stars` | [Get Wiki Page Star](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/) | 2026-11-15 | — |
-| GET | `wikis/count` | [Count Wiki Page](https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/) | 2026-11-15 | — |
-| GET | `wikis/tags` | [Get Wiki Page Tag List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/) | 2026-11-15 | — |
+| GET | `wikis/:wikiId/history` | [Get Wiki Page History](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-history/) | 2026-11-15 | `Wiki.list_history()` |
+| GET | `wikis/:wikiId/sharedFiles` | [Get List of Shared Files on Wiki](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files-on-wiki/) | 2026-11-15 | `Wiki.list_shared_files()` |
+| POST | `wikis/:wikiId/sharedFiles` | [Link Shared Files to Wiki](https://developer.nulab.com/docs/backlog/api/2/link-shared-files-to-wiki/) | 2026-11-15 | `Wiki.link_shared_files()` |
+| DELETE | `wikis/:wikiId/sharedFiles/:id` | [Remove Link to Shared File from Wiki](https://developer.nulab.com/docs/backlog/api/2/remove-link-to-shared-file-from-wiki/) | 2026-11-15 | `Wiki.unlink_shared_file()` |
+| GET | `wikis/:wikiId/stars` | [Get Wiki Page Star](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/) | 2026-11-15 | `Wiki.list_stars()` |
+| GET | `wikis/count` | [Count Wiki Page](https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/) | 2026-11-15 | `Wiki.count()` |
+| GET | `wikis/tags` | [Get Wiki Page Tag List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/) | 2026-11-15 | `Wiki.list_tags()` |

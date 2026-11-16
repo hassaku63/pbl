@@ -81,6 +81,8 @@ def main():
     print("# list wikis")
     wikis = api.wiki.list("SampleProject")
     print(json.dumps(wikis[0], indent=2))
+    print(api.wiki.count("SampleProject"), api.wiki.list_tags("SampleProject"))
+    print(api.wiki.list_history(wikis[0]["id"], count=5))  # past versions of the page
 
     # get attachment
     # https://developer.nulab.com/docs/backlog/api/2/get-issue-attachment/
