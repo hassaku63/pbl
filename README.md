@@ -139,10 +139,6 @@ HTTPS certificates are verified against the system trust store (it also honors `
 - Redirects are not followed, so the API key is never sent to another host.
 - `Project.list_categories()`, `add_category()`, `update_category()` and `delete_category()` are deprecated. Use `BacklogAPI.category` instead.
 
-## See also
-
-Qiita https://qiita.com/hassaku_63/items/b9eb2a1c7ecd3c19507d
-
 ## Contact
 
 Please open an issue on [GitHub](https://github.com/hassaku63/pbl/issues).
