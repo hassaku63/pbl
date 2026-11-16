@@ -1,5 +1,5 @@
 {
-  "_comment": "Backlog API endpoints from the official API reference. Maintained by hand (or by an AI agent reading the pages); see .claude/skills/api-change/SKILL.md. last_accessed is the date the page was last read.",
+  "_comment": "Backlog API endpoints from the official API reference. Maintained by hand (or by an AI agent reading the pages); see .claude/skills/api-change/SKILL.md. last_accessed is the date the page was last read. 'removed' lists endpoints that were removed from the API (see the changelog); methods that call them must be deprecated.",
   "index": "https://developer.nulab.com/docs/backlog/",
   "index_last_accessed": "2026-11-15",
   "endpoints": [
@@ -1066,6 +1066,154 @@
       "title": "Get Wiki Page Tag List",
       "url": "https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/",
       "last_accessed": "2026-11-15"
+    }
+  ],
+  "removed": [
+    {
+      "method": "GET",
+      "path": "/api/v2/groups",
+      "title": "Get List of Groups",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "GET /api/v2/teams",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/groups",
+      "title": "Add Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "POST /api/v2/teams",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/groups/:groupId",
+      "title": "Get Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "GET /api/v2/teams/:teamId",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/groups/:groupId",
+      "title": "Update Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "PATCH /api/v2/teams/:teamId",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/groups/:groupId",
+      "title": "Delete Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "DELETE /api/v2/teams/:teamId",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/groups/:groupId/icon",
+      "title": "Get Group Icon",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "GET /api/v2/teams/:teamId/icon",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/statuses",
+      "title": "Get Status List",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "GET /api/v2/projects/:projectIdOrKey/statuses",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v2/projects/:projectIdOrKey/groups",
+      "title": "Get Project Group List",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "GET /api/v2/projects/:projectIdOrKey/teams",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/projects/:projectIdOrKey/groups",
+      "title": "Add Project Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "POST /api/v2/projects/:projectIdOrKey/teams",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/projects/:projectIdOrKey/groups",
+      "title": "Delete Project Group",
+      "removed_in": "2.113.3",
+      "removed_on": "2025-09-11",
+      "replacement": "DELETE /api/v2/projects/:projectIdOrKey/teams",
+      "announcement": "https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/",
+      "changelog": "https://developer.nulab.com/docs/backlog/changelog/",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v2/users",
+      "title": "Add User",
+      "removed_in": null,
+      "removed_on": null,
+      "replacement": null,
+      "announcement": null,
+      "changelog": null,
+      "note": "The reference page was removed (it redirects to the API index) without a changelog entry. Reported not to work in spaces on the new plans, where users are managed in the web UI.",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v2/users/:userId",
+      "title": "Update User",
+      "removed_in": null,
+      "removed_on": null,
+      "replacement": null,
+      "announcement": null,
+      "changelog": null,
+      "note": "The reference page was removed (it redirects to the API index) without a changelog entry. Reported not to work in spaces on the new plans, where users are managed in the web UI.",
+      "confirmed_on": "2026-11-16"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v2/users/:userId",
+      "title": "Delete User",
+      "removed_in": null,
+      "removed_on": null,
+      "replacement": null,
+      "announcement": null,
+      "changelog": null,
+      "note": "The reference page was removed (it redirects to the API index) without a changelog entry. Reported not to work in spaces on the new plans, where users are managed in the web UI.",
+      "confirmed_on": "2026-11-16"
     }
   ]
 }
