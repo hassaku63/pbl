@@ -1,6 +1,19 @@
 # coding: utf-8
 
+import warnings
+
 from backlog.wiki import _filename_from_response
+
+_USER_MANAGEMENT_DEPRECATION = (
+    "User.{}() is deprecated and will be removed in a future release. The Add User, Update User and "
+    "Delete User endpoints were removed from the official Backlog API reference and are reported not to work "
+    "in spaces on the new plans, where users are invited and managed in the Backlog web UI (or through the "
+    "Nulab Account SCIM API for managed accounts). They may still work in spaces on the old plans."
+)
+
+
+def _warn_user_management(name):
+    warnings.warn(_USER_MANAGEMENT_DEPRECATION.format(name), DeprecationWarning, stacklevel=3)
 
 
 class User(object):
@@ -130,7 +143,11 @@ class User(object):
 
     def add(self, userId, password, name, mailAddress, roleType):
         """
-        https://developer.nulab.com/ja/docs/backlog/api/2/add-user/
+        (Formerly documented at https://developer.nulab.com/docs/backlog/api/2/add-user/)
+
+        .. deprecated:: 0.18.0
+            The endpoint was removed from the official API reference and is reported not to work in spaces
+            on the new plans (users are managed in the web UI there). It may still work on the old plans.
 
         :param userId: (str) Required.
         :param password: (str) Required.
@@ -139,6 +156,7 @@ class User(object):
         :param roleType: (int) Required. administrator=1, general-user=2, reporter=3, viewer=4, guest-reporter=5, guest-viewer=6
         :return: Compliant with Backlog API specification
         """
+        _warn_user_management("add")
         _uri = "users"
         _method = "POST"
         params = dict(
@@ -155,7 +173,11 @@ class User(object):
 
     def update(self, userId, password=None, name=None, mailAddress=None, roleType=None):
         """
-        https://developer.nulab.com/ja/docs/backlog/api/2/update-user/
+        (Formerly documented at https://developer.nulab.com/docs/backlog/api/2/update-user/)
+
+        .. deprecated:: 0.18.0
+            The endpoint was removed from the official API reference and is reported not to work in spaces
+            on the new plans (users are managed in the web UI there). It may still work on the old plans.
 
         :param userId: (str) Required.
         :param password: (str) Optional.
@@ -164,6 +186,7 @@ class User(object):
         :param roleType: (str) Optional.
         :return: Compliant with Backlog API specification
         """
+        _warn_user_management("update")
         _uri = "users/{user_id}".format(user_id=userId)
         _method = "PATCH"
         params = dict(
@@ -180,11 +203,16 @@ class User(object):
 
     def delete(self, id):
         """
-        https://developer.nulab.com/ja/docs/backlog/api/2/delete-user/
+        (Formerly documented at https://developer.nulab.com/docs/backlog/api/2/delete-user/)
+
+        .. deprecated:: 0.18.0
+            The endpoint was removed from the official API reference and is reported not to work in spaces
+            on the new plans (users are managed in the web UI there). It may still work on the old plans.
 
         :param id: (int) Required.
         :return: Compliant with Backlog API specification
         """
+        _warn_user_management("delete")
         _uri = "users/{id}".format(id=id)
         _method = "DELETE"
 
