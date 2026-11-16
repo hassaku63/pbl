@@ -5,7 +5,7 @@ BACKLOG_E2E_WRITE=1, names every resource with resource_name() and deletes what 
 finally. Assertions follow tests/e2e/README.md.
 
 The API key's user needs to be an administrator of the test project (not of the space) for
-documents, categories, versions, statuses and webhooks.
+documents, categories, versions, statuses, webhooks and custom fields.
 """
 
 import os
@@ -260,3 +260,32 @@ class TestWebhookRoundTrip(unittest.TestCase):
             check.contains_id(api.webhook.list(PROJECT_KEY), webhook["id"], what="webhook.list()")
         finally:
             api.webhook.delete(PROJECT_KEY, webhook["id"])
+
+
+@requires_write
+class TestCustomFieldRoundTrip(unittest.TestCase):
+    def test_list_custom_field(self):
+        api = client()
+        if not api.get_space_licence().get("attribute"):
+            self.skipTest("The plan of the space has no custom fields")
+        name = resource_name("field")
+
+        field = api.custom_field.add_single_list_custom_field(PROJECT_KEY, name, items=["first"])
+        try:
+            check.field_equals(field, "name", name, what="custom_field.add_single_list_custom_field()")
+            check.field_type(field, "id", int, what="custom_field.add_single_list_custom_field()")
+            updated = api.custom_field.update(PROJECT_KEY, field["id"], description="e2e")
+            check.field_equals(updated, "description", "e2e", what="custom_field.update()")
+
+            items = api.custom_field.add_list_item(PROJECT_KEY, field["id"], "second").get("items")
+            check.is_list(items, what="custom_field.add_list_item()['items']", min_length=2, item_keys=("id", "name"))
+            added = [item for item in items if item["name"] == "second"]
+            check.is_true(len(added) == 1, "custom_field.add_list_item() did not add exactly one item")
+            items = api.custom_field.update_list_item(PROJECT_KEY, field["id"], added[0]["id"], "renamed").get("items")
+            check.is_true(any(item.get("name") == "renamed" for item in items or []),
+                          "custom_field.update_list_item() did not rename the item")
+            items = api.custom_field.delete_list_item(PROJECT_KEY, field["id"], added[0]["id"]).get("items")
+            check.is_true(all(item.get("id") != added[0]["id"] for item in items or []),
+                          "custom_field.delete_list_item() did not delete the item")
+        finally:
+            api.custom_field.delete(PROJECT_KEY, field["id"])

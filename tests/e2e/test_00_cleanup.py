@@ -57,3 +57,9 @@ class TestCleanupLeftovers(unittest.TestCase):
         for webhook in self.api.webhook.list(PROJECT_KEY):
             if is_leftover(webhook.get("name"), webhook.get("created")):
                 self.api.webhook.delete(PROJECT_KEY, webhook["id"])
+
+    def test_custom_fields(self):
+        # Custom fields have no creation time.
+        for field in self.api.custom_field.list(PROJECT_KEY):
+            if is_previous_run(field.get("name")):
+                self.api.custom_field.delete(PROJECT_KEY, field["id"])
