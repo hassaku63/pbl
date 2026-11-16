@@ -43,6 +43,11 @@ def main():
     print(api.project.list_statuses("SampleProject"))  # statusId
     print(api.project.list_versions("SampleProject"))  # versionId[] / milestoneId[]
 
+    # Custom fields (project administrators)
+    field = api.custom_field.add_single_list_custom_field("SampleProject", "Severity", items=["Low", "High"])
+    api.custom_field.add_list_item("SampleProject", field["id"], "Critical")
+    api.custom_field.update("SampleProject", field["id"], required=True)
+
     # Webhooks of a project (project administrators)
     hook = api.webhook.add("SampleProject", "CI", "https://ci.example.com/backlog", activityTypeIds=[1, 2])
     api.webhook.update("SampleProject", hook["id"], allEvent=True)

@@ -2,6 +2,22 @@ from enum import Enum
 from typing import List, TypedDict, NewType, Optional, Union
 
 
+
+def _form_params(params):
+    """
+    Drop None values, send booleans as "true"/"false" and use the Backlog names of the list parameters.
+    """
+    request_param = {}
+    for k, v in params.items():
+        if v is None:
+            continue
+        if type(v) is bool:
+            v = "true" if v else "false"
+        if k in ("applicableIssueTypes", "items"):
+            k += "[]"
+        request_param[k] = v
+    return request_param
+
 class CustomFieldResponse(TypedDict):
     id: int
     projectId: int
@@ -135,27 +151,14 @@ class CustomField(object):
             tid = typeId
         else:
             raise ValueError(f"invalid typeId: {typeId}")
-        request_param = {
+        request_param = _form_params({
             "typeId": tid,
             "name": name,
             "applicableIssueTypes": applicableIssueTypes,
             "description": description,
             "required": required,
             **kwargs,
-        }
-        for k, v in request_param.copy().items():
-            if v is None:
-                del request_param[k]
-            if type(v) is bool:
-                request_param[k] = "true" if v else "false"
-
-        # for backlog parameter key spec
-        if "applicableIssueTypes" in request_param:
-            request_param["applicableIssueTypes[]"] = request_param["applicableIssueTypes"]
-            del request_param["applicableIssueTypes"]
-        if "items" in request_param:
-            request_param["items[]"] = request_param["items"]
-            del request_param["items"]
+        })
 
         resp = self.api.invoke_method(_method, _url, request_param=request_param)
 
@@ -348,23 +351,89 @@ class CustomField(object):
             allowAddItem=allowAddItem,
         )
 
-    # def update(self, projectIdOrKey: str, id: int, name: str):
-    #     """Update category
-    #     https://developer.nulab.com/docs/backlog/api/2/update-category/#
+    def update(
+        self,
+        projectIdOrKey: str,
+        id: int,
+        name: Optional[str] = None,
+        applicableIssueTypes: Optional[List[int]] = None,
+        description: Optional[str] = None,
+        required: Optional[bool] = None,
+        **kwargs,
+    ):
+        """Update custom field
+        https://developer.nulab.com/docs/backlog/api/2/update-custom-field/
 
-    #     :param projectIdOrKey: project id or key
-    #     :type projectIdOrKey: str
-    #     :param id: category id
-    #     :type id: int
-    #     :param name: category name
-    #     :type name: str
-    #     """
-    #     _url = f"projects/{projectIdOrKey}/categories/{id}"
-    #     _method = "PATCH"
+        Requires administrator or project administrator rights.
 
-    #     resp = self.api.invoke_method(_method, _url, request_param={"name": name})
+        :param projectIdOrKey: project id or key
+        :param id: custom field id
+        :param name: Optional. name
+        :param applicableIssueTypes: Optional. issue type IDs the field applies to (empty: all issue types)
+        :param description: Optional. description
+        :param required: Optional. True to make the field required
+        :param kwargs: parameters of the field type, as for add(): min, max, initialValue and unit (number);
+            min, max, initialValueType, initialDate and initialShift (date); items, allowInput and allowAddItem (list)
+        :return: the updated custom field
+        """
+        _url = f"projects/{projectIdOrKey}/customFields/{id}"
+        request_param = _form_params({
+            "name": name,
+            "applicableIssueTypes": applicableIssueTypes,
+            "description": description,
+            "required": required,
+            **kwargs,
+        })
 
-    #     return resp.json()
+        resp = self.api.invoke_method("PATCH", _url, request_param=request_param)
+
+        return resp.json()
+
+    def add_list_item(self, projectIdOrKey: str, id: int, name: str):
+        """Add a list item to a list type custom field
+        https://developer.nulab.com/docs/backlog/api/2/add-list-item-for-list-type-custom-field/
+
+        :param projectIdOrKey: project id or key
+        :param id: custom field id
+        :param name: name of the list item
+        :return: the custom field
+        """
+        _url = f"projects/{projectIdOrKey}/customFields/{id}/items"
+
+        resp = self.api.invoke_method("POST", _url, request_param={"name": name})
+
+        return resp.json()
+
+    def update_list_item(self, projectIdOrKey: str, id: int, itemId: int, name: str):
+        """Update a list item of a list type custom field
+        https://developer.nulab.com/docs/backlog/api/2/update-list-item-for-list-type-custom-field/
+
+        :param projectIdOrKey: project id or key
+        :param id: custom field id
+        :param itemId: list item id
+        :param name: new name of the list item
+        :return: the custom field
+        """
+        _url = f"projects/{projectIdOrKey}/customFields/{id}/items/{itemId}"
+
+        resp = self.api.invoke_method("PATCH", _url, request_param={"name": name})
+
+        return resp.json()
+
+    def delete_list_item(self, projectIdOrKey: str, id: int, itemId: int):
+        """Delete a list item of a list type custom field
+        https://developer.nulab.com/docs/backlog/api/2/delete-list-item-for-list-type-custom-field/
+
+        :param projectIdOrKey: project id or key
+        :param id: custom field id
+        :param itemId: list item id
+        :return: the custom field
+        """
+        _url = f"projects/{projectIdOrKey}/customFields/{id}/items/{itemId}"
+
+        resp = self.api.invoke_method("DELETE", _url)
+
+        return resp.json()
 
     def delete(self, projectIdOrKey: str, id: int) -> DeleteCustomFiledResponse:
         """Delete custom field
