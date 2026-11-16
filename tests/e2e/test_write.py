@@ -5,7 +5,7 @@ BACKLOG_E2E_WRITE=1, names every resource with resource_name() and deletes what 
 finally. Assertions follow tests/e2e/README.md.
 
 The API key's user needs to be an administrator of the test project (not of the space) for
-documents and categories.
+documents, categories, versions and statuses.
 """
 
 import os
@@ -156,3 +156,39 @@ class TestCategoryRoundTrip(unittest.TestCase):
             check.contains_id(api.category.list(PROJECT_KEY), category["id"], what="category.list()")
         finally:
             api.category.delete(PROJECT_KEY, category["id"])
+
+
+@requires_write
+class TestVersionAndStatusRoundTrip(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.api = client()
+
+    def test_version(self):
+        name = resource_name("version")
+        version = self.api.project.add_version(PROJECT_KEY, name, startDate="2026-01-01", releaseDueDate="2026-12-31")
+        try:
+            check.field_equals(version, "name", name, what="project.add_version()")
+            check.field_type(version, "id", int, what="project.add_version()")
+            updated = self.api.project.update_version(PROJECT_KEY, version["id"], name, description="e2e", archived=True)
+            check.field_equals(updated, "archived", True, what="project.update_version()")
+            check.field_equals(updated, "description", "e2e", what="project.update_version()")
+            check.contains_id(self.api.project.list_versions(PROJECT_KEY), version["id"], what="project.list_versions()")
+        finally:
+            self.api.project.delete_version(PROJECT_KEY, version["id"])
+
+    def test_status(self):
+        statuses = self.api.project.list_statuses(PROJECT_KEY)
+        check.is_list(statuses, what="project.list_statuses()", min_length=1, item_keys=("id",))
+        substitute = statuses[0]["id"]
+        name = resource_name("status")
+
+        status = self.api.project.add_status(PROJECT_KEY, name, "#3b9dbd")
+        try:
+            check.field_equals(status, "name", name, what="project.add_status()")
+            check.field_type(status, "id", int, what="project.add_status()")
+            updated = self.api.project.update_status(PROJECT_KEY, status["id"], color="#393939")
+            check.field_equals(updated, "color", "#393939", what="project.update_status()")
+            check.contains_id(self.api.project.list_statuses(PROJECT_KEY), status["id"], what="project.list_statuses()")
+        finally:
+            self.api.project.delete_status(PROJECT_KEY, status["id"], substituteStatusId=substitute)
