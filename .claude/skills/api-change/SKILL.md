@@ -59,6 +59,8 @@ README.md does not need an update for an additional method on an existing resour
 
 State the decision in the pull request description, for example "README: not needed (new methods on an existing resource)". The "Release check" comment reminds you when `backlog/` changed but neither document did.
 
-## 5. Version
+## 5. Changelog and version
 
-Bump `VERSION` only if the change affects package users and should be released. See "Releasing" in CONTRIBUTING.md.
+- Add an entry for every change package users notice to the `[Unreleased]` section of `CHANGELOG.md` (Added / Changed / Deprecated / Removed / Fixed / Security), with a link to the pull request. Mark breaking changes and deprecations clearly. Changes to CI, tests or documentation only are not listed.
+- Bump `VERSION` only if the change affects package users and should be released. See "Releasing" in CONTRIBUTING.md.
+- In the pull request that bumps `VERSION`, move the `[Unreleased]` entries to a new `## [<VERSION>] - <YYYY-MM-DD>` section (the PyPI publication date, UTC) and update the compare links at the bottom of `CHANGELOG.md`.
