@@ -41,6 +41,11 @@ class TestSpaceRead(unittest.TestCase):
         me = self.api.user.get_myself()
         check.is_list(self.api.activity.list_user(me["id"], count=1), what="activity.list_user()", item_keys=("id",))
 
+    def test_received_stars(self):
+        me = self.api.user.get_myself()
+        check.is_list(self.api.star.list_received(me["id"], count=1), what="star.list_received()", item_keys=("id",))
+        check.is_count(self.api.star.count_received(me["id"]), what="star.count_received()")
+
     def test_notifications(self):
         check.is_list(self.api.notification.list(count=1), what="notification.list()")
         check.is_count(self.api.notification.count(resourceAlreadyRead=False), what="notification.count()")

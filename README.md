@@ -50,6 +50,10 @@ def main():
     me = api.user.get_myself()
     print(api.watching.list(me["id"], resourceAlreadyRead=False))  # unread watched issues
 
+    # Stars
+    api.star.add(issueId=123)
+    print(api.star.count_received(me["id"], since="2026-01-01"))
+
     # Your notifications
     print(api.notification.count(resourceAlreadyRead=False))  # number of unread notifications
     print(api.notification.list(count=10))

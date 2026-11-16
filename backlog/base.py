@@ -18,6 +18,7 @@ from backlog.watching import Watching
 from backlog.notification import Notification
 from backlog.document import Document
 from backlog.activity import Activity
+from backlog.star import Star
 
 BACKLOG_BASE_URL = "https://{space}.{domain}"
 BACKLOG_URI_PREFIX = "/api/v2/"
@@ -234,6 +235,7 @@ class BacklogAPI(BaseAPI):
         self.notification = Notification(self)
         self.document = Document(self)
         self.activity = Activity(self)
+        self.star = Star(self)
 
     def get_rate_limit(self):
         """
