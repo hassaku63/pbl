@@ -2,8 +2,10 @@
 
 import warnings
 from typing import TypedDict, Literal, Optional, NewType
+from urllib.parse import quote
 
 from backlog._params import bool_params
+from backlog.wiki import _filename_from_response
 
 
 TextFormattingRule = Literal["markdown", "backlog"]
@@ -404,6 +406,40 @@ class Project(object):
         resp = self.api.invoke_method("DELETE", _uri)
 
         return resp.json()
+
+    def list_shared_files(self, projectIdOrKey, path="", order=None, offset=None, count=None):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param path: (str) Optional. directory path, e.g. "docs/specs" (default: the root directory)
+        :param order: (str) Optional. "asc" or "desc" (default)
+        :param offset: (int) Optional.
+        :param count: (int) Optional. number of records to retrieve (1-100), default 20
+        :return: list of the files and directories in the directory ("type" is "file" or "directory")
+        """
+        _uri = "projects/{project_id_or_key}/files/metadata/{path}".format(
+            project_id_or_key=projectIdOrKey, path=quote(path.strip("/"), safe="/"))
+        _query_param = {"order": order, "offset": offset, "count": count}
+
+        resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
+
+        return resp.json()
+
+    def get_shared_file(self, projectIdOrKey, sharedFileId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-file/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param sharedFileId: (int) shared file ID
+        :return: dict with "id", "name" (file name) and "data" (the file content as bytes)
+        """
+        _uri = "projects/{project_id_or_key}/files/{shared_file_id}".format(
+            project_id_or_key=projectIdOrKey, shared_file_id=sharedFileId)
+
+        resp = self.api.invoke_method("GET", _uri)
+
+        return {"id": sharedFileId, "name": _filename_from_response(resp), "data": resp.content}
 
     def list_issue_types(self, projectIdOrKey):
         """
