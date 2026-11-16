@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from backlog.pagination import id_range, iterate_by_id, iterate_by_offset
 from backlog.wiki import _filename_from_response
 
 
@@ -24,6 +25,17 @@ class Issue(object):
         resp = self.api.invoke_method(_method, _uri, query_param=kwargs)
 
         return resp.json()
+
+
+    def iter(self, count=100, **kwargs):
+        """
+        Iterate over all issues that match the filters, requesting pages of count issues (offset/count).
+
+        :param count: (int) issues per request (1-100), default 100
+        :param kwargs: filters and sort order as for list()
+        :return: iterator of issues
+        """
+        return iterate_by_offset(self.list, count=count, **kwargs)
 
     def count(self, **kwargs):
         """
@@ -113,6 +125,21 @@ class Issue(object):
         resp = self.api.invoke_method("GET", _uri, query_param=_query_param)
 
         return resp.json()
+
+
+    def iter_comments(self, issueIdOrKey, order="asc", count=100, minId=None, maxId=None):
+        """
+        Iterate over all comments of an issue, oldest first by default (minId/maxId paging).
+
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param order: (str) "asc" (default) or "desc"
+        :param count: (int) comments per request (1-100), default 100
+        :param minId: (int) Optional. minimum comment ID
+        :param maxId: (int) Optional. maximum comment ID
+        :return: iterator of comments
+        """
+        return iterate_by_id(self.get_comments, issueIdOrKey, order=order, count=count,
+                             **id_range(minId, maxId))
 
     def add_comment(self, issueIdOrKey, content, notifiedUserId=None, attachmentId=None):
         """

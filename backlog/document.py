@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from backlog._params import bool_params
+from backlog.pagination import iterate_by_offset
 from backlog.wiki import _filename_from_response
 
 
@@ -38,6 +39,14 @@ class Document(object):
         resp = self.api.invoke_method("GET", "documents", query_param=_query_param)
 
         return resp.json()
+
+    def iter(self, projectId=None, keyword=None, sort=None, order=None, count=100):
+        """
+        Iterate over all documents that match the filters (offset/count paging).
+
+        :return: iterator of documents
+        """
+        return iterate_by_offset(self.list, projectId=projectId, keyword=keyword, sort=sort, order=order, count=count)
 
     def count(self, projectIdOrKey):
         """

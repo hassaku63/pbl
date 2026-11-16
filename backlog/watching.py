@@ -1,6 +1,7 @@
 # coding: utf-8
 
 from backlog._params import bool_params
+from backlog.pagination import iterate_by_offset
 
 
 class Watching(object):
@@ -25,6 +26,16 @@ class Watching(object):
         resp = self.api.invoke_method("GET", _uri, query_param=bool_params(kwargs))
 
         return resp.json()
+
+    def iter(self, userId, count=100, **kwargs):
+        """
+        Iterate over all watchings of the user (offset/count paging).
+
+        :param userId: (int) user ID
+        :param kwargs: filters and sort order as for list()
+        :return: iterator of watchings
+        """
+        return iterate_by_offset(self.list, userId, count=count, **kwargs)
 
     def count(self, userId, resourceAlreadyRead=None, alreadyRead=None):
         """

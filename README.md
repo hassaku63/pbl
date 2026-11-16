@@ -126,6 +126,25 @@ if __name__ == "__main__":
     main()
 ```
 
+## Pagination
+
+List endpoints return at most 100 items per request. The `iter...()` methods request one page after another and yield every item; they stop after the last page:
+
+```python
+for issue in api.issue.iter(**{"projectId[]": [project["id"]], "statusId[]": [1]}):  # offset / count
+    print(issue["issueKey"])
+
+for activity in api.activity.iter_project("SampleProject", activityTypeId=[1]):  # newest first (minId / maxId)
+    print(activity["id"])
+```
+
+| Method | Paging |
+|---|---|
+| `issue.iter()`, `document.iter()`, `watching.iter()`, `git.iter_pull_requests()` | offset / count |
+| `issue.iter_comments()` (oldest first), `activity.iter()`, `iter_project()`, `iter_user()`, `notification.iter()`, `star.iter_received()`, `wiki.iter_history()` (newest first) | minId / maxId; pass `order="asc"` or `"desc"` |
+
+For any other list method, use `backlog.pagination.iterate_by_offset(method, ...)` or `iterate_by_id(method, ...)`. Every page is a separate request, so `rate_limit_retries` (see Options) is useful for long iterations.
+
 ## Options
 
 ```python
