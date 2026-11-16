@@ -41,6 +41,12 @@ class TestSpaceRead(unittest.TestCase):
         me = self.api.user.get_myself()
         check.is_list(self.api.activity.list_user(me["id"], count=1), what="activity.list_user()", item_keys=("id",))
 
+    def test_recently_viewed(self):
+        u = self.api.user
+        check.is_list(u.list_recently_viewed_issues(count=1), what="user.list_recently_viewed_issues()", item_keys=("issue",))
+        check.is_list(u.list_recently_viewed_projects(count=1), what="user.list_recently_viewed_projects()", item_keys=("project",))
+        check.is_list(u.list_recently_viewed_wikis(count=1), what="user.list_recently_viewed_wikis()", item_keys=("page",))
+
     def test_received_stars(self):
         me = self.api.user.get_myself()
         check.is_list(self.api.star.list_received(me["id"], count=1), what="star.list_received()", item_keys=("id",))
