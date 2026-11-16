@@ -58,6 +58,17 @@ class TestIssueRoundTrip(unittest.TestCase):
         finally:
             self.api.issue.delete(issue["issueKey"])
 
+    def test_star(self):
+        issue = self._create_issue("star")
+        try:
+            check.is_true(self.api.star.add(issueId=issue["id"]) is None, "star.add() did not return None")
+            stars = self.api.issue.get(issue["issueKey"]).get("stars")
+            check.is_list(stars, what="issue.get()['stars']", min_length=1, item_keys=("id",))
+            self.api.star.delete(stars[-1]["id"])
+            check.is_list(self.api.issue.get(issue["issueKey"]).get("stars"), what="issue.get()['stars']")
+        finally:
+            self.api.issue.delete(issue["issueKey"])
+
     def test_related_issues_and_watching(self):
         issue = self._create_issue("issue-a")
         try:

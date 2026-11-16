@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **111 of 152 endpoints (73%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **115 of 152 endpoints (76%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -24,9 +24,9 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
 | [Space](#space) | 2 / 8 |
-| [Stars](#stars) | 0 / 2 |
+| [Stars](#stars) | 2 / 2 |
 | [Teams](#teams) | 0 / 3 |
-| [Users](#users) | 6 / 14 |
+| [Users](#users) | 8 / 14 |
 | [Watching](#watching) | 5 / 5 |
 | [Wiki](#wiki) | 16 / 16 |
 
@@ -196,8 +196,8 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| POST | `stars` | [Add Star](https://developer.nulab.com/docs/backlog/api/2/add-star/) | 2026-11-15 | — |
-| DELETE | `stars/:starId` | [Remove Star](https://developer.nulab.com/docs/backlog/api/2/remove-star/) | 2026-11-15 | — |
+| POST | `stars` | [Add Star](https://developer.nulab.com/docs/backlog/api/2/add-star/) | 2026-11-15 | `Star.add()` |
+| DELETE | `stars/:starId` | [Remove Star](https://developer.nulab.com/docs/backlog/api/2/remove-star/) | 2026-11-15 | `Star.delete()` |
 
 ## Teams
 
@@ -215,8 +215,8 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `users/:userId` | [Get User](https://developer.nulab.com/docs/backlog/api/2/get-user/) | 2026-11-15 | `User.get()` |
 | GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | 2026-11-15 | `Activity.list_user()` |
 | GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | — |
-| GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | — |
-| GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | — |
+| GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | `Star.list_received()` |
+| GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | `Star.count_received()` |
 | GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | `Watching.list()` |
 | GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | 2026-11-15 | `Watching.count()` |
 | GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | 2026-11-15 | `User.get_myself()` |
