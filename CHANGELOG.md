@@ -2,10 +2,17 @@
 
 All notable changes to python-backlog are documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (before 1.0, a minor version may contain breaking changes; they are marked **Breaking** below).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) (before 1.0, a minor version may contain breaking changes).
 Dates are the PyPI publication dates (UTC). Only versions published to PyPI are listed: changes of an unpublished version are included in the next published one.
 
 Releases before 0.7.4 are listed on [GitHub Releases](https://github.com/hassaku63/pbl/releases).
+
+Versions with breaking changes start with a **⚠ Breaking changes** section that explains how to migrate:
+
+| Version | Breaking change |
+|---|---|
+| [0.9.0](#090---2026-11-15) | The `requests` dependency was removed: `invoke_method()` returns a different response type, accepts fewer keyword arguments and raises different network errors |
+| [0.8.0](#080---2026-11-15) | Python 3.8 and 3.9 are no longer supported |
 
 ## [Unreleased]
 
@@ -106,15 +113,20 @@ Releases before 0.7.4 are listed on [GitHub Releases](https://github.com/hassaku
 
 ## [0.9.0] - 2026-11-15
 
-### Removed
+### ⚠ Breaking changes
 
-- **Breaking: the `requests` dependency.** python-backlog has no runtime dependencies; HTTP requests use a small client built on `urllib` ([#58](https://github.com/hassaku63/pbl/pull/58)). See "Upgrading to 0.9" in the README:
-  - `invoke_method()` returns `backlog._http.Response` (with `status_code`, `ok`, `headers`, `content`, `text` and `json()`) instead of `requests.Response`;
-  - `invoke_method()` accepts only the `timeout` and `files` keyword arguments; requests-specific options such as `verify` or `proxies` raise `TypeError` (proxies are still read from the environment);
-  - network errors raise `BacklogConnectionError` (a `BacklogError`) instead of `requests` exceptions;
-  - redirects are not followed, so the API key is never sent to another host;
-  - TLS uses the system trust store, plus `REQUESTS_CA_BUNDLE` / `CURL_CA_BUNDLE` and certifi when available.
-- The unused `BacklogObject` class and `BaseAPI.api` attribute ([#58](https://github.com/hassaku63/pbl/pull/58)).
+python-backlog no longer depends on `requests`: HTTP requests use a small client built on the standard library (`urllib`), and the package has no runtime dependencies ([#58](https://github.com/hassaku63/pbl/pull/58)). Code that only calls the resource methods (`api.issue.list()`, ...) and catches `BacklogError` needs no change. Check your code if it does any of the following (see also "Upgrading to 0.9" in the README):
+
+| If your code ... | then in 0.9.0 ... | Migration |
+|---|---|---|
+| uses the return value of `invoke_method()` as a `requests.Response` | it returns `backlog._http.Response` | Use `status_code`, `ok`, `headers`, `content`, `text` and `json()`; other `requests.Response` attributes are not available |
+| passes requests options such as `verify`, `proxies` or `allow_redirects` to `invoke_method()` | they raise `TypeError` (only `timeout` and `files` are accepted) | Remove them. Set proxies with `HTTP(S)_PROXY` / `NO_PROXY`, and custom CA certificates with `REQUESTS_CA_BUNDLE` or `CURL_CA_BUNDLE` |
+| catches `requests.exceptions.*` (e.g. `ConnectionError`, `Timeout`) | network errors raise `BacklogConnectionError` | Catch `backlog.base.BacklogConnectionError` (or `BacklogError`) |
+| relies on HTTP redirects being followed | redirects are not followed | None expected: the Backlog API does not redirect; this keeps the API key from being sent to another host |
+| relies on `requests` being installed as a dependency of python-backlog | it is no longer installed with python-backlog | Add `requests` to your own dependencies |
+| imports `backlog.base.BacklogObject` or uses `BaseAPI.api` | they were removed (they were unused) | Remove those references |
+
+TLS certificates are verified with the system trust store, plus `REQUESTS_CA_BUNDLE` / `CURL_CA_BUNDLE` and certifi when available.
 
 ### Deprecated
 
@@ -128,9 +140,10 @@ Releases before 0.7.4 are listed on [GitHub Releases](https://github.com/hassaku
 
 ## [0.8.0] - 2026-11-15
 
-### Removed
+### ⚠ Breaking changes
 
-- **Breaking: Python 3.8 and 3.9 are no longer supported.** python-backlog requires Python 3.10 or later and is tested on 3.10 to 3.14. Users of Python 3.8 and 3.9 can use 0.7.6 ([#52](https://github.com/hassaku63/pbl/pull/52)).
+- **Python 3.8 and 3.9 are no longer supported.** python-backlog requires Python 3.10 or later and is tested on 3.10 to 3.14 ([#52](https://github.com/hassaku63/pbl/pull/52)). Both versions are end of life.
+  - Migration: upgrade to Python 3.10 or later. If you cannot upgrade yet, pin `python-backlog<0.8`: pip then installs 0.7.6, which contains the security and bug fixes of 0.7.5 and 0.7.6. On Python 3.8 and 3.9, pip skips 0.8.0 and later automatically because of `requires-python`.
 
 ### Changed
 
