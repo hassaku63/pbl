@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **93 of 152 endpoints (61%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **97 of 152 endpoints (64%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -14,19 +14,19 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Group | Implemented |
 |---|---|
-| [Activities](#activities) | 0 / 1 |
+| [Activities](#activities) | 1 / 1 |
 | [Documents](#documents) | 10 / 10 |
 | [Git](#git) | 14 / 14 |
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
-| [Projects](#projects) | 18 / 48 |
+| [Projects](#projects) | 19 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
-| [Space](#space) | 1 / 8 |
+| [Space](#space) | 2 / 8 |
 | [Stars](#stars) | 0 / 2 |
 | [Teams](#teams) | 0 / 3 |
-| [Users](#users) | 5 / 14 |
+| [Users](#users) | 6 / 14 |
 | [Watching](#watching) | 5 / 5 |
 | [Wiki](#wiki) | 9 / 16 |
 
@@ -34,7 +34,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
-| GET | `activities/:activityId` | [Get Activity](https://developer.nulab.com/docs/backlog/api/2/get-activity/) | 2026-11-15 | — |
+| GET | `activities/:activityId` | [Get Activity](https://developer.nulab.com/docs/backlog/api/2/get-activity/) | 2026-11-15 | `Activity.get()` |
 
 ## Documents
 
@@ -123,7 +123,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | DELETE | `projects/:projectIdOrKey` | [Delete Project](https://developer.nulab.com/docs/backlog/api/2/delete-project/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey` | [Get Project](https://developer.nulab.com/docs/backlog/api/2/get-project/) | 2026-11-15 | `Project.get()` |
 | PATCH | `projects/:projectIdOrKey` | [Update Project](https://developer.nulab.com/docs/backlog/api/2/update-project/) | 2026-11-15 | `Project.update()` |
-| GET | `projects/:projectIdOrKey/activities` | [Get Project Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/activities` | [Get Project Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-project-recent-updates/) | 2026-11-15 | `Activity.list_project()` |
 | DELETE | `projects/:projectIdOrKey/administrators` | [Delete Project Administrator](https://developer.nulab.com/docs/backlog/api/2/delete-project-administrator/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/administrators` | [Get List of Project Administrators](https://developer.nulab.com/docs/backlog/api/2/get-list-of-project-administrators/) | 2026-11-15 | — |
 | POST | `projects/:projectIdOrKey/administrators` | [Add Project Administrator](https://developer.nulab.com/docs/backlog/api/2/add-project-administrator/) | 2026-11-15 | — |
@@ -184,7 +184,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | Method | Path | API | Last accessed | python-backlog |
 |---|---|---|---|---|
 | GET | `space` | [Get Space](https://developer.nulab.com/docs/backlog/api/2/get-space/) | 2026-11-15 | — |
-| GET | `space/activities` | [Get Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/) | 2026-11-15 | — |
+| GET | `space/activities` | [Get Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-recent-updates/) | 2026-11-15 | `Activity.list()` |
 | POST | `space/attachment` | [Post Attachment File](https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/) | 2026-11-15 | `Attachment.upload()` |
 | GET | `space/diskUsage` | [Get Space Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-space-disk-usage/) | 2026-11-15 | — |
 | GET | `space/image` | [Get Space Logo](https://developer.nulab.com/docs/backlog/api/2/get-space-logo/) | 2026-11-15 | — |
@@ -213,7 +213,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 |---|---|---|---|---|
 | GET | `users` | [Get User List](https://developer.nulab.com/docs/backlog/api/2/get-user-list/) | 2026-11-15 | `User.list()` |
 | GET | `users/:userId` | [Get User](https://developer.nulab.com/docs/backlog/api/2/get-user/) | 2026-11-15 | `User.get()` |
-| GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | 2026-11-15 | — |
+| GET | `users/:userId/activities` | [Get User Recent Updates](https://developer.nulab.com/docs/backlog/api/2/get-user-recent-updates/) | 2026-11-15 | `Activity.list_user()` |
 | GET | `users/:userId/icon` | [Get User Icon](https://developer.nulab.com/docs/backlog/api/2/get-user-icon/) | 2026-11-15 | — |
 | GET | `users/:userId/stars` | [Get Received Star List](https://developer.nulab.com/docs/backlog/api/2/get-received-star-list/) | 2026-11-15 | — |
 | GET | `users/:userId/stars/count` | [Count User Received Stars](https://developer.nulab.com/docs/backlog/api/2/count-user-received-stars/) | 2026-11-15 | — |
