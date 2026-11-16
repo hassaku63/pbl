@@ -8,16 +8,16 @@ class Issue(object):
     def __init__(self, api):
         """
 
-        :param api:
+        :param api: the BacklogAPI client
         """
         self.api = api
 
     def list(self, **kwargs):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-issue-list/
 
         :param kwargs: query parameter
-        :return:
+        :return: list of issues
         """
         _uri = "issues"
         _method = "GET"
@@ -39,10 +39,10 @@ class Issue(object):
 
     def count(self, **kwargs):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/count-issue/
+        https://developer.nulab.com/docs/backlog/api/2/count-issue/
 
-        :param kwargs:
-        :return:
+        :param kwargs: filters as for list()
+        :return: {"count": int}
         """
         _uri = "issues/count"
         _method = "GET"
@@ -53,10 +53,11 @@ class Issue(object):
 
     def create(self, **kwargs):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-issue/
+        https://developer.nulab.com/docs/backlog/api/2/add-issue/
 
-        :param kwargs:
-        :return:
+        :param kwargs: parameters of the API: projectId, summary, issueTypeId and priorityId are required;
+            list parameters use their API names, e.g. **{"notifiedUserId[]": [1]}
+        :return: the created issue
         """
         _uri = "issues"
         _method = "POST"
@@ -67,10 +68,10 @@ class Issue(object):
 
     def get(self, issueIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue/
+        https://developer.nulab.com/docs/backlog/api/2/get-issue/
 
-        :param issueIdOrKey:
-        :return:
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: the issue
         """
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
         _method = "GET"
@@ -81,11 +82,11 @@ class Issue(object):
 
     def update(self, issueIdOrKey, **kwargs):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-issue/
+        https://developer.nulab.com/docs/backlog/api/2/update-issue/
 
-        :param issueIdOrKey:
+        :param issueIdOrKey: Issue ID or Issue Key
         :param kwargs: issue param
-        :return:
+        :return: the updated issue
         """
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
         _method = "PATCH"
@@ -96,10 +97,10 @@ class Issue(object):
 
     def delete(self, issueIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-issue/
+        https://developer.nulab.com/docs/backlog/api/2/delete-issue/
 
-        :param issueIdOrKey:
-        :return:
+        :param issueIdOrKey: Issue ID or Issue Key
+        :return: the deleted issue
         """
         _uri = "issues/{issue_id_or_key}".format(issue_id_or_key=issueIdOrKey)
         _method = "DELETE"
@@ -143,13 +144,13 @@ class Issue(object):
 
     def add_comment(self, issueIdOrKey, content, notifiedUserId=None, attachmentId=None):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-comment/
+        https://developer.nulab.com/docs/backlog/api/2/add-comment/
 
-        :param issueIdOrKey:
-        :param content:
-        :param notifiedUserId:
-        :param attachmentId:
-        :return:
+        :param issueIdOrKey: Issue ID or Issue Key
+        :param content: (str) comment text
+        :param notifiedUserId: (int or list of int) Optional. users to notify
+        :param attachmentId: (int or list of int) Optional. attachment IDs returned by Attachment.upload()
+        :return: the added comment
         """
         _uri = "issues/{issue_id_or_key}/comments".format(issue_id_or_key=issueIdOrKey)
         _method = "POST"

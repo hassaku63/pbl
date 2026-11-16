@@ -20,7 +20,7 @@ class Category(object):
 
     def list(self, projectIdOrKey: str) -> ListCategoryResponse:
         """List categories
-        https://developer.nulab.com/ja/docs/backlog/api/2/get-category-list/#
+        https://developer.nulab.com/docs/backlog/api/2/get-category-list/
 
         :param projectIdOrKey: project id or key
         :type projectIdOrKey: str
@@ -34,7 +34,7 @@ class Category(object):
 
     def add(self, projectIdOrKey: str, name: str) -> AddCategoryResponse:
         """Add category
-        https://developer.nulab.com/docs/backlog/api/2/add-category/#add-category
+        https://developer.nulab.com/docs/backlog/api/2/add-category/
 
         :param projectIdOrKey: project id or key
         :type projectIdOrKey: str
@@ -48,7 +48,7 @@ class Category(object):
 
     def update(self, projectIdOrKey: str, id: int, name: str) -> UpdateCategoryResponse:
         """Update category
-        https://developer.nulab.com/docs/backlog/api/2/update-category/#
+        https://developer.nulab.com/docs/backlog/api/2/update-category/
 
         :param projectIdOrKey: project id or key
         :type projectIdOrKey: str
@@ -66,7 +66,7 @@ class Category(object):
 
     def delete(self, projectIdOrKey: str, id: int) -> DeleteCategoryResponse:
         """Delete category
-        https://developer.nulab.com/docs/backlog/api/2/delete-category/#
+        https://developer.nulab.com/docs/backlog/api/2/delete-category/
 
         :param projectIdOrKey: project id or key
         :type projectIdOrKey: str

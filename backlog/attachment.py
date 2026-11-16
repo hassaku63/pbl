@@ -10,10 +10,10 @@ class Attachment(object):
 
     def upload(self, filename):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/post-attachment-file/
+        https://developer.nulab.com/docs/backlog/api/2/post-attachment-file/
 
         :param filename: (str) Required. filename to upload
-        :return: Compliant with Backlog API specification
+        :return: the uploaded attachment ({"id", "name", "size"}); pass its id as attachmentId to issues, comments, wikis or pull requests
         """
         if not os.path.exists(filename):
             raise FileNotFoundError(filename)

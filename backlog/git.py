@@ -8,16 +8,16 @@ class Git(object):
     def __init__(self, api):
         """
 
-        :param api:
+        :param api: the BacklogAPI client
         """
         self.api = api
 
     def list_git_repositories(self, projectIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-list-of-git-repositories/
+        https://developer.nulab.com/docs/backlog/api/2/get-list-of-git-repositories/
 
         :param projectIdOrKey: (str or int) Required
-        :return:
+        :return: list of the Git repositories of the project
         """
         _uri = "projects/{projectIdOrKey}/git/repositories".format(
             projectIdOrKey=projectIdOrKey
@@ -30,12 +30,12 @@ class Git(object):
 
     def add_pull_request(self, projectIdOrKey, repoIdOrName, **kwargs):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-pull-request/
+        https://developer.nulab.com/docs/backlog/api/2/add-pull-request/
 
         :param projectIdOrKey: (str or int) Requied.
         :param repoIdOrName: (str or int) Requied.
         :param kwargs: (dict) Optional. Other request parameter, compliant with Backlog API specification
-        :return: Compliant with Backlog API specification
+        :return: the added pull request
         """
         _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests".format(
             projectIdOrKey=projectIdOrKey,
@@ -79,12 +79,12 @@ class Git(object):
     def list_pull_requests(self, projectIdOrKey, repoIdOrName, **kwargs):
         """
 
-        https://developer.nulab.com/ja/docs/backlog/api/2/get-pull-request-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-pull-request-list/
 
         :param projectIdOrKey: (str or int) Required
         :param repoIdOrName: (str or int) Required
         :param kwargs: Optional. Query Parameters
-        :return: Compliant with Backlog API specification
+        :return: list of pull requests
         """
         _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests".format(
             projectIdOrKey=projectIdOrKey,

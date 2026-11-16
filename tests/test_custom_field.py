@@ -326,3 +326,10 @@ class TestCategory(unittest.TestCase):
 
     #     resp = self.api.category.delete(self.project, category_id)
     #     self.assertEqual(expects, resp)
+
+
+class TestTypeNameAliases(unittest.TestCase):
+    def test_misspelled_type_names_still_exist(self):
+        from backlog import custom_field
+        self.assertIs(custom_field.AddCustomFieldResponse, custom_field.AddCustomFiledResponse)
+        self.assertIs(custom_field.DeleteCustomFieldResponse, custom_field.DeleteCustomFiledResponse)

@@ -20,15 +20,15 @@ class User(object):
     def __init__(self, api):
         """
 
-        :param api:
+        :param api: the BacklogAPI client
         """
         self.api = api
 
     def list(self):
         """
-        https://developer.nulab.com/ja/docs/backlog/api/2/get-user-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-user-list/
 
-        :return: Compliant with Backlog API specification
+        :return: list of the users in the space
         """
         _uri = "users"
         _method = "GET"
@@ -129,10 +129,10 @@ class User(object):
 
     def get(self, userId):
         """
-        https://developer.nulab.com/ja/docs/backlog/api/2/get-user/
+        https://developer.nulab.com/docs/backlog/api/2/get-user/
 
         :param userId: (str or int) Required.
-        :return: Compliant with Backlog API specification
+        :return: the user
         """
         _uri = "users/{user_id}".format(user_id=userId)
         _method = "GET"
@@ -154,7 +154,7 @@ class User(object):
         :param name: (str) Required.
         :param mailAddress: (str) Required.
         :param roleType: (int) Required. administrator=1, general-user=2, reporter=3, viewer=4, guest-reporter=5, guest-viewer=6
-        :return: Compliant with Backlog API specification
+        :return: the added user
         """
         _warn_user_management("add")
         _uri = "users"
@@ -184,7 +184,7 @@ class User(object):
         :param name: (str) Optional.
         :param mailAddress: (str) Optional.
         :param roleType: (str) Optional.
-        :return: Compliant with Backlog API specification
+        :return: the updated user
         """
         _warn_user_management("update")
         _uri = "users/{user_id}".format(user_id=userId)
@@ -210,7 +210,7 @@ class User(object):
             on the new plans (users are managed in the web UI there). It may still work on the old plans.
 
         :param id: (int) Required.
-        :return: Compliant with Backlog API specification
+        :return: the deleted user
         """
         _warn_user_management("delete")
         _uri = "users/{id}".format(id=id)

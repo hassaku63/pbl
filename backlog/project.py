@@ -39,7 +39,7 @@ class Project(object):
     def __init__(self, api):
         """
 
-        :param api:
+        :param api: the BacklogAPI client
         """
         self.api = api
 
@@ -82,7 +82,7 @@ class Project(object):
         useDocument: Optional[bool] = None,
     ) -> AddProjectResponse:
         """Add project
-        https://developer.nulab.com/docs/backlog/api/2/add-project/#form-parameters
+        https://developer.nulab.com/docs/backlog/api/2/add-project/
 
         :param name: Project Name
         :type name: str
@@ -155,10 +155,10 @@ class Project(object):
 
     def get(self, projectIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project/
+        https://developer.nulab.com/docs/backlog/api/2/get-project/
 
         :param projectIdOrKey: (str or int) Required. project id or project key
-        :return: Compliant with Backlog API specification
+        :return: the project
         """
         _uri = "projects/{project_id_or_key}".format(project_id_or_key=projectIdOrKey)
         _method = "GET"
@@ -188,7 +188,7 @@ class Project(object):
         useDocument: bool = None,
     ) -> UpdateProjectResponse:
         """Update project
-        https://developer.nulab.com/docs/backlog/api/2/update-project/#form-parameters
+        https://developer.nulab.com/docs/backlog/api/2/update-project/
 
         :param projectIdOrKey: Project Name
         :type projectIdOrKey: str
@@ -256,11 +256,11 @@ class Project(object):
 
     def list_users(self, projectIdOrKey, excludeGroupMembers=False):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-project-user-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/
 
-        :param projectIdOrKey:
-        :param excludeGroupMembers:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :param excludeGroupMembers: (bool) Optional. True to exclude users who belong to the project only through a team
+        :return: list of the users of the project
         """
         _uri = "projects/{project_id_or_key}/users".format(project_id_or_key=projectIdOrKey)
         _method = "GET"
@@ -553,10 +553,10 @@ class Project(object):
 
     def list_issue_types(self, projectIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-issue-type-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/
 
-        :param projectIdOrKey:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of the issue types of the project
         """
         _uri = "projects/{project_id_or_key}/issueTypes".format(
             project_id_or_key=projectIdOrKey
@@ -624,12 +624,12 @@ class Project(object):
 
     def delete_issue_type(self, projectIdOrKey, id, substituteIssueTypeId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-issue-type/
+        https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/
 
         :param projectIdOrKey: Project ID or Key
         :param id: Issue Type ID
         :param substituteIssueTypeId: New Issue type ID
-        :return:
+        :return: the deleted issue type
         """
         _uri = "projects/{project_id_or_key}/issueTypes/{id}".format(
             project_id_or_key=projectIdOrKey,
@@ -646,10 +646,10 @@ class Project(object):
 
     def list_categories(self, projectIdOrKey):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/get-category-list/
+        https://developer.nulab.com/docs/backlog/api/2/get-category-list/
 
-        :param projectIdOrKey:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :return: list of categories
         """
         warnings.warn(
             "Project.list_categories() is deprecated and will be removed in a future release; use BacklogAPI.category.list() instead.",
@@ -667,11 +667,11 @@ class Project(object):
 
     def add_category(self, projectIdOrKey, name):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-category/
+        https://developer.nulab.com/docs/backlog/api/2/add-category/
 
-        :param projectIdOrKey:
+        :param projectIdOrKey: Project ID or Project Key
         :param name: (str) Category name
-        :return:
+        :return: the added category
         """
         warnings.warn(
             "Project.add_category() is deprecated and will be removed in a future release; use BacklogAPI.category.add() instead.",
@@ -689,12 +689,12 @@ class Project(object):
 
     def update_category(self, projectIdOrKey, id, name):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/update-category/
+        https://developer.nulab.com/docs/backlog/api/2/update-category/
 
-        :param projectIdOrKey:
-        :param id:
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) category ID
         :param name: (str) will modified
-        :return:
+        :return: the updated category
         """
         warnings.warn(
             "Project.update_category() is deprecated and will be removed in a future release; use BacklogAPI.category.update() instead.",
@@ -713,11 +713,11 @@ class Project(object):
 
     def delete_category(self, projectIdOrKey, id):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/delete-category/
+        https://developer.nulab.com/docs/backlog/api/2/delete-category/
 
-        :param projectIdOrKey:
-        :param id:
-        :return:
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) category ID
+        :return: the deleted category
         """
         warnings.warn(
             "Project.delete_category() is deprecated and will be removed in a future release; use BacklogAPI.category.delete() instead.",
