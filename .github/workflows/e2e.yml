@@ -48,6 +48,12 @@ jobs:
           python-version: "3.x"
       - name: Install
         run: pip install -e .
+      - name: Mask personal data of the API key's user
+        env:
+          BACKLOG_E2E_SPACE: ${{ secrets.BACKLOG_E2E_SPACE }}
+          BACKLOG_E2E_API_KEY: ${{ secrets.BACKLOG_E2E_API_KEY }}
+          BACKLOG_E2E_DOMAIN: ${{ vars.BACKLOG_E2E_DOMAIN }}
+        run: python -m tests.e2e.mask
       - name: Run E2E tests
         id: run
         env:
