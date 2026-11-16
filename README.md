@@ -43,6 +43,10 @@ def main():
     print(api.project.list_statuses("SampleProject"))  # statusId
     print(api.project.list_versions("SampleProject"))  # versionId[] / milestoneId[]
 
+    # Members of a project (project administrators)
+    api.project.add_user("SampleProject", 12)  # numeric user ID
+    api.project.add_team("SampleProject", api.team.list()[0]["id"])
+
     # Custom fields (project administrators)
     field = api.custom_field.add_single_list_custom_field("SampleProject", "Severity", items=["Low", "High"])
     api.custom_field.add_list_item("SampleProject", field["id"], "Critical")
