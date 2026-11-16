@@ -32,6 +32,15 @@ class TestSpaceRead(unittest.TestCase):
         check.is_list(self.api.watching.list(me["id"], count=1), what="watching.list()")
         check.is_count(self.api.watching.count(me["id"]), what="watching.count()")
 
+    def test_activities(self):
+        activities = self.api.activity.list(count=1)
+        check.is_list(activities, what="activity.list()", item_keys=("id", "type"))
+        if activities:
+            activity = self.api.activity.get(activities[0]["id"])
+            check.field_equals(activity, "id", activities[0]["id"], what="activity.get()")
+        me = self.api.user.get_myself()
+        check.is_list(self.api.activity.list_user(me["id"], count=1), what="activity.list_user()", item_keys=("id",))
+
     def test_notifications(self):
         check.is_list(self.api.notification.list(count=1), what="notification.list()")
         check.is_count(self.api.notification.count(resourceAlreadyRead=False), what="notification.count()")
@@ -72,6 +81,9 @@ class TestProjectRead(unittest.TestCase):
 
     def test_custom_fields(self):
         check.is_list(self.api.custom_field.list(PROJECT_KEY), what="custom_field.list()", item_keys=("id", "typeId"))
+
+    def test_activities(self):
+        check.is_list(self.api.activity.list_project(PROJECT_KEY, count=1), what="activity.list_project()", item_keys=("id",))
 
     def test_issues(self):
         params = {"projectId[]": [self.project["id"]]}

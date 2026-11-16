@@ -48,6 +48,10 @@ def main():
     print(api.notification.count(resourceAlreadyRead=False))  # number of unread notifications
     print(api.notification.list(count=10))
 
+    # Recent updates (activities) of the space, a project or a user
+    print(api.activity.list(count=10))
+    print(api.activity.list_project("SampleProject", activityTypeId=[1, 2]))  # issues added / updated
+
     # Documents
     project = api.project.get("SampleProject")
     print(api.document.list(projectId=project["id"], keyword="spec"))
