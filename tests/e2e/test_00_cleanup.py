@@ -40,3 +40,15 @@ class TestCleanupLeftovers(unittest.TestCase):
         for category in self.api.category.list(PROJECT_KEY):
             if is_previous_run(category.get("name")):
                 self.api.category.delete(PROJECT_KEY, category["id"])
+
+    def test_versions(self):
+        # Versions have no creation time either.
+        for version in self.api.project.list_versions(PROJECT_KEY):
+            if is_previous_run(version.get("name")):
+                self.api.project.delete_version(PROJECT_KEY, version["id"])
+
+    def test_statuses(self):
+        statuses = self.api.project.list_statuses(PROJECT_KEY)
+        for status in statuses:
+            if is_previous_run(status.get("name")):
+                self.api.project.delete_status(PROJECT_KEY, status["id"], substituteStatusId=statuses[0]["id"])

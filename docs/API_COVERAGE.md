@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **97 of 152 endpoints (64%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **104 of 152 endpoints (68%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -20,7 +20,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
-| [Projects](#projects) | 19 / 48 |
+| [Projects](#projects) | 26 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
 | [Space](#space) | 2 / 8 |
@@ -147,10 +147,10 @@ Methods that call endpoints which are not in the official API reference (they ma
 | DELETE | `projects/:projectIdOrKey/issueTypes/:id` | [Delete Issue Type](https://developer.nulab.com/docs/backlog/api/2/delete-issue-type/) | 2026-11-15 | `Project.delete_issue_type()` |
 | PATCH | `projects/:projectIdOrKey/issueTypes/:id` | [Update Issue Type](https://developer.nulab.com/docs/backlog/api/2/update-issue-type/) | 2026-11-15 | `Project.update_issue_type()` |
 | GET | `projects/:projectIdOrKey/statuses` | [Get Status List of Project](https://developer.nulab.com/docs/backlog/api/2/get-status-list-of-project/) | 2026-11-15 | `Project.list_statuses()` |
-| POST | `projects/:projectIdOrKey/statuses` | [Add Status](https://developer.nulab.com/docs/backlog/api/2/add-status/) | 2026-11-15 | — |
-| DELETE | `projects/:projectIdOrKey/statuses/:id` | [Delete Status](https://developer.nulab.com/docs/backlog/api/2/delete-status/) | 2026-11-15 | — |
-| PATCH | `projects/:projectIdOrKey/statuses/:id` | [Update Status](https://developer.nulab.com/docs/backlog/api/2/update-status/) | 2026-11-15 | — |
-| PATCH | `projects/:projectIdOrKey/statuses/updateDisplayOrder` | [Update Order of Status](https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/statuses` | [Add Status](https://developer.nulab.com/docs/backlog/api/2/add-status/) | 2026-11-15 | `Project.add_status()` |
+| DELETE | `projects/:projectIdOrKey/statuses/:id` | [Delete Status](https://developer.nulab.com/docs/backlog/api/2/delete-status/) | 2026-11-15 | `Project.delete_status()` |
+| PATCH | `projects/:projectIdOrKey/statuses/:id` | [Update Status](https://developer.nulab.com/docs/backlog/api/2/update-status/) | 2026-11-15 | `Project.update_status()` |
+| PATCH | `projects/:projectIdOrKey/statuses/updateDisplayOrder` | [Update Order of Status](https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/) | 2026-11-15 | `Project.update_status_order()` |
 | DELETE | `projects/:projectIdOrKey/teams` | [Delete Project Team](https://developer.nulab.com/docs/backlog/api/2/delete-project-team/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/teams` | [Get Project Team List](https://developer.nulab.com/docs/backlog/api/2/get-project-team-list/) | 2026-11-15 | — |
 | POST | `projects/:projectIdOrKey/teams` | [Add Project Team](https://developer.nulab.com/docs/backlog/api/2/add-project-team/) | 2026-11-15 | — |
@@ -158,9 +158,9 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `projects/:projectIdOrKey/users` | [Get Project User List](https://developer.nulab.com/docs/backlog/api/2/get-project-user-list/) | 2026-11-15 | `Project.list_users()` |
 | POST | `projects/:projectIdOrKey/users` | [Add Project User](https://developer.nulab.com/docs/backlog/api/2/add-project-user/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/versions` | [Get Version/Milestone List](https://developer.nulab.com/docs/backlog/api/2/get-version-milestone-list/) | 2026-11-15 | `Project.list_versions()` |
-| POST | `projects/:projectIdOrKey/versions` | [Add Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/) | 2026-11-15 | — |
-| DELETE | `projects/:projectIdOrKey/versions/:id` | [Delete Version](https://developer.nulab.com/docs/backlog/api/2/delete-version/) | 2026-11-15 | — |
-| PATCH | `projects/:projectIdOrKey/versions/:id` | [Update Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/) | 2026-11-15 | — |
+| POST | `projects/:projectIdOrKey/versions` | [Add Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/) | 2026-11-15 | `Project.add_version()` |
+| DELETE | `projects/:projectIdOrKey/versions/:id` | [Delete Version](https://developer.nulab.com/docs/backlog/api/2/delete-version/) | 2026-11-15 | `Project.delete_version()` |
+| PATCH | `projects/:projectIdOrKey/versions/:id` | [Update Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/) | 2026-11-15 | `Project.update_version()` |
 | GET | `projects/:projectIdOrKey/webhooks` | [Get List of Webhooks](https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/) | 2026-11-15 | — |
 | POST | `projects/:projectIdOrKey/webhooks` | [Add Webhook](https://developer.nulab.com/docs/backlog/api/2/add-webhook/) | 2026-11-15 | — |
 | DELETE | `projects/:projectIdOrKey/webhooks/:webhookId` | [Delete Webhook](https://developer.nulab.com/docs/backlog/api/2/delete-webhook/) | 2026-11-15 | — |

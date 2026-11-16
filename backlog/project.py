@@ -3,6 +3,8 @@
 import warnings
 from typing import TypedDict, Literal, Optional, NewType
 
+from backlog._params import bool_params
+
 
 TextFormattingRule = Literal["markdown", "backlog"]
 
@@ -280,6 +282,126 @@ class Project(object):
         _uri = "projects/{project_id_or_key}/versions".format(project_id_or_key=projectIdOrKey)
 
         resp = self.api.invoke_method("GET", _uri)
+
+        return resp.json()
+
+    def add_status(self, projectIdOrKey, name, color):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/add-status/
+
+        A project can have up to 8 custom statuses besides the 4 default ones. Requires administrator.
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param name: (str) status name
+        :param color: (str) background color, one of "#ea2c00", "#e87758", "#e07b9a", "#868cb7", "#3b9dbd",
+            "#4caf93", "#b0be3c", "#eda62a", "#f42858", "#393939"
+        :return: the added status
+        """
+        _uri = "projects/{project_id_or_key}/statuses".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("POST", _uri, request_param={"name": name, "color": color})
+
+        return resp.json()
+
+    def update_status(self, projectIdOrKey, id, name=None, color=None):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/update-status/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) status ID
+        :param name: (str) Optional. status name
+        :param color: (str) Optional. background color (see add_status())
+        :return: the updated status
+        """
+        _uri = "projects/{project_id_or_key}/statuses/{id}".format(project_id_or_key=projectIdOrKey, id=id)
+
+        resp = self.api.invoke_method("PATCH", _uri, request_param={"name": name, "color": color})
+
+        return resp.json()
+
+    def delete_status(self, projectIdOrKey, id, substituteStatusId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/delete-status/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) status ID
+        :param substituteStatusId: (int) status ID that issues with the deleted status get instead
+        :return: the deleted status
+        """
+        _uri = "projects/{project_id_or_key}/statuses/{id}".format(project_id_or_key=projectIdOrKey, id=id)
+
+        resp = self.api.invoke_method("DELETE", _uri, request_param={"substituteStatusId": substituteStatusId})
+
+        return resp.json()
+
+    def update_status_order(self, projectIdOrKey, statusId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/update-order-of-status/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param statusId: (list of int) all status IDs of the project in the new order.
+            "Open" must be first, "Closed" last, and "In Progress" before "Resolved".
+        :return: list of statuses in the new order
+        """
+        _uri = "projects/{project_id_or_key}/statuses/updateDisplayOrder".format(project_id_or_key=projectIdOrKey)
+
+        resp = self.api.invoke_method("PATCH", _uri, request_param={"statusId[]": statusId})
+
+        return resp.json()
+
+    def add_version(self, projectIdOrKey, name, description=None, startDate=None, releaseDueDate=None):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param name: (str) version/milestone name
+        :param description: (str) Optional.
+        :param startDate: (str) Optional. start date (yyyy-MM-dd)
+        :param releaseDueDate: (str) Optional. release due date (yyyy-MM-dd)
+        :return: the added version/milestone
+        """
+        _uri = "projects/{project_id_or_key}/versions".format(project_id_or_key=projectIdOrKey)
+        _request_param = {"name": name, "description": description, "startDate": startDate, "releaseDueDate": releaseDueDate}
+
+        resp = self.api.invoke_method("POST", _uri, request_param=_request_param)
+
+        return resp.json()
+
+    def update_version(self, projectIdOrKey, id, name, description=None, startDate=None, releaseDueDate=None,
+                       archived=None):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) version/milestone ID
+        :param name: (str) version/milestone name (required by the API even if unchanged)
+        :param description: (str) Optional.
+        :param startDate: (str) Optional. start date (yyyy-MM-dd)
+        :param releaseDueDate: (str) Optional. release due date (yyyy-MM-dd)
+        :param archived: (bool) Optional.
+        :return: the updated version/milestone
+        """
+        _uri = "projects/{project_id_or_key}/versions/{id}".format(project_id_or_key=projectIdOrKey, id=id)
+        _request_param = bool_params({
+            "name": name, "description": description, "startDate": startDate, "releaseDueDate": releaseDueDate,
+            "archived": archived,
+        })
+
+        resp = self.api.invoke_method("PATCH", _uri, request_param=_request_param)
+
+        return resp.json()
+
+    def delete_version(self, projectIdOrKey, id):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/delete-version/
+
+        :param projectIdOrKey: Project ID or Project Key
+        :param id: (int) version/milestone ID
+        :return: the deleted version/milestone
+        """
+        _uri = "projects/{project_id_or_key}/versions/{id}".format(project_id_or_key=projectIdOrKey, id=id)
+
+        resp = self.api.invoke_method("DELETE", _uri)
 
         return resp.json()
 
