@@ -63,4 +63,10 @@ State the decision in the pull request description, for example "README: not nee
 
 - Add an entry for every change package users notice to the `[Unreleased]` section of `CHANGELOG.md` (Added / Changed / Deprecated / Removed / Fixed / Security), with a link to the pull request. A breaking change goes into a `### ⚠ Breaking changes` section at the top of the version (what breaks, who is affected, how to migrate) and into the table of breaking changes at the top of the file; avoid breaking changes where a deprecation would do. Changes to CI, tests or documentation only are not listed.
 - Bump `VERSION` only if the change affects package users and should be released. See "Releasing" in CONTRIBUTING.md.
-- In the pull request that bumps `VERSION`, move the `[Unreleased]` entries to a new `## [<VERSION>] - <YYYY-MM-DD>` section (the PyPI publication date, UTC) and update the compare links at the bottom of `CHANGELOG.md`.
+- In the pull request that bumps `VERSION`, move the `[Unreleased]` entries to a new `## [<VERSION>] - <YYYY-MM-DD>` section (the PyPI publication date, UTC) and update the compare links at the bottom of `CHANGELOG.md`: point `[Unreleased]` at `v<VERSION>...HEAD` and add `[<VERSION>]: .../compare/v<previous>...v<VERSION>`. Then run:
+
+  ```bash
+  python scripts/changelog_check.py
+  ```
+
+  The "Changelog" CI job runs the same check and fails the pull request otherwise. If several pull requests are released together, bump `VERSION` in a pull request of its own (or the last one) and collect their entries there.
