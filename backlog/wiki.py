@@ -131,16 +131,16 @@ class Wiki(object):
 
     def add_attachment(self, wikiId, attachmentId):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/attach-file-to-wiki/
+        https://developer.nulab.com/docs/backlog/api/2/attach-file-to-wiki/
 
         :param wikiId: (int) Required. wiki id
-        :param attachmentId: (int) Required. attachment id
+        :param attachmentId: (int or list of int) Required. attachment ID(s) returned by Attachment.upload()
         :return: Compliant with Backlog API specification
         """
         _uri = "wikis/{wiki_id}/attachments".format(wiki_id=wikiId)
         _method = "POST"
         _request_param = {
-            "attachmentId": attachmentId
+            "attachmentId[]": attachmentId
         }
 
         resp = self.api.invoke_method(_method, _uri, request_param=_request_param)
