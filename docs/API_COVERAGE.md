@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **120 of 152 endpoints (79%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **122 of 152 endpoints (80%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -20,7 +20,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
-| [Projects](#projects) | 26 / 48 |
+| [Projects](#projects) | 28 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
 | [Space](#space) | 2 / 8 |
@@ -139,8 +139,8 @@ Methods that call endpoints which are not in the official API reference (they ma
 | DELETE | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Delete List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/delete-list-item-for-list-type-custom-field/) | 2026-11-15 | — |
 | PATCH | `projects/:projectIdOrKey/customFields/:id/items/:itemId` | [Update List Item for List Type Custom Field](https://developer.nulab.com/docs/backlog/api/2/update-list-item-for-list-type-custom-field/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/diskUsage` | [Get Project Disk Usage](https://developer.nulab.com/docs/backlog/api/2/get-project-disk-usage/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/files/:sharedFileId` | [Get File](https://developer.nulab.com/docs/backlog/api/2/get-file/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/files/metadata/:path` | [Get List of Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/files/:sharedFileId` | [Get File](https://developer.nulab.com/docs/backlog/api/2/get-file/) | 2026-11-15 | `Project.get_shared_file()` |
+| GET | `projects/:projectIdOrKey/files/metadata/:path` | [Get List of Shared Files](https://developer.nulab.com/docs/backlog/api/2/get-list-of-shared-files/) | 2026-11-15 | `Project.list_shared_files()` |
 | GET | `projects/:projectIdOrKey/image` | [Get Project Icon](https://developer.nulab.com/docs/backlog/api/2/get-project-icon/) | 2026-11-15 | — |
 | GET | `projects/:projectIdOrKey/issueTypes` | [Get Issue Type List](https://developer.nulab.com/docs/backlog/api/2/get-issue-type-list/) | 2026-11-15 | `Project.list_issue_types()` |
 | POST | `projects/:projectIdOrKey/issueTypes` | [Add Issue Type](https://developer.nulab.com/docs/backlog/api/2/add-issue-type/) | 2026-11-15 | `Project.add_issue_type()` |

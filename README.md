@@ -68,6 +68,10 @@ def main():
     print(api.document.list(projectId=project["id"], keyword="spec"))
     print(api.document.tree("SampleProject"))
 
+    # Shared files
+    entries = api.project.list_shared_files("SampleProject", path="docs/specs")
+    shared = api.project.get_shared_file("SampleProject", entries[0]["id"])  # {"id", "name", "data": bytes}
+
     """
     Project API
     """

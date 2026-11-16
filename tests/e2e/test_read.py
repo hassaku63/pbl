@@ -105,6 +105,17 @@ class TestProjectRead(unittest.TestCase):
         check.is_list(self.api.document.list(projectId=self.project["id"], count=1), what="document.list()", item_keys=("id",))
         check.is_count(self.api.document.count(PROJECT_KEY), what="document.count()")
 
+    def test_shared_files(self):
+        if not self.project.get("useFileSharing"):
+            self.skipTest("File sharing is disabled in the project")
+        entries = self.api.project.list_shared_files(PROJECT_KEY, count=20)
+        check.is_list(entries, what="project.list_shared_files()", item_keys=("id", "type", "name"))
+        files = [e for e in entries if e["type"] == "file"]
+        if files:
+            downloaded = self.api.project.get_shared_file(PROJECT_KEY, files[0]["id"])
+            check.field_equals(downloaded, "name", files[0]["name"], what="project.get_shared_file()")
+            check.field_type(downloaded, "data", bytes, what="project.get_shared_file()")
+
     def test_wikis(self):
         if not self.project.get("useWiki"):
             self.skipTest("Wiki is disabled in the project")

@@ -68,6 +68,24 @@ class TestIssueRoundTrip(unittest.TestCase):
         finally:
             self.api.issue.delete(issue["issueKey"])
 
+    def test_shared_file_links(self):
+        # Shared files cannot be uploaded through the API: use one that already exists in the project.
+        if not self.project.get("useFileSharing"):
+            self.skipTest("File sharing is disabled in the project")
+        files = [e for e in self.api.project.list_shared_files(PROJECT_KEY, count=100) if e.get("type") == "file"]
+        if not files:
+            self.skipTest("The project has no shared file in its root directory")
+        file_id = files[0]["id"]
+        issue = self._create_issue("shared-file")
+        try:
+            check.is_list(self.api.issue.link_issue_shared_files(issue["issueKey"], [file_id]),
+                          what="issue.link_issue_shared_files()", min_length=1)
+            check.contains_id(self.api.issue.list_issue_shared_files(issue["issueKey"]), file_id,
+                              what="issue.list_issue_shared_files()")
+            self.api.issue.unlink_issue_shared_file(issue["issueKey"], file_id)
+        finally:
+            self.api.issue.delete(issue["issueKey"])
+
     def test_star(self):
         issue = self._create_issue("star")
         try:
@@ -121,6 +139,12 @@ class TestWikiRoundTrip(unittest.TestCase):
             updated = api.wiki.update(wiki["id"], name, "updated by the e2e test", mailNotify=False)
             check.field_equals(updated, "content", "updated by the e2e test", what="wiki.update()")
             check.field_equals(api.user.add_recently_viewed_wiki(wiki["id"]), "id", wiki["id"], what="user.add_recently_viewed_wiki()")
+            if project.get("useFileSharing"):
+                files = [e for e in api.project.list_shared_files(PROJECT_KEY, count=100) if e.get("type") == "file"]
+                if files:
+                    api.wiki.link_shared_files(wiki["id"], [files[0]["id"]])
+                    check.contains_id(api.wiki.list_shared_files(wiki["id"]), files[0]["id"], what="wiki.list_shared_files()")
+                    api.wiki.unlink_shared_file(wiki["id"], files[0]["id"])
             check.is_list(api.wiki.list_history(wiki["id"]), what="wiki.list_history()", min_length=1, item_keys=("version",))
             check.is_list(api.wiki.list(PROJECT_KEY, keyword=name), what="wiki.list(keyword)", min_length=1)
 
