@@ -130,6 +130,15 @@ class TestRequestParams(unittest.TestCase):
         self.assertEqual({"password": "p"}, _form(fake_http.last_request()))
 
     @fake_http.activate
+    def test_wiki_add_attachment_sends_attachment_id_array(self):
+        self._register(fake_http.POST, "wikis/1/attachments", body="[]")
+
+        for value, expected in [(2, ["2"]), ([2, 3], ["2", "3"])]:
+            with self.subTest(attachmentId=value):
+                self.api.wiki.add_attachment(wikiId=1, attachmentId=value)
+                self.assertEqual({"attachmentId[]": expected}, parse_qs(fake_http.last_request().body.decode()))
+
+    @fake_http.activate
     def test_wiki_get_attachment_name(self):
         _uri = "wikis/1/attachments/2"
         cases = [
