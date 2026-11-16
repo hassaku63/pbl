@@ -58,6 +58,16 @@ class TestIssueRoundTrip(unittest.TestCase):
         finally:
             self.api.issue.delete(issue["issueKey"])
 
+    def test_recently_viewed_issue(self):
+        issue = self._create_issue("viewed")
+        try:
+            added = self.api.user.add_recently_viewed_issue(issue["issueKey"])
+            check.field_equals(added, "id", issue["id"], what="user.add_recently_viewed_issue()")
+            viewed = [item["issue"]["id"] for item in self.api.user.list_recently_viewed_issues(count=20)]
+            check.is_true(issue["id"] in viewed, "user.list_recently_viewed_issues() does not contain the issue")
+        finally:
+            self.api.issue.delete(issue["issueKey"])
+
     def test_star(self):
         issue = self._create_issue("star")
         try:
@@ -110,6 +120,7 @@ class TestWikiRoundTrip(unittest.TestCase):
             check.has_keys(wiki, "id", "created", what="wiki.create()")
             updated = api.wiki.update(wiki["id"], name, "updated by the e2e test", mailNotify=False)
             check.field_equals(updated, "content", "updated by the e2e test", what="wiki.update()")
+            check.field_equals(api.user.add_recently_viewed_wiki(wiki["id"]), "id", wiki["id"], what="user.add_recently_viewed_wiki()")
             check.is_list(api.wiki.list_history(wiki["id"]), what="wiki.list_history()", min_length=1, item_keys=("version",))
             check.is_list(api.wiki.list(PROJECT_KEY, keyword=name), what="wiki.list(keyword)", min_length=1)
 

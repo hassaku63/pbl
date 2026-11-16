@@ -49,6 +49,7 @@ def main():
     # Your own user, and the issues you watch
     me = api.user.get_myself()
     print(api.watching.list(me["id"], resourceAlreadyRead=False))  # unread watched issues
+    print(api.user.list_recently_viewed_issues(count=5))  # [{"issue": {...}, "updated": ...}, ...]
 
     # Stars
     api.star.add(issueId=123)

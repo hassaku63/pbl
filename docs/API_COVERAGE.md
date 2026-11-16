@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **115 of 152 endpoints (76%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **120 of 152 endpoints (79%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -26,7 +26,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Space](#space) | 2 / 8 |
 | [Stars](#stars) | 2 / 2 |
 | [Teams](#teams) | 0 / 3 |
-| [Users](#users) | 8 / 14 |
+| [Users](#users) | 13 / 14 |
 | [Watching](#watching) | 5 / 5 |
 | [Wiki](#wiki) | 16 / 16 |
 
@@ -220,11 +220,11 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `users/:userId/watchings` | [Get Watching List](https://developer.nulab.com/docs/backlog/api/2/get-watching-list/) | 2026-11-15 | `Watching.list()` |
 | GET | `users/:userId/watchings/count` | [Count Watching](https://developer.nulab.com/docs/backlog/api/2/count-watching/) | 2026-11-15 | `Watching.count()` |
 | GET | `users/myself` | [Get Own User](https://developer.nulab.com/docs/backlog/api/2/get-own-user/) | 2026-11-15 | `User.get_myself()` |
-| GET | `users/myself/recentlyViewedIssues` | [Get List of Recently Viewed Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/) | 2026-11-15 | — |
-| POST | `users/myself/recentlyViewedIssues` | [Add Recently Viewed Issue](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/) | 2026-11-15 | — |
-| GET | `users/myself/recentlyViewedProjects` | [Get List of Recently Viewed Projects](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/) | 2026-11-15 | — |
-| GET | `users/myself/recentlyViewedWikis` | [Get List of Recently Viewed Wikis](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-wikis/) | 2026-11-15 | — |
-| POST | `users/myself/recentlyViewedWikis` | [Add Recently Viewed Wiki](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-wiki/) | 2026-11-15 | — |
+| GET | `users/myself/recentlyViewedIssues` | [Get List of Recently Viewed Issues](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-issues/) | 2026-11-15 | `User.list_recently_viewed_issues()` |
+| POST | `users/myself/recentlyViewedIssues` | [Add Recently Viewed Issue](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-issue/) | 2026-11-15 | `User.add_recently_viewed_issue()` |
+| GET | `users/myself/recentlyViewedProjects` | [Get List of Recently Viewed Projects](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-projects/) | 2026-11-15 | `User.list_recently_viewed_projects()` |
+| GET | `users/myself/recentlyViewedWikis` | [Get List of Recently Viewed Wikis](https://developer.nulab.com/docs/backlog/api/2/get-list-of-recently-viewed-wikis/) | 2026-11-15 | `User.list_recently_viewed_wikis()` |
+| POST | `users/myself/recentlyViewedWikis` | [Add Recently Viewed Wiki](https://developer.nulab.com/docs/backlog/api/2/add-recently-viewed-wiki/) | 2026-11-15 | `User.add_recently_viewed_wiki()` |
 
 ## Watching
 
