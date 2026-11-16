@@ -5,6 +5,7 @@ A Python package that wraps the [Backlog API v2](https://developer.nulab.com/doc
 - Requires Python 3.10 or later.
 - No runtime dependencies: only the Python standard library is used.
 - [API coverage](https://github.com/hassaku63/pbl/blob/master/docs/API_COVERAGE.md): which Backlog API endpoints have dedicated methods.
+- [Changelog](https://github.com/hassaku63/pbl/blob/master/CHANGELOG.md): what changed in each release, including breaking changes and deprecations.
 
 ## Usage
 
@@ -208,6 +209,8 @@ except BacklogNotFoundError as e:
 HTTPS certificates are verified against the system trust store (it also honors `SSL_CERT_FILE` and `SSL_CERT_DIR`). If `certifi` is installed, or `REQUESTS_CA_BUNDLE` or `CURL_CA_BUNDLE` is set, those CA certificates are trusted as well.
 
 ## Deprecations
+
+See also the [changelog](https://github.com/hassaku63/pbl/blob/master/CHANGELOG.md).
 
 - `User.add()`, `User.update()` and `User.delete()` are deprecated since 0.18.0 and emit a `DeprecationWarning`. Their endpoints were removed from the official API reference and are reported not to work in spaces on the new plans, where users are invited and managed in the Backlog web UI. They may still work in spaces on the old plans and will be removed in a future release. To remove a user from a project, use `Project.delete_user()`.
 - `Project.list_categories()`, `add_category()`, `update_category()` and `delete_category()` are deprecated since 0.9.0. Use `BacklogAPI.category` instead.

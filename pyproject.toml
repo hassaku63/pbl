@@ -37,6 +37,7 @@ dev = [
 Homepage = "https://github.com/hassaku63/pbl"
 Source = "https://github.com/hassaku63/pbl"
 Issues = "https://github.com/hassaku63/pbl/issues"
+Changelog = "https://github.com/hassaku63/pbl/blob/master/CHANGELOG.md"
 
 [tool.setuptools.dynamic]
 version = { file = "VERSION" }
