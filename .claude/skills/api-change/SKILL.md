@@ -61,12 +61,6 @@ State the decision in the pull request description, for example "README: not nee
 
 ## 5. Changelog and version
 
-- Add an entry for every change package users notice to the `[Unreleased]` section of `CHANGELOG.md` (Added / Changed / Deprecated / Removed / Fixed / Security), with a link to the pull request. A breaking change goes into a `### ⚠ Breaking changes` section at the top of the version (what breaks, who is affected, how to migrate) and into the table of breaking changes at the top of the file; avoid breaking changes where a deprecation would do. Changes to CI, tests or documentation only are not listed.
+- Optionally add an entry for a change package users notice to the `[Unreleased]` section of `CHANGELOG.md` (Added / Changed / Deprecated / Removed / Fixed / Security), with a link to the pull request. It is not required: the release pull request collects every pull request merged since the previous release. Write a clear pull request description instead; it is the material for the changelog.
 - Bump `VERSION` only if the change affects package users and should be released. See "Releasing" in CONTRIBUTING.md.
-- In the pull request that bumps `VERSION`, move the `[Unreleased]` entries to a new `## [<VERSION>] - <YYYY-MM-DD>` section (the PyPI publication date, UTC) and update the compare links at the bottom of `CHANGELOG.md`: point `[Unreleased]` at `v<VERSION>...HEAD` and add `[<VERSION>]: .../compare/v<previous>...v<VERSION>`. Then run:
-
-  ```bash
-  python scripts/changelog_check.py
-  ```
-
-  The "Changelog" CI job runs the same check and fails the pull request otherwise. If several pull requests are released together, bump `VERSION` in a pull request of its own (or the last one) and collect their entries there.
+- **If the pull request bumps `VERSION`, follow the `release` skill (`.claude/skills/release/SKILL.md`)**: it lists the pull requests merged since the previous release (`python scripts/changelog_check.py pulls`), writes the `CHANGELOG.md` section for the new version (breaking changes in a `### ⚠ Breaking changes` section and the table at the top), and runs `python scripts/changelog_check.py`. The "Changelog" CI job fails if a merged pull request is missing from the new section and from the Internal section.
