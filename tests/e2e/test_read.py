@@ -97,7 +97,15 @@ class TestProjectRead(unittest.TestCase):
     def test_wikis(self):
         if not self.project.get("useWiki"):
             self.skipTest("Wiki is disabled in the project")
-        check.is_list(self.api.wiki.list(PROJECT_KEY), what="wiki.list()", item_keys=("id", "name"))
+        wikis = self.api.wiki.list(PROJECT_KEY)
+        check.is_list(wikis, what="wiki.list()", item_keys=("id", "name"))
+        check.is_count(self.api.wiki.count(PROJECT_KEY), what="wiki.count()", expected=len(wikis))
+        check.is_list(self.api.wiki.list_tags(PROJECT_KEY), what="wiki.list_tags()", item_keys=("id", "name"))
+        if wikis:
+            wiki_id = wikis[0]["id"]
+            check.is_list(self.api.wiki.list_history(wiki_id, count=1), what="wiki.list_history()")
+            check.is_list(self.api.wiki.list_stars(wiki_id), what="wiki.list_stars()")
+            check.is_list(self.api.wiki.list_shared_files(wiki_id), what="wiki.list_shared_files()")
 
     def test_git_repositories(self):
         if not self.project.get("useGit"):
