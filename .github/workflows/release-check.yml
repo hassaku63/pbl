@@ -49,6 +49,8 @@ jobs:
           docs_changed=false
           if printf '%s\n' "$files" | grep -Eq '^backlog/'; then package_changed=true; fi
           if printf '%s\n' "$files" | grep -Eqx 'README.md|docs/API_COVERAGE.md'; then docs_changed=true; fi
+          changelog_changed=false
+          if printf '%s\n' "$files" | grep -Fxq CHANGELOG.md; then changelog_changed=true; fi
           version_changed=false
           if printf '%s\n' "$files" | grep -Fxq VERSION; then
             version_changed=true
@@ -78,6 +80,7 @@ jobs:
             echo "head_version=$head_version"
             echo "problem=$problem"
             echo "docs_reminder=$([ "$package_changed" = true ] && [ "$docs_changed" = false ] && echo true || echo false)"
+            echo "changelog_reminder=$([ "$package_changed" = true ] && [ "$changelog_changed" = false ] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
       - name: Comment on the pull request
@@ -92,6 +95,7 @@ jobs:
           HEAD_VERSION: ${{ steps.inspect.outputs.head_version }}
           PROBLEM: ${{ steps.inspect.outputs.problem }}
           DOCS_REMINDER: ${{ steps.inspect.outputs.docs_reminder }}
+          CHANGELOG_REMINDER: ${{ steps.inspect.outputs.changelog_reminder }}
         run: |
           set -euo pipefail
           marker='<!-- pbl-release-check -->'
@@ -127,6 +131,8 @@ jobs:
                   ;;
                 release)
                   echo "🚀 **This pull request bumps the package version from \`$BASE_VERSION\` to \`$HEAD_VERSION\`.** Merging it publishes \`$HEAD_VERSION\` to PyPI and creates the \`v$HEAD_VERSION\` tag and GitHub Release."
+                  echo
+                  echo "📋 CHANGELOG.md must have a \`## [$HEAD_VERSION] - YYYY-MM-DD\` section with the changes moved from \`[Unreleased]\`, and updated compare links. The \"Changelog\" CI job checks it."
                   ;;
                 invalid)
                   echo "❌ **This pull request changes \`VERSION\` in a way that cannot be released:** $PROBLEM"
@@ -137,6 +143,10 @@ jobs:
               if [ "$DOCS_REMINDER" = "true" ]; then
                 echo
                 echo "📝 This pull request changes \`backlog/\` but not \`README.md\` or \`docs/API_COVERAGE.md\`. If it adds or changes API methods, check whether the README needs an update. (The coverage document itself is verified by CI.)"
+              fi
+              if [ "$CHANGELOG_REMINDER" = "true" ]; then
+                echo
+                echo "📋 This pull request changes \`backlog/\` but not \`CHANGELOG.md\`. If package users will notice the change, add an entry to the \`[Unreleased]\` section."
               fi
               echo
               echo "<sub>This comment is updated automatically and will be marked as outdated when the pull request is closed.</sub>"
