@@ -43,6 +43,10 @@ def main():
     print(api.project.list_statuses("SampleProject"))  # statusId
     print(api.project.list_versions("SampleProject"))  # versionId[] / milestoneId[]
 
+    # Webhooks of a project (project administrators)
+    hook = api.webhook.add("SampleProject", "CI", "https://ci.example.com/backlog", activityTypeIds=[1, 2])
+    api.webhook.update("SampleProject", hook["id"], allEvent=True)
+
     # Versions/milestones and statuses of a project
     version = api.project.add_version("SampleProject", "v1.0", releaseDueDate="2026-12-31")
     api.project.update_version("SampleProject", version["id"], "v1.0", archived=True)

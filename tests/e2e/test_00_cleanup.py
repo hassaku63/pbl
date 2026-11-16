@@ -52,3 +52,8 @@ class TestCleanupLeftovers(unittest.TestCase):
         for status in statuses:
             if is_previous_run(status.get("name")):
                 self.api.project.delete_status(PROJECT_KEY, status["id"], substituteStatusId=statuses[0]["id"])
+
+    def test_webhooks(self):
+        for webhook in self.api.webhook.list(PROJECT_KEY):
+            if is_leftover(webhook.get("name"), webhook.get("created")):
+                self.api.webhook.delete(PROJECT_KEY, webhook["id"])

@@ -4,7 +4,7 @@
 
 Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints python-backlog implements.
 
-The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **131 of 152 endpoints (86%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
+The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **136 of 152 endpoints (89%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
 Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
 
@@ -20,7 +20,7 @@ Methods that call endpoints which are not in the official API reference (they ma
 | [Issues](#issues) | 24 / 24 |
 | [Notifications](#notifications) | 4 / 4 |
 | [Priorities](#priorities) | 1 / 1 |
-| [Projects](#projects) | 31 / 48 |
+| [Projects](#projects) | 36 / 48 |
 | [Rate limit](#rate-limit) | 1 / 1 |
 | [Resolutions](#resolutions) | 1 / 1 |
 | [Space](#space) | 6 / 8 |
@@ -161,11 +161,11 @@ Methods that call endpoints which are not in the official API reference (they ma
 | POST | `projects/:projectIdOrKey/versions` | [Add Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/add-version-milestone/) | 2026-11-15 | `Project.add_version()` |
 | DELETE | `projects/:projectIdOrKey/versions/:id` | [Delete Version](https://developer.nulab.com/docs/backlog/api/2/delete-version/) | 2026-11-15 | `Project.delete_version()` |
 | PATCH | `projects/:projectIdOrKey/versions/:id` | [Update Version/Milestone](https://developer.nulab.com/docs/backlog/api/2/update-version-milestone/) | 2026-11-15 | `Project.update_version()` |
-| GET | `projects/:projectIdOrKey/webhooks` | [Get List of Webhooks](https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/) | 2026-11-15 | — |
-| POST | `projects/:projectIdOrKey/webhooks` | [Add Webhook](https://developer.nulab.com/docs/backlog/api/2/add-webhook/) | 2026-11-15 | — |
-| DELETE | `projects/:projectIdOrKey/webhooks/:webhookId` | [Delete Webhook](https://developer.nulab.com/docs/backlog/api/2/delete-webhook/) | 2026-11-15 | — |
-| GET | `projects/:projectIdOrKey/webhooks/:webhookId` | [Get Webhook](https://developer.nulab.com/docs/backlog/api/2/get-webhook/) | 2026-11-15 | — |
-| PATCH | `projects/:projectIdOrKey/webhooks/:webhookId` | [Update Webhook](https://developer.nulab.com/docs/backlog/api/2/update-webhook/) | 2026-11-15 | — |
+| GET | `projects/:projectIdOrKey/webhooks` | [Get List of Webhooks](https://developer.nulab.com/docs/backlog/api/2/get-list-of-webhooks/) | 2026-11-15 | `Webhook.list()` |
+| POST | `projects/:projectIdOrKey/webhooks` | [Add Webhook](https://developer.nulab.com/docs/backlog/api/2/add-webhook/) | 2026-11-15 | `Webhook.add()` |
+| DELETE | `projects/:projectIdOrKey/webhooks/:webhookId` | [Delete Webhook](https://developer.nulab.com/docs/backlog/api/2/delete-webhook/) | 2026-11-15 | `Webhook.delete()` |
+| GET | `projects/:projectIdOrKey/webhooks/:webhookId` | [Get Webhook](https://developer.nulab.com/docs/backlog/api/2/get-webhook/) | 2026-11-15 | `Webhook.get()` |
+| PATCH | `projects/:projectIdOrKey/webhooks/:webhookId` | [Update Webhook](https://developer.nulab.com/docs/backlog/api/2/update-webhook/) | 2026-11-15 | `Webhook.update()` |
 
 ## Rate limit
 
