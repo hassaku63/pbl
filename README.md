@@ -83,6 +83,8 @@ def main():
     print("# list project users")
     users = api.project.list_users("SampleProject")
     print(json.dumps(users, indent=2))
+    print(api.project.list_administrators("SampleProject"), api.project.list_teams("SampleProject"))
+    icon = api.user.get_icon(users[0]["id"])  # {"name": "person_168.gif", "data": bytes}
 
 
     """

@@ -47,6 +47,10 @@ class TestSpaceRead(unittest.TestCase):
         check.is_list(u.list_recently_viewed_projects(count=1), what="user.list_recently_viewed_projects()", item_keys=("project",))
         check.is_list(u.list_recently_viewed_wikis(count=1), what="user.list_recently_viewed_wikis()", item_keys=("page",))
 
+    def test_user_icon(self):
+        me = self.api.user.get_myself()
+        check.field_type(self.api.user.get_icon(me["id"]), "data", bytes, what="user.get_icon()")
+
     def test_received_stars(self):
         me = self.api.user.get_myself()
         check.is_list(self.api.star.list_received(me["id"], count=1), what="star.list_received()", item_keys=("id",))
@@ -110,6 +114,14 @@ class TestProjectRead(unittest.TestCase):
     def test_documents(self):
         check.is_list(self.api.document.list(projectId=self.project["id"], count=1), what="document.list()", item_keys=("id",))
         check.is_count(self.api.document.count(PROJECT_KEY), what="document.count()")
+
+    def test_icon_and_members(self):
+        check.field_type(self.api.project.get_image(PROJECT_KEY), "data", bytes, what="project.get_image()")
+        check.is_list(self.api.project.list_administrators(PROJECT_KEY), what="project.list_administrators()", item_keys=("id",))
+        teams = self.api.project.list_teams(PROJECT_KEY)
+        check.is_list(teams, what="project.list_teams()", item_keys=("id",))
+        if teams:
+            check.field_type(self.api.team.get_icon(teams[0]["id"]), "data", bytes, what="team.get_icon()")
 
     def test_shared_files(self):
         if not self.project.get("useFileSharing"):

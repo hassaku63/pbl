@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from backlog.wiki import _filename_from_response
+
 
 class User(object):
     def __init__(self, api):
@@ -31,6 +33,17 @@ class User(object):
         resp = self.api.invoke_method("GET", "users/myself")
 
         return resp.json()
+
+    def get_icon(self, userId):
+        """
+        https://developer.nulab.com/docs/backlog/api/2/get-user-icon/
+
+        :param userId: (int) user ID
+        :return: dict with "name" (file name) and "data" (the user icon as bytes)
+        """
+        resp = self.api.invoke_method("GET", "users/{user_id}/icon".format(user_id=userId))
+
+        return {"name": _filename_from_response(resp), "data": resp.content}
 
     def list_recently_viewed_issues(self, order=None, offset=None, count=None):
         """
