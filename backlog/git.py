@@ -47,20 +47,23 @@ class Git(object):
 
         return resp.json()
 
-    def add_pull_request_comment(self, projectIdOrKey, repoIdOrName, number, content, notifiedUserIds=None):
+    def add_pull_request_comment(self, projectIdOrKey, repoIdOrName, number, content, notifiedUserIds=None,
+                                 attachmentId=None):
         """
-        https://developer.nulab-inc.com/ja/docs/backlog/api/2/add-pull-request-comment/
+        https://developer.nulab.com/docs/backlog/api/2/add-pull-request-comment/
 
         :param projectIdOrKey: (str or int) Required.
         :param repoIdOrName: (str or int) Required.
         :param number: (str or int) Required. PR number
         :param content: (str) Required. comment string
-        :param notifiedUserIds: (int or list of int) Optional.
-        :return:
+        :param notifiedUserIds: (int or list of int) Optional. users to notify (sent as notifiedUserId[])
+        :param attachmentId: (int or list of int) Optional. attachment IDs returned by Attachment.upload()
+        :return: the added comment
         """
         param = {
             "content": content,
-            "notifiedUserId[]": notifiedUserIds if notifiedUserIds is not None else []
+            "notifiedUserId[]": notifiedUserIds if notifiedUserIds is not None else [],
+            "attachmentId[]": attachmentId,
         }
         _uri = "projects/{projectIdOrKey}/git/repositories/{repoIdOrName}/pullRequests/{number}/comments".format(
             projectIdOrKey=projectIdOrKey,
