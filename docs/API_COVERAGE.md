@@ -6,12 +6,6 @@ Which [Backlog API v2](https://developer.nulab.com/docs/backlog/) endpoints pyth
 
 The endpoint list (`docs/api_endpoints.json`) follows the official API reference, whose index was last checked on 2026-11-15. **145 of 152 endpoints (95%) have a dedicated method.** Any other endpoint can still be called with `BacklogAPI.invoke_method()`.
 
-Methods that call endpoints which are not in the official API reference (they may have been removed; see the E2E tests in `tests/e2e/`):
-
-- `DELETE users/*`: `User.delete()`
-- `PATCH users/*`: `User.update()`
-- `POST users`: `User.add()`
-
 | Group | Implemented |
 |---|---|
 | [Activities](#activities) | 1 / 1 |
@@ -256,3 +250,25 @@ Methods that call endpoints which are not in the official API reference (they ma
 | GET | `wikis/:wikiId/stars` | [Get Wiki Page Star](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-star/) | 2026-11-15 | `Wiki.list_stars()` |
 | GET | `wikis/count` | [Count Wiki Page](https://developer.nulab.com/docs/backlog/api/2/count-wiki-page/) | 2026-11-15 | `Wiki.count()` |
 | GET | `wikis/tags` | [Get Wiki Page Tag List](https://developer.nulab.com/docs/backlog/api/2/get-wiki-page-tag-list/) | 2026-11-15 | `Wiki.list_tags()` |
+
+## Removed endpoints
+
+Endpoints that Backlog removed from the API. Methods that still call them are deprecated (`scripts/api_coverage.py check` fails otherwise).
+
+| Method | Path | API | Removed | Replacement | python-backlog |
+|---|---|---|---|---|---|
+| GET | `groups` | [Get List of Groups](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `GET teams` | — |
+| POST | `groups` | [Add Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `POST teams` | — |
+| DELETE | `groups/:groupId` | [Delete Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `DELETE teams/:teamId` | — |
+| GET | `groups/:groupId` | [Get Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `GET teams/:teamId` | — |
+| PATCH | `groups/:groupId` | [Update Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `PATCH teams/:teamId` | — |
+| GET | `groups/:groupId/icon` | [Get Group Icon](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `GET teams/:teamId/icon` | — |
+| DELETE | `projects/:projectIdOrKey/groups` | [Delete Project Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `DELETE projects/:projectIdOrKey/teams` | — |
+| GET | `projects/:projectIdOrKey/groups` | [Get Project Group List](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `GET projects/:projectIdOrKey/teams` | — |
+| POST | `projects/:projectIdOrKey/groups` | [Add Project Group](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `POST projects/:projectIdOrKey/teams` | — |
+| GET | `statuses` | [Get Status List](https://nulab.com/blog/product-updates/backlog/discontinued-apis-august-2024/) | [2.113.3 (2025-09-11)](https://developer.nulab.com/docs/backlog/changelog/) | `GET projects/:projectIdOrKey/statuses` | — |
+| POST | `users` | Add User | Removed from the reference (confirmed 2026-11-16) | — | `User.add()` (deprecated) |
+| DELETE | `users/:userId` | Delete User | Removed from the reference (confirmed 2026-11-16) | — | `User.delete()` (deprecated) |
+| PATCH | `users/:userId` | Update User | Removed from the reference (confirmed 2026-11-16) | — | `User.update()` (deprecated) |
+
+- Add User, Update User, Delete User: The reference page was removed (it redirects to the API index) without a changelog entry. Reported not to work in spaces on the new plans, where users are managed in the web UI.
